@@ -31,6 +31,7 @@
     --led: "VT323", "Courier New", monospace;
   }
   html { background: var(--bg); }
+  [hidden] { display: none !important; }
   body {
     margin: 0;
     color: var(--ink);
@@ -283,6 +284,53 @@
   .db-status.readonly { color: var(--yellow); }
   .db-status.offline, .db-status.loading { color: #ff9d5c; }
 
+  /* fire button */
+  .btn.fire { font-size: 14px; padding: 8px 20px; color: #fff; text-shadow: 1px 1px 0 #600; border-color: #800;
+    background: linear-gradient(180deg, #ffd0d0 0%, #ff5a5a 48%, #d00000 52%, #ff6a6a 100%); touch-action: none; user-select: none; -webkit-user-select: none; }
+  .btn.fire.held { background: linear-gradient(180deg, #fff6a0 0%, #ffcc00 48%, #ff8800 52%, #ffd060 100%); color: #300; text-shadow: none; }
+  kbd { font: 11px var(--body); border: 1px solid #666; border-bottom-width: 2px; padding: 0 3px; background: #eee; }
+  /* ad slots */
+  .adslot { margin-top: 10px; text-align: center; }
+  .adslot-label { display: block; font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: #8894b8; }
+  .house-ad { max-width: 728px; min-height: 60px; margin: 0 auto; display: grid; place-items: center; padding: 8px;
+    font: 700 14px/1.3 var(--comic); color: #000; border: 3px ridge var(--yellow);
+    background: repeating-linear-gradient(45deg, #ffe600 0 10px, #ffd000 10px 20px); }
+  .house-ad.tall { min-height: 200px; }
+  .adslot-side { margin-top: 0; }
+  /* messenger */
+  .messenger { margin-top: 14px; }
+  .nick-form { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; font-size: 12px; }
+  .nick-form input, .chat-form input { font: 12px var(--body); border: 2px inset var(--silver); padding: 4px 5px; background: #fff; color: #000; min-width: 0; }
+  .nick-form input { width: 180px; max-width: 100%; }
+  .msn { display: grid; grid-template-columns: minmax(0, 1fr) 170px; gap: 8px; }
+  .chat-log { height: 260px; overflow-y: auto; background: #fff; color: #000; border: 2px inset var(--silver); padding: 6px; font-size: 12px; }
+  .chat-line { padding-block: 2px; overflow-wrap: anywhere; }
+  .chat-line.sys { color: #777; font-style: italic; }
+  .chat-time { color: #888; font-size: 10px; }
+  .chat-who { color: #0645ad; }
+  .chat-line.mine .chat-who { color: #c0007a; }
+  .chat-buzz { color: #d00; font-weight: 700; }
+  .emo { font-weight: 700; }
+  .emo-xd { color: #fff; background: #ff00cc; padding: 0 3px; border-radius: 3px; }
+  .emo-heart { color: #e0005a; }
+  .emo-smile, .emo-happy, .emo-wink, .emo-tongue { color: #d68a00; }
+  .emo-sad { color: #3060c0; }
+  .online-box { background: #eef3ff; color: #000; border: 2px inset var(--silver); padding: 6px; font-size: 12px; height: 260px; overflow-y: auto; box-sizing: border-box; }
+  .online-box ul { list-style: none; margin: 6px 0 0; padding: 0; }
+  .online-box li::before { content: "● "; color: #2ab300; }
+  .online-box li.me { font-weight: 700; }
+  .chat-form { display: flex; gap: 6px; margin-top: 8px; }
+  .chat-form input { flex: 1; }
+  .buzz-btn { background: linear-gradient(180deg, #fff3c4 0%, #ffd34d 48%, #ffae00 52%, #ffd780 100%); }
+  .chat-note { color: #a00; min-height: 1em; }
+  .page.buzzing { animation: buzz .6s linear; }
+  @keyframes buzz { 10%, 50%, 90% { transform: translate(-8px, 4px); } 30%, 70% { transform: translate(8px, -4px); } }
+  @media (max-width: 560px) {
+    .msn { grid-template-columns: minmax(0, 1fr); }
+    .online-box { height: auto; max-height: 90px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .page.buzzing { animation: none; outline: 4px solid #f00; } }
+
   /* guestbook */
   .guest { margin-top: 14px; }
   .gb-entries { display: grid; gap: 8px; margin-top: 8px; }
@@ -353,8 +401,14 @@
     <a href="#juego">El Cerdo</a>
     <a href="#bajas">Bajas</a>
     <a href="#libro">Libro de visitas</a>
+    <a href="#chat">Chat</a>
     <a href="#links">Links</a>
   </nav>
+
+  <div class="adslot adslot-top" data-slot="top">
+    <span class="adslot-label">Publicidad</span>
+    <div class="adslot-box"><div class="house-ad">¡¡ANUNCIATE AQUÍ!! · espacio 728×90 disponible · el cerdo promete no dispararle a TU banner XD</div></div>
+  </div>
 
   <div class="layout">
 
@@ -390,6 +444,11 @@
         </div>
       </section>
 
+      <div class="adslot adslot-side" data-slot="side">
+        <span class="adslot-label">Publicidad</span>
+        <div class="adslot-box"><div class="house-ad tall">TU BANNER ACÁ<br>160×600<br><br>¡precios de 2004!<br><br>:D</div></div>
+      </div>
+
       <section class="win" id="links">
         <div class="win-title"><span>Anillo Web Porcino</span><span class="ctrls"><i>×</i></span></div>
         <div class="win-body">
@@ -418,11 +477,12 @@
           <div class="stat"><small>Récord</small><b id="best">000000</b></div>
         </div>
         <div class="controls">
+          <button class="btn fire" id="btnFire" type="button">¡DISPARAR! (mantené)</button>
           <button class="btn" id="btnTurbo" type="button" aria-pressed="false">MODO TURBO</button>
           <button class="btn" id="btnSound" type="button" aria-pressed="false">SONIDO: NO</button>
           <button class="btn" id="btnPause" type="button" aria-pressed="false">PAUSA</button>
         </div>
-        <p class="how"><b>Cómo se juega:</b> el cerdo dispara solo. Hacé clic (o tocá) en un pop-up para marcarlo como blanco prioritario. Si un anuncio llega hasta el cerdo, cuenta como spam.</p>
+        <p class="how"><b>Cómo se juega:</b> el cerdo solo dispara cuando vos querés. Tocá un pop-up para mandarle una ráfaga, o mantené <b>¡DISPARAR!</b> (o la barra <kbd>ESPACIO</kbd>). Si un anuncio llega hasta el cerdo, cuenta como spam. Tocá al cerdo para darle amor &lt;3</p>
       </section>
     </main>
 
@@ -450,14 +510,35 @@
         <div class="win-title"><span>Salón de la fama</span><span class="ctrls"><i>×</i></span></div>
         <div class="win-body dark">
           <ol id="hof"><li class="empty">cargando...</li></ol>
-          <form id="nickForm" class="nick-form" hidden>
-            <input id="nick" maxlength="20" placeholder="Tu apodo" aria-label="Tu apodo para el ranking">
-            <button class="btn" type="submit">OK</button>
-          </form>
         </div>
       </section>
     </aside>
   </div>
+
+  <section class="win messenger" id="chat">
+    <div class="win-title"><span>Cerdo Messenger 6.0 — Sala principal</span><span class="ctrls"><i>_</i><i>□</i><i>×</i></span></div>
+    <div class="win-body">
+      <form id="nickForm" class="nick-form">
+        <label for="nick">Tu apodo:</label>
+        <input id="nick" maxlength="20" placeholder="xX_tu_nick_Xx">
+        <button class="btn" type="submit">OK</button>
+        <span class="tiny">(se usa en el chat, el ranking y el libro)</span>
+      </form>
+      <div class="msn">
+        <div class="chat-log" id="chatLog" aria-live="polite"><div class="chat-line sys">conectando...</div></div>
+        <aside class="online-box">
+          <b>Conectados (<span id="onlineCount">0</span>)</b>
+          <ul id="onlineList"></ul>
+        </aside>
+      </div>
+      <form id="chatForm" class="chat-form">
+        <input id="chatMsg" maxlength="200" placeholder="Escribí algo... (probá XD, &lt;3, :P)" aria-label="Mensaje del chat" autocomplete="off">
+        <button class="btn" type="submit">Enviar</button>
+        <button class="btn buzz-btn" id="btnBuzz" type="button" title="Sacude la pantalla de todos">¡Zumbido!</button>
+      </form>
+      <p class="tiny chat-note" id="chatNote" aria-live="polite"></p>
+    </div>
+  </section>
 
   <section class="win guest" id="libro">
     <div class="win-title"><span>Libro de visitas</span><span class="ctrls"><i>_</i><i>×</i></span></div>
@@ -481,7 +562,15 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0/dist/umd/supabase.js"></script>
 <script>
+/* ======== CONFIGURACIÓN: lo único que hay que tocar ======== */
+var CONFIG = {
+  SUPABASE_URL: "https://sbcrxepmzqpkxspsadxj.supabase.co",
+  SUPABASE_KEY: "sb_publishable_PttXWDucwrZIQjpa0DggHw_g5l8ZZWi",   // clave pública (publishable), es seguro que esté acá
+  ADSENSE_CLIENT: "",                     // tu "ca-pub-XXXXXXXXXXXXXXXX" cuando AdSense apruebe el sitio
+  ADSENSE_SLOTS: { top: "", side: "" }    // ids de bloques de anuncios (opcional; vacío = anuncios automáticos)
+};
 (function () {
   "use strict";
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -529,20 +618,21 @@
   function $(id) { return document.getElementById(id); }
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 
-  /* ---------------- data layer: shared db on claude.ai, localStorage elsewhere ---------------- */
+  /* ---------------- data layer: Supabase online, localStorage as fallback ---------------- */
   var Data = (function () {
-    var db = null, userNs = null, uid = null, owner = false;
-    var mode = "loading";           // loading | online | readonly | offline
-    var me = null, players = [], guest = [];
+    var sb = null, uid = null, channel = null;
+    var mode = "loading";           // loading | online | offline
+    var offlineWhy = "";
+    var me = null, stats = null, hof = [], guest = [], chatRows = [];
     var session = { kills: 0, leaks: 0, killsByAd: {}, leaksByAd: {}, best: 0 };
-    var bestCbs = [], saving = false, dirty = false, timer = null, timerDue = 0, lastPost = 0, pollEditing = false, pollChoice = null;
+    var bestCbs = [], saving = false, dirty = false, timer = null, timerDue = 0, lastPost = 0, lastChat = 0;
+    var pollEditing = false, pollChoice = null, statsTimer = null;
     var OFFLINE_SAMPLES = [
       { name: "xX_DarkCerdo_Xx", msg: "wooow la mejor pag q vi en mi vida!!! 10 puntos. pasate x mi fotolog", at: Date.UTC(2004, 2, 12) },
-      { name: "marcelita_sk8", msg: "el cerdo tiene lentes de sol re fachero jajaja. saludos a todos los del ciber", at: Date.UTC(2004, 6, 28) },
-      { name: "el_tio_del_ciber", msg: "Mi PC se puso lenta desde que entré. Igual 10/10, me gustó el cerdo.", at: Date.UTC(2005, 0, 3) }
+      { name: "marcelita_sk8", msg: "el cerdo es re tierno jajaja XD saludos a todos los del ciber", at: Date.UTC(2004, 6, 28) }
     ];
 
-    function blank() { return { nick: "", best: 0, totalKills: 0, totalLeaks: 0, killsByAd: {}, leaksByAd: {}, visits: 0, vote: null, firstSeen: Date.now(), lastSeen: Date.now() }; }
+    function blank() { return { nick: "", best: 0, totalKills: 0, totalLeaks: 0, killsByAd: {}, leaksByAd: {}, visits: 0, vote: null }; }
     function normalize(d) {
       var b = blank(); d = d ? clone(d) : {};
       Object.keys(b).forEach(function (k) { if (d[k] !== undefined && d[k] !== null) b[k] = d[k]; });
@@ -550,6 +640,14 @@
       if (typeof b.leaksByAd !== "object") b.leaksByAd = {};
       if (POLL.indexOf(b.vote) < 0) b.vote = null;
       return b;
+    }
+    function fromRow(r) {
+      return r ? { nick: r.nick, best: r.best, totalKills: r.total_kills, totalLeaks: r.total_leaks, killsByAd: r.kills_by_ad,
+        leaksByAd: r.leaks_by_ad, visits: r.visits, vote: r.vote } : null;
+    }
+    function toRow() {
+      return { id: uid, nick: me.nick, best: me.best, total_kills: me.totalKills, total_leaks: me.totalLeaks, kills_by_ad: me.killsByAd,
+        leaks_by_ad: me.leaksByAd, visits: me.visits, vote: me.vote, last_seen: new Date().toISOString() };
     }
     function bump(map, id, n) { map[id] = (map[id] || 0) + n; }
     function applySession() {
@@ -559,14 +657,15 @@
       me.best = Math.max(me.best, session.best);
     }
     function saveLocal() { store("cerdo_player", JSON.stringify(me)); }
+    function nickOr(fallback) { return (me && me.nick) || fallback; }
 
+    /* ---- saving my own row (throttled: a stream of kills still gets saved) ---- */
     function schedule(delay) {
       if (!me) return;
       if (mode === "offline") saveLocal();
-      if (mode === "online") { dirty = true; arm(delay == null ? 2500 : delay); }
+      if (mode === "online") { dirty = true; arm(delay == null ? 3000 : delay); }
       render();
     }
-    // throttle, not debounce: a steady stream of kills must still get saved
     function arm(delay) {
       var due = Date.now() + delay;
       if (timer && due >= timerDue) return;
@@ -576,71 +675,67 @@
     function flush() {
       if (mode !== "online" || !dirty) return;
       if (saving) { arm(800); return; }
-      saving = true; dirty = false; me.lastSeen = Date.now();
-      db.doc("players/" + uid).set(clone(me)).then(function () { saving = false; }, function (e) { saving = false; onWriteError(e); });
-    }
-    function onWriteError(e) {
-      var code = e && e.code;
-      if (code === "unavailable" || code === "resource_exhausted") {
-        dirty = true; arm(5000 + Math.random() * 4000);
-      } else if (code === "invalid_argument" || code === "not_granted" || code === "revoked") {
-        mode = "readonly";
-      }
-      render();
+      saving = true; dirty = false;
+      sb.from("players").upsert(toRow()).then(function (r) {
+        saving = false;
+        if (r.error) { dirty = true; arm(8000 + Math.random() * 4000); }
+        else refreshSoon();
+      }, function () { saving = false; dirty = true; arm(8000); });
     }
     window.addEventListener("pagehide", function () { if (dirty) { clearTimeout(timer); timer = null; flush(); } });
 
-    /* ---- aggregates over every player doc ---- */
-    function allPlayers() {
-      if (!me) return [];
-      if (mode === "offline") return [{ id: "local", d: me }];
-      var out = [], seen = false;
-      players.forEach(function (p) { if (p.id === uid) { seen = true; out.push({ id: uid, d: me }); } else out.push(p); });
-      if (!seen && mode === "online") out.push({ id: uid, d: me });
-      return out;
+    /* ---- global numbers ---- */
+    function localStats() {
+      var s = { uniq: 1, visits: me ? me.visits : 0, kills: me ? me.totalKills : 0, leaks: me ? me.totalLeaks : 0,
+        killsByAd: me ? me.killsByAd : {}, leaksByAd: me ? me.leaksByAd : {}, votes: {} };
+      if (me && me.vote) s.votes[me.vote] = 1;
+      return s;
     }
-    function argmax(map) { var best = null, n = 0; Object.keys(map).forEach(function (k) { if (map[k] > n) { n = map[k]; best = k; } }); return best ? { id: best, n: n } : null; }
+    function loadStats() {
+      if (mode !== "online") return;
+      Promise.all([
+        sb.rpc("get_stats"),
+        sb.from("players").select("id,nick,best").gt("best", 0).order("best", { ascending: false }).limit(10)
+      ]).then(function (r) {
+        if (!r[0].error && r[0].data) stats = r[0].data;
+        if (!r[1].error && r[1].data) hof = r[1].data;
+        render();
+      }, function () {});
+    }
+    function refreshSoon() { clearTimeout(statsTimer); statsTimer = setTimeout(loadStats, 600); }
+    function argmax(map) { var best = null, n = 0; Object.keys(map || {}).forEach(function (k) { if (+map[k] > n) { n = +map[k]; best = k; } }); return best && adById(best) ? { id: best, n: n } : null; }
 
-    function renderStats(list) {
-      var tv = 0, tk = 0, tl = 0, kb = {}, lb = {}, votes = {};
-      list.forEach(function (p) {
-        var d = p.d || {};
-        tv += +d.visits || 0; tk += +d.totalKills || 0; tl += +d.totalLeaks || 0;
-        Object.keys(d.killsByAd || {}).forEach(function (k) { bump(kb, k, +d.killsByAd[k] || 0); });
-        Object.keys(d.leaksByAd || {}).forEach(function (k) { bump(lb, k, +d.leaksByAd[k] || 0); });
-        if (d.vote) bump(votes, d.vote, 1);
-      });
-      $("counter").innerHTML = pad(tv, 7).split("").map(function (c) { return "<b>" + c + "</b>"; }).join("");
+    function renderStats() {
+      var s = mode === "online" && stats ? stats : localStats();
+      $("counter").innerHTML = pad(s.visits, 7).split("").map(function (c) { return "<b>" + c + "</b>"; }).join("");
       if (me) {
-        $("visitNote").textContent = mode === "offline"
-          ? "modo offline: solo cuenta este navegador · viniste " + me.visits + (me.visits === 1 ? " vez" : " veces")
-          : list.length + (list.length === 1 ? " visitante único" : " visitantes únicos") + " · vos viniste " + me.visits + (me.visits === 1 ? " vez" : " veces");
+        $("visitNote").textContent = (mode === "online"
+          ? s.uniq + (s.uniq === 1 ? " visitante único" : " visitantes únicos") + " · vos viniste "
+          : "modo offline: solo cuenta este navegador · viniste ") + me.visits + (me.visits === 1 ? " vez" : " veces");
       }
-      $("gKills").textContent = pad(tk, 5);
-      $("gLeaks").textContent = pad(tl, 5);
-      $("gRatio").textContent = tk + tl ? Math.round(tk / (tk + tl) * 100) + "%" : "—";
-      var mk = argmax(kb), ml = argmax(lb), mv = argmax(votes);
+      $("gKills").textContent = pad(s.kills, 5);
+      $("gLeaks").textContent = pad(s.leaks, 5);
+      $("gRatio").textContent = s.kills + s.leaks ? Math.round(s.kills / (s.kills + s.leaks) * 100) + "%" : "—";
+      var mk = argmax(s.killsByAd), ml = argmax(s.leaksByAd), mv = argmax(s.votes);
       $("gTopKill").textContent = mk ? adById(mk.id).short + " (" + mk.n + ")" : "—";
       $("gTopLeak").textContent = ml ? adById(ml.id).short + " (" + ml.n + ")" : "—";
       $("gHated").textContent = mv ? adById(mv.id).short + " (" + mv.n + (mv.n === 1 ? " voto)" : " votos)") : "—";
-      return votes;
+      return s.votes || {};
     }
 
     function renderPoll(votes) {
       var box = $("pollOpts"), btn = $("pollBtn"), note = $("pollNote");
       box.textContent = "";
       if (!me) { note.textContent = "cargando votos..."; btn.hidden = true; return; }
-      var total = 0; POLL.forEach(function (id) { total += votes[id] || 0; });
-      if (me.vote && !pollEditing || mode === "readonly") {
+      var total = 0; POLL.forEach(function (id) { total += +votes[id] || 0; });
+      if (me.vote && !pollEditing) {
         POLL.forEach(function (id) {
-          var n = votes[id] || 0, pct = total ? Math.round(n / total * 100) : 0;
-          var row = el("div", "row" + (id === me.vote ? " mine" : ""), adById(id).short + " — " + pct + "% (" + n + ")");
-          var bar = el("div", "bar"); bar.style.width = Math.max(pct, 1) + "%";
-          box.appendChild(row); box.appendChild(bar);
+          var n = +votes[id] || 0, pct = total ? Math.round(n / total * 100) : 0;
+          box.appendChild(el("div", "row" + (id === me.vote ? " mine" : ""), adById(id).short + " — " + pct + "% (" + n + ")"));
+          var bar = el("div", "bar"); bar.style.width = Math.max(pct, 1) + "%"; box.appendChild(bar);
         });
-        btn.hidden = mode === "readonly"; btn.textContent = "Cambiar voto";
-        note.textContent = total + (total === 1 ? " voto" : " votos") +
-          (mode === "offline" ? " · sin conexión: solo cuenta tu voto" : mode === "readonly" ? " · solo lectura" : " · ¡gracias por votar!");
+        btn.hidden = false; btn.textContent = "Cambiar voto";
+        note.textContent = total + (total === 1 ? " voto" : " votos") + (mode === "offline" ? " · sin conexión: solo cuenta tu voto" : " · ¡gracias por votar! XD");
       } else {
         POLL.forEach(function (id, i) {
           var lab = el("label"), inp = el("input");
@@ -654,48 +749,50 @@
       }
     }
 
-    function renderHof(list) {
-      var ol = $("hof");
-      var top = list.filter(function (p) { return (+p.d.best || 0) > 0; })
-        .sort(function (a, b) { return (+b.d.best || 0) - (+a.d.best || 0); }).slice(0, 10);
-      function paint(profiles) {
-        ol.textContent = "";
-        if (!top.length) { ol.appendChild(el("li", "empty", "nadie todavía. ¡sé el primero!")); return; }
-        top.forEach(function (p, i) {
-          var isMe = mode === "offline" || p.id === uid;
-          var prof = profiles && profiles[p.id];
-          var name = (p.d.nick || "").trim() || (prof && prof.name) || (isMe ? "vos" : "Anónimo");
-          var li = el("li", isMe ? "me" : "");
-          li.appendChild(el("span", "who", (i + 1) + ". " + name + (isMe ? " (vos)" : "")));
-          li.appendChild(el("b", null, pad(p.d.best, 6)));
-          ol.appendChild(li);
-        });
-      }
-      paint(null);
-      if (userNs && mode !== "offline" && top.length) {
-        userNs.profiles(top.map(function (p) { return p.id; })).then(paint, function () {});
-      }
-      var nick = $("nick");
-      if (me && document.activeElement !== nick) nick.value = me.nick || "";
-      $("nickForm").hidden = !me || mode === "readonly";
+    function renderHof() {
+      var ol = $("hof"), rows;
+      if (mode === "online") {
+        rows = hof.map(function (r) { return { id: r.id, nick: r.nick, best: r.best }; });
+        var mine = rows.filter(function (r) { return r.id === uid; })[0];
+        if (me && me.best > 0) {
+          if (mine) { mine.best = Math.max(mine.best, me.best); mine.nick = me.nick; }
+          else rows.push({ id: uid, nick: me.nick, best: me.best });
+        }
+      } else rows = me && me.best > 0 ? [{ id: "local", nick: me.nick, best: me.best }] : [];
+      rows.sort(function (a, b) { return b.best - a.best; }); rows = rows.slice(0, 10);
+      ol.textContent = "";
+      if (!rows.length) { ol.appendChild(el("li", "empty", "nadie todavía. ¡sé el primero! :D")); return; }
+      rows.forEach(function (r, i) {
+        var isMe = r.id === uid || r.id === "local";
+        var li = el("li", isMe ? "me" : "");
+        li.appendChild(el("span", "who", (i + 1) + ". " + ((r.nick || "").trim() || (isMe ? "vos" : "Anónimo")) + (isMe ? " (vos)" : "")));
+        li.appendChild(el("b", null, pad(r.best, 6)));
+        ol.appendChild(li);
+      });
     }
 
+    /* ---- guestbook ---- */
+    function loadGuestbook() {
+      if (mode !== "online") return;
+      sb.from("guestbook").select("id,author,name,msg,created_at").order("created_at", { ascending: false }).limit(50)
+        .then(function (r) { if (!r.error) { guest = r.data; renderGuestbook(); } });
+    }
     function renderGuestbook() {
-      var list = $("gbEntries");
+      var list = $("gbEntries"), entries;
       list.textContent = "";
-      var entries;
-      if (mode === "offline") entries = (parseJSON(store("cerdo_gb")) || []).map(function (e, i) { return { id: "l" + i, d: e, local: true }; })
-        .concat(OFFLINE_SAMPLES.map(function (e) { return { id: null, d: e }; }));
-      else entries = guest;
       if (mode === "loading") { list.appendChild(el("p", "tiny", "cargando firmas...")); return; }
-      if (!entries.length) { list.appendChild(el("p", "tiny", "El libro está vacío. ¡Firmá primero!")); return; }
+      if (mode === "offline") {
+        entries = (parseJSON(store("cerdo_gb")) || []).map(function (e, i) { return { id: "l" + i, name: e.name, msg: e.msg, at: e.at, mine: true, local: true }; })
+          .concat(OFFLINE_SAMPLES.map(function (e) { return { name: e.name, msg: e.msg, at: e.at }; }));
+      } else {
+        entries = guest.map(function (g) { return { id: g.id, name: g.name, msg: g.msg, at: Date.parse(g.created_at), mine: g.author === uid }; });
+      }
+      if (!entries.length) { list.appendChild(el("p", "tiny", "El libro está vacío. ¡Firmá primero! :)")); return; }
       entries.forEach(function (e) {
-        var d = e.d || {};
         var box = el("div", "gb-entry");
-        box.appendChild(el("span", "who", String(d.name || "anónimo").slice(0, 24)));
-        box.appendChild(el("span", "when", d.at ? fmtDate(d.at) : ""));
-        var mine = e.local || (mode !== "offline" && (owner || (uid && d.author === uid)));
-        if (mine && e.id) {
+        box.appendChild(el("span", "who", e.name));
+        box.appendChild(el("span", "when", e.at ? fmtDate(e.at) : ""));
+        if (e.mine && e.id != null) {
           var del = el("button", "gb-del", "[borrar]"); del.type = "button";
           del.addEventListener("click", function () {
             if (!del.dataset.armed) { del.dataset.armed = "1"; del.textContent = "[¿seguro? clic otra vez]"; return; }
@@ -703,7 +800,7 @@
           });
           box.appendChild(del);
         }
-        box.appendChild(el("p", null, String(d.msg || "").slice(0, 160)));
+        var p = el("p"); emote(p, e.msg); box.appendChild(p);
         list.appendChild(box);
       });
     }
@@ -712,35 +809,110 @@
         var arr = parseJSON(store("cerdo_gb")) || [];
         arr.splice(+e.id.slice(1), 1); store("cerdo_gb", JSON.stringify(arr)); renderGuestbook(); return;
       }
-      db.doc("guestbook/" + e.id).delete().catch(function () { gbNote("No se pudo borrar. Probá de nuevo."); });
+      sb.from("guestbook").delete().eq("id", e.id).then(function (r) {
+        if (r.error) gbNote("No se pudo borrar. Probá de nuevo."); else loadGuestbook();
+      });
     }
     function gbNote(t) { $("gbNote").textContent = t; }
+    function isRateLimit(err) { return err && /rate_limit/.test(err.message || ""); }
+
+    /* ---- chat ---- */
+    var EMOTES = [[/XD/g, "xd"], [/<3/g, "heart"], [/:\)|:-\)/g, "smile"], [/:\(|:-\(/g, "sad"], [/:P|:p/g, "tongue"], [/\^_\^/g, "happy"], [/;\)/g, "wink"]];
+    var EMOTE_TEXT = { xd: "XD", heart: "♥", smile: "☺", sad: "☹", tongue: ":P", happy: "^_^", wink: ";)" };
+    function emote(node, text) {
+      var re = /XD|<3|:-?\)|:-?\(|:[Pp]|\^_\^|;\)/g, last = 0, m;
+      text = String(text || "");
+      while ((m = re.exec(text))) {
+        if (m.index > last) node.appendChild(document.createTextNode(text.slice(last, m.index)));
+        var kind = EMOTES.filter(function (e) { e[0].lastIndex = 0; return e[0].test(m[0]); })[0];
+        node.appendChild(el("span", "emo emo-" + (kind ? kind[1] : "x"), kind ? EMOTE_TEXT[kind[1]] : m[0]));
+        last = m.index + m[0].length;
+      }
+      if (last < text.length) node.appendChild(document.createTextNode(text.slice(last)));
+    }
+    function chatLine(row, fresh) {
+      var box = $("chatLog");
+      var d = new Date(row.created_at || Date.now());
+      var line = el("div", "chat-line" + (row.kind === "buzz" ? " buzz" : "") + (row.author === uid ? " mine" : ""));
+      line.appendChild(el("span", "chat-time", "[" + pad(d.getHours(), 2) + ":" + pad(d.getMinutes(), 2) + "]"));
+      if (row.kind === "buzz") {
+        line.appendChild(el("span", "chat-buzz", " *** " + row.name + " mandó un ZUMBIDO!!! ***"));
+        if (fresh) buzz();
+      } else {
+        line.appendChild(el("b", "chat-who", " " + row.name + " dice: "));
+        var msg = el("span", "chat-msg"); emote(msg, row.msg); line.appendChild(msg);
+      }
+      var atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 40;
+      box.appendChild(line);
+      while (box.children.length > 80) box.removeChild(box.firstChild);
+      if (atBottom || row.author === uid) box.scrollTop = box.scrollHeight;
+    }
+    function loadChat() {
+      sb.from("chat").select("id,author,name,kind,msg,created_at").order("created_at", { ascending: false }).limit(40).then(function (r) {
+        if (r.error) return;
+        $("chatLog").textContent = "";
+        chatRows = r.data.reverse();
+        chatRows.forEach(function (row) { chatLine(row, false); });
+        if (!chatRows.length) $("chatLog").appendChild(el("div", "chat-line sys", "No hay mensajes. ¡Saludá! :D"));
+      });
+    }
+    function buzz() {
+      var page = document.querySelector(".page");
+      page.classList.remove("buzzing"); void page.offsetWidth; page.classList.add("buzzing");
+      setTimeout(function () { page.classList.remove("buzzing"); }, 700);
+      if (window.CerdoSfx) window.CerdoSfx.buzz();
+    }
+    function sendChat(kind) {
+      var note = $("chatNote");
+      if (mode !== "online") { note.textContent = "El chat necesita conexión con la base de datos."; return; }
+      var name = nickOr("");
+      if (!name) { note.textContent = "Primero poné tu apodo (arriba) y dale OK."; $("nick").focus(); return; }
+      var msg = kind === "buzz" ? "" : $("chatMsg").value.trim().slice(0, 200);
+      if (kind !== "buzz" && !msg) return;
+      if (Date.now() - lastChat < 1500) { note.textContent = "Más despacio, cerdito XD"; return; }
+      lastChat = Date.now();
+      if (kind !== "buzz") $("chatMsg").value = "";
+      sb.from("chat").insert({ name: name, kind: kind, msg: msg }).then(function (r) {
+        if (!r.error) { note.textContent = ""; return; }
+        if (kind !== "buzz" && !$("chatMsg").value) $("chatMsg").value = msg;
+        note.textContent = isRateLimit(r.error) ? (kind === "buzz" ? "Un zumbido cada 15 s, no seas denso XD" : "Más despacio, cerdito XD") : "No se pudo mandar. Probá de nuevo.";
+      });
+    }
+    function renderOnline(state) {
+      var names = [];
+      Object.keys(state || {}).forEach(function (k) {
+        var p = state[k] && state[k][0];
+        names.push({ id: k, nick: (p && p.nick) || "Anónimo" });
+      });
+      $("onlineCount").textContent = names.length;
+      var ul = $("onlineList"); ul.textContent = "";
+      names.slice(0, 30).forEach(function (n) { ul.appendChild(el("li", n.id === uid ? "me" : "", n.nick + (n.id === uid ? " (vos)" : ""))); });
+    }
+    function trackPresence() { if (channel) channel.track({ nick: nickOr("Anónimo") }); }
 
     function renderStatus() {
       var s = $("dbStatus");
       s.className = "db-status " + mode;
-      s.textContent = {
-        loading: "○ Conectando con la base de datos...",
-        online: "● Conectado: votos, firmas, puntajes y visitas se guardan para todos.",
-        readonly: "● Base de datos en solo lectura: ves todo, pero no podés guardar.",
-        offline: "○ Modo offline: todo se guarda solo en este navegador."
-      }[mode];
-      $("gbForm").hidden = mode === "readonly";
+      s.textContent = mode === "online" ? "● Conectado: votos, firmas, chat, puntajes y visitas se guardan para todos."
+        : mode === "loading" ? "○ Conectando con la base de datos..."
+        : "○ Modo offline (" + offlineWhy + "): todo se guarda solo en este navegador.";
+      $("chatForm").hidden = mode !== "online";
+      if (mode === "offline") $("chatLog").textContent = "El chat no está disponible sin conexión a la base de datos.";
     }
 
     function render() {
-      var list = allPlayers();
-      var votes = renderStats(list);
-      renderPoll(votes);
-      renderHof(list);
+      renderPoll(renderStats());
+      renderHof();
       renderStatus();
+      var nick = $("nick");
+      if (me && document.activeElement !== nick) nick.value = me.nick || "";
     }
 
     /* ---- UI wiring ---- */
     $("poll").addEventListener("change", function (ev) { if (ev.target.name === "p") pollChoice = ev.target.value; });
     $("poll").addEventListener("submit", function (ev) {
       ev.preventDefault();
-      if (!me || mode === "readonly") return;
+      if (!me) return;
       if (me.vote && !pollEditing) { pollEditing = true; render(); return; }
       var sel = $("poll").querySelector("input:checked");
       if (!sel) return;
@@ -752,58 +924,67 @@
       if (!me) return;
       me.nick = $("nick").value.trim().slice(0, 20);
       $("nick").blur();
+      $("chatNote").textContent = me.nick ? "¡Listo, " + me.nick + "! Ya podés chatear :)" : "";
+      trackPresence();
       schedule(0);
     });
+    $("chatForm").addEventListener("submit", function (ev) { ev.preventDefault(); sendChat("msg"); });
+    $("btnBuzz").addEventListener("click", function () { sendChat("buzz"); });
     $("gbForm").addEventListener("submit", function (ev) {
       ev.preventDefault();
-      var name = $("gbName").value.trim().slice(0, 24) || (me && me.nick) || "anónimo";
+      var name = $("gbName").value.trim().slice(0, 24) || nickOr("anónimo");
       var msg = $("gbMsg").value.trim().slice(0, 160);
       if (!msg) { gbNote("Escribí algo antes de firmar."); $("gbMsg").focus(); return; }
       var wait = Math.ceil((lastPost + 20000 - Date.now()) / 1000);
-      if (wait > 0) { gbNote("¡Tranqui! Esperá " + wait + " s antes de volver a firmar (anti-spam, obvio)."); return; }
-      var entry = { name: name, msg: msg, at: Date.now() };
+      if (wait > 0) { gbNote("¡Tranqui! Esperá " + wait + " s antes de volver a firmar (anti-spam, obvio XD)."); return; }
       if (mode === "offline") {
-        var arr = parseJSON(store("cerdo_gb")) || []; arr.unshift(entry); store("cerdo_gb", JSON.stringify(arr.slice(0, 50)));
+        var arr = parseJSON(store("cerdo_gb")) || []; arr.unshift({ name: name, msg: msg, at: Date.now() }); store("cerdo_gb", JSON.stringify(arr.slice(0, 50)));
         lastPost = Date.now(); $("gbMsg").value = ""; gbNote("Firmado (guardado solo en este navegador)."); renderGuestbook(); return;
       }
       if (mode !== "online") { gbNote("Todavía conectando con la base de datos..."); return; }
-      entry.author = uid;
       var btn = $("gbForm").querySelector("button"); btn.disabled = true;
-      db.collection("guestbook").add(entry).then(function () {
-        lastPost = Date.now(); $("gbMsg").value = ""; gbNote("¡Firmado! Gracias por pasar.");
-      }, function (e) {
-        gbNote(e && e.code === "quota_exceeded" ? "El libro de visitas está lleno. Avisale al webmaster." :
-          e && e.code === "invalid_argument" ? "No tenés permiso para firmar este libro." : "No se pudo guardar. Probá de nuevo en un rato.");
-      }).then(function () { btn.disabled = false; });
+      sb.from("guestbook").insert({ name: name, msg: msg }).then(function (r) {
+        btn.disabled = false;
+        if (r.error) { gbNote(isRateLimit(r.error) ? "Esperá 20 s entre firmas (anti-spam)." : "No se pudo guardar. Probá de nuevo en un rato."); return; }
+        lastPost = Date.now(); $("gbMsg").value = ""; gbNote("¡Firmado! Gracias por pasar :D"); loadGuestbook();
+      });
     });
 
     /* ---- connect ---- */
+    function goOffline(why) {
+      mode = "offline"; offlineWhy = why;
+      me = normalize(parseJSON(store("cerdo_player")));
+      me.visits++; applySession(); saveLocal();
+    }
     (async function () {
       renderStatus(); renderGuestbook();
-      var c = window.claude;
-      if (c && typeof c.use === "function") {
-        try { var r = await Promise.all([c.use("db"), c.use("user")]); db = r[0]; userNs = r[1]; } catch (e) { db = null; }
+      try {
+        if (!window.supabase || !CONFIG.SUPABASE_URL || !CONFIG.SUPABASE_KEY) throw new Error("no cargó Supabase");
+        sb = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY);
+        var got = await sb.auth.getSession();
+        var sess = got.data && got.data.session;
+        if (!sess) {
+          var signed = await sb.auth.signInAnonymously();
+          if (signed.error) throw new Error("activá los inicios anónimos en Supabase");
+          sess = signed.data.session;
+        }
+        uid = sess.user.id;
+        var mine = await sb.from("players").select("*").eq("id", uid).maybeSingle();
+        if (mine.error) throw new Error("faltan las tablas: corré el SQL");
+        me = normalize(fromRow(mine.data));
+        me.visits++; applySession();
+        mode = "online";
+      } catch (e) {
+        goOffline(e && e.message ? e.message : "sin conexión");
       }
-      if (db && userNs) { uid = await userNs.id(); owner = await userNs.isOwner(); }
-      if (db && uid) {
-        try {
-          var snap = await db.doc("players/" + uid).get();
-          me = normalize(snap.exists ? snap.data() : null);
-          mode = (await userNs.can("data.write")) === false ? "readonly" : "online";
-        } catch (e) { mode = "offline"; }
-      } else mode = "offline";
-      if (mode === "offline") me = normalize(parseJSON(store("cerdo_player")));
-      me.visits++; me.lastSeen = Date.now();
-      applySession();
-      if (mode !== "offline") {
-        db.collection("players").onSnapshot(function (s) {
-          players = s.docs.map(function (d) { return { id: d.id, d: d.data() }; });
-          render();
-        }, function () {});
-        db.collection("guestbook").orderBy("at", "desc").limit(50).onSnapshot(function (s) {
-          guest = s.docs.map(function (d) { return { id: d.id, d: d.data() }; });
-          renderGuestbook();
-        }, function () { gbNote("Se cortó la conexión con el libro de visitas. Recargá la página."); });
+      if (mode === "online") {
+        channel = sb.channel("cerdo-sala", { config: { presence: { key: uid } } })
+          .on("postgres_changes", { event: "INSERT", schema: "public", table: "chat" }, function (p) { chatLine(p.new, true); })
+          .on("postgres_changes", { event: "*", schema: "public", table: "guestbook" }, function () { loadGuestbook(); })
+          .on("presence", { event: "sync" }, function () { renderOnline(channel.presenceState()); })
+          .subscribe(function (status) { if (status === "SUBSCRIBED") trackPresence(); });
+        loadChat(); loadGuestbook(); loadStats();
+        setInterval(loadStats, 20000);
       }
       schedule(0);
       renderGuestbook();
@@ -821,6 +1002,28 @@
       },
       onBest: function (cb) { bestCbs.push(cb); if (me) cb(me.best); }
     };
+  })();
+
+  /* ---------------- Google AdSense (se activa al poner tu ca-pub en CONFIG) ---------------- */
+  (function () {
+    var slots = document.querySelectorAll(".adslot");
+    if (!CONFIG.ADSENSE_CLIENT) return;               // sin cuenta: quedan los banners "Anunciate aquí"
+    var s = document.createElement("script");
+    s.async = true; s.crossOrigin = "anonymous";
+    s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=" + encodeURIComponent(CONFIG.ADSENSE_CLIENT);
+    document.head.appendChild(s);
+    Array.prototype.forEach.call(slots, function (slot) {
+      var id = CONFIG.ADSENSE_SLOTS[slot.dataset.slot];
+      if (!id) { slot.hidden = true; return; }       // sin bloque asignado: lo maneja "Anuncios automáticos"
+      var ins = document.createElement("ins");
+      ins.className = "adsbygoogle"; ins.style.display = "block";
+      ins.setAttribute("data-ad-client", CONFIG.ADSENSE_CLIENT);
+      ins.setAttribute("data-ad-slot", id);
+      ins.setAttribute("data-ad-format", "auto");
+      ins.setAttribute("data-full-width-responsive", "true");
+      var box = slot.querySelector(".adslot-box"); box.textContent = ""; box.appendChild(ins);
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    });
   })();
 
   /* ================= 3D GAME ================= */
@@ -911,17 +1114,32 @@
   [-0.11, 0.11].forEach(function (x) {
     var n = mesh(new T.CylinderGeometry(0.06, 0.06, 0.05, 12), M.black, x, -0.1, 0.86); n.rotation.x = Math.PI / 2; head.add(n);
   });
-  // sunglasses (obviously)
-  head.add(mesh(new T.BoxGeometry(1.02, 0.08, 0.06), M.black, 0, 0.3, 0.62));
-  [-0.26, 0.26].forEach(function (x) {
-    var l = mesh(new T.BoxGeometry(0.4, 0.24, 0.06), M.lens, x, 0.2, 0.64); l.rotation.y = x * 0.5; head.add(l);
+  // big friendly eyes (they blink)
+  var eyes = [];
+  var white = new T.MeshPhongMaterial({ color: 0xffffff, specular: 0xffffff, shininess: 90 });
+  [-0.24, 0.24].forEach(function (x) {
+    var eye = new T.Group(); eye.position.set(x, 0.2, 0.66); eye.rotation.y = x * 0.9;
+    eye.add(mesh(new T.SphereGeometry(0.15, 20, 16), white));
+    eye.add(mesh(new T.SphereGeometry(0.085, 16, 12), M.black, 0, -0.01, 0.11));
+    eye.add(mesh(new T.SphereGeometry(0.03, 10, 8), new T.MeshBasicMaterial({ color: 0xffffff }), 0.03, 0.035, 0.19));
+    head.add(eye); eyes.push(eye);
   });
-  [-1, 1].forEach(function (s) {
-    var arm = mesh(new T.BoxGeometry(0.04, 0.05, 0.5), M.black, s * 0.52, 0.3, 0.38); head.add(arm);
+  // rosy cheeks
+  var blush = new T.MeshBasicMaterial({ color: 0xff5f9e, transparent: true, opacity: 0.55 });
+  [-0.44, 0.44].forEach(function (x) {
+    var c = mesh(new T.SphereGeometry(0.12, 14, 10), blush, x, -0.1, 0.6); c.scale.set(1, 0.6, 0.35); c.rotation.y = x; head.add(c);
   });
-  // smug mouth
-  var mouth = mesh(new T.TorusGeometry(0.16, 0.025, 8, 20, Math.PI), M.black, 0.05, -0.36, 0.6);
-  mouth.rotation.set(0.3, 0, Math.PI + 0.25); head.add(mouth);
+  // sunglasses pushed up on the forehead (still 2004, still cool)
+  var shades = new T.Group(); shades.position.set(0, 0.56, 0.52); shades.rotation.x = -0.6; head.add(shades);
+  shades.add(mesh(new T.BoxGeometry(0.9, 0.06, 0.05), M.black, 0, 0.08, 0));
+  [-0.22, 0.22].forEach(function (x) {
+    var l = mesh(new T.BoxGeometry(0.34, 0.2, 0.05), M.lens, x, 0, 0.01); l.rotation.y = x * 0.5; shades.add(l);
+  });
+  // happy smile + tongue
+  var mouth = mesh(new T.TorusGeometry(0.17, 0.03, 8, 20, Math.PI), M.black, 0, -0.36, 0.68);
+  mouth.rotation.set(0.35, 0, Math.PI); head.add(mouth);
+  var tongue = mesh(new T.SphereGeometry(0.07, 12, 8), new T.MeshPhongMaterial({ color: 0xff3366, shininess: 60 }), 0, -0.5, 0.66);
+  tongue.scale.set(1, 0.6, 0.5); head.add(tongue);
   var ears = [];
   [-1, 1].forEach(function (s) {
     var pivot = new T.Group(); pivot.position.set(s * 0.42, 0.58, -0.05);
@@ -999,7 +1217,8 @@
     bubbleTex.needsUpdate = true;
     bubbleTimer = 2.2;
   }
-  var quips = ["¡OINK OINK!", "¡NO AL SPAM!", "¡CHUPATE ESA, POP-UP!", "¿MÁS RAM? MIS PATAS", "¡CERRAR VENTANA!", "¡ESTE CERDO NO CLICKEA!", "¡OINK... PEW PEW!"];
+  var quips = ["¡hola! XD", "oink oink :P", "¡sos lo más! ^_^", "¿jugamos? :3", "tocame y te doy amor <3", "¡cerremos pop-ups juntos! :D", "¡buenísimo! XD", "no me dejes solo T_T"];
+  var killQuips = ["¡chau pop-up! :P", "¡sos crack! ^_^", "¡BUENÍSIMO! XD", "¡otro menos! :D", "¡qué puntería! <3"];
 
   /* ---------------- ads ---------------- */
   function makeAdTexture(ad) {
@@ -1067,7 +1286,7 @@
     m.position.set(8 + Math.random() * 3, y, z);
     m.scale.setScalar(0.01);
     scene.add(m);
-    var ad = { mesh: m, kind: k, hp: 4, vx: -(0.55 + Math.random() * 0.55), baseY: y, phase: Math.random() * 6, hitT: 0, age: 0, dead: false };
+    var ad = { mesh: m, kind: k, hp: 4, vx: -(0.35 + Math.random() * 0.4), baseY: y, phase: Math.random() * 6, hitT: 0, age: 0, dead: false };
     m.userData.ad = ad;
     ads.push(ad);
   }
@@ -1168,6 +1387,16 @@
       o.connect(gn).connect(actx.destination); o.start(t + d); o.stop(t + d + 0.15);
     });
   }
+  window.CerdoSfx = {
+    buzz: function () {
+      if (!soundOn || !actx) return;
+      var t0 = actx.currentTime, o = actx.createOscillator(), lfo = actx.createOscillator(), lg = actx.createGain(), gn = actx.createGain();
+      o.type = "square"; o.frequency.value = 90; lfo.frequency.value = 28; lg.gain.value = 40;
+      lfo.connect(lg).connect(o.frequency);
+      gn.gain.setValueAtTime(0.08, t0); gn.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.6);
+      o.connect(gn).connect(actx.destination); o.start(t0); lfo.start(t0); o.stop(t0 + 0.62); lfo.stop(t0 + 0.62);
+    }
+  };
   var btnSound = document.getElementById("btnSound");
   btnSound.addEventListener("click", function () {
     soundOn = !soundOn;
@@ -1207,18 +1436,42 @@
     var hits = ray.intersectObjects(ads.filter(function (a) { return !a.dead; }).map(function (a) { return a.mesh; }));
     if (hits.length) {
       selected = hits[0].object.userData.ad;
-      say("¡BLANCO FIJADO!");
-    } else {
+      burst = Math.max(burst, 7);
+      idleT = 0;
+    } else if (ray.intersectObject(pig, true).length) {
+      loveHearts();
       say(quips[(Math.random() * quips.length) | 0]);
       sfxOink();
     }
   });
 
+  /* manual trigger: hold the button or the space bar */
+  var triggerHeld = false, burst = 0, idleT = 0;
+  var btnFire = document.getElementById("btnFire");
+  function hold(on) { triggerHeld = on; btnFire.classList.toggle("held", on); if (on) idleT = 0; }
+  btnFire.addEventListener("pointerdown", function (e) { e.preventDefault(); hold(true); if (btnFire.setPointerCapture) btnFire.setPointerCapture(e.pointerId); });
+  ["pointerup", "pointercancel", "lostpointercapture"].forEach(function (ev) { btnFire.addEventListener(ev, function () { hold(false); }); });
+  btnFire.addEventListener("keydown", function (e) { if (e.key === "Enter") hold(true); });
+  btnFire.addEventListener("keyup", function (e) { if (e.key === "Enter") hold(false); });
+  function typing(e) { var t = e.target; return t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable); }
+  document.addEventListener("keydown", function (e) { if (e.code === "Space" && !typing(e) && e.target.tagName !== "BUTTON") { e.preventDefault(); hold(true); } });
+  document.addEventListener("keyup", function (e) { if (e.code === "Space") hold(false); });
+  window.addEventListener("blur", function () { hold(false); });
+
+  function loveHearts() {
+    for (var i = 0; i < 4; i++) {
+      var h = textSprite("♥", ["#ff4fa3", "#ff0055", "#ff9ecb"][i % 3]);
+      h.position.set(pig.position.x + (Math.random() - 0.5) * 1.2, pig.position.y + 1.4 + Math.random() * 0.4, pig.position.z + 0.6);
+      h.scale.set(0.9, 0.34, 1);
+      scene.add(h); sprites.push({ obj: h, life: 1.3 + i * 0.1, max: 1.4, grow: 0.4, rise: 1.2 + Math.random() });
+    }
+  }
+
   /* ---------------- loop ---------------- */
   var clock = new T.Clock(), t = 0, spawnT = 0.2, fireCD = 0, spin = 0, shake = 0, recoil = 0, flashT = 0;
   var tmp = new T.Vector3(), tmp2 = new T.Vector3(), aimPoint = new T.Vector3(4, 0.5, 0), idleAim = new T.Vector3(6, 0, 0.8);
   for (var s0 = 0; s0 < 3; s0++) { spawnAd(); ads[s0].mesh.position.x = 3 + s0 * 2; }
-  say("¡OINK! ¡A LA CARGA!");
+  say("¡hola! tocá un pop-up :D");
 
   function pickTarget() {
     if (selected && !selected.dead) return selected;
@@ -1238,7 +1491,7 @@
 
     // spawn
     spawnT -= dt;
-    if (spawnT <= 0 && ads.length < (turbo ? 12 : 7)) { spawnAd(); spawnT = (turbo ? 0.55 : 1.5) + Math.random() * 0.6; }
+    if (spawnT <= 0 && ads.length < (turbo ? 10 : 6)) { spawnAd(); spawnT = (turbo ? 1.0 : 2.2) + Math.random() * 0.8; }
 
     // ads
     for (var i = ads.length - 1; i >= 0; i--) {
@@ -1264,7 +1517,7 @@
         a.dead = true; leaks++;
         Data.leak(ADS[a.kind].id);
         log('"' + ADS[a.kind].title + '" <em>SE COLÓ</em>', "miss");
-        say("¡NOOO, SPAM!");
+        say("¡uy! se coló uno T_T");
         hud();
       }
     }
@@ -1275,19 +1528,23 @@
     if (target) tmp.copy(target.mesh.position); else tmp.copy(idleAim);
     aimPoint.lerp(tmp, Math.min(1, dt * 10));
     var yaw = Math.atan2(aimPoint.x - pig.position.x, aimPoint.z - pig.position.z);
-    pig.rotation.y += (yaw * 0.55 + 0.7 - pig.rotation.y) * Math.min(1, dt * 5);
+    var wantYaw = (triggerHeld || burst > 0) ? yaw * 0.55 + 0.7 : 0.45;   // idle: look at the camera and smile
+    pig.rotation.y += (wantYaw - pig.rotation.y) * Math.min(1, dt * 4);
     pig.updateMatrixWorld(true);
     gun.position.copy(GUN_POS);
     gun.lookAt(aimPoint);
 
-    var firing = !!target;
+    var firing = triggerHeld || burst > 0;
     spin += ((firing ? 28 : 2) - spin) * Math.min(1, dt * 4);
     barrels.rotation.z += spin * dt;
     fireCD -= dt;
+    idleT += dt;
+    if (idleT > 10 && !paused) { idleT = 0; say(ads.length ? "psst... ¡tocá un pop-up! :3" : "oink... ¿jugamos? :3"); }
     if (firing && fireCD <= 0) {
       fireCD = turbo ? 1 / 20 : 1 / 13;
+      if (burst > 0) burst--;
       barrels.localToWorld(tmp2.copy(MUZZLE));
-      var dir = tmp.copy(target.mesh.position).sub(tmp2).normalize();
+      var dir = target ? tmp.copy(target.mesh.position).sub(tmp2).normalize() : barrels.getWorldDirection(tmp);
       dir.x += (Math.random() - 0.5) * 0.03; dir.y += (Math.random() - 0.5) * 0.03; dir.normalize();
       fire(tmp2, dir);
       recoil = 0.08; flashT = 0.05;
@@ -1308,6 +1565,9 @@
     ears[0].rotation.x = -0.35 + Math.sin(t * 9) * (firing ? 0.25 : 0.08);
     ears[1].rotation.x = -0.35 + Math.sin(t * 9 + 1) * (firing ? 0.25 : 0.08);
     head.rotation.z = Math.sin(t * 1.3) * 0.06;
+    var lid = (t % 3.7) < 0.12 ? 0.12 : 1;
+    eyes[0].scale.y = eyes[1].scale.y = lid;
+    tongue.position.y = -0.52 + Math.sin(t * 6) * 0.015;
 
     // bolts
     for (var j = bolts.length - 1; j >= 0; j--) {
@@ -1326,7 +1586,7 @@
             Data.kill(ADS[ad.kind].id, score);
             log('"' + ADS[ad.kind].title + '" <em>ELIMINADO</em>');
             explode(ad);
-            if (kills % 4 === 0) say(quips[(Math.random() * quips.length) | 0]);
+            if (kills % 3 === 0) say(killQuips[(Math.random() * killQuips.length) | 0]);
             hud();
           }
         }

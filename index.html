@@ -261,6 +261,28 @@
   .poll .row { font-size: 11px; }
   .poll button { margin-top: 6px; }
 
+  .poll .row.mine { font-weight: 700; color: #a00; }
+  .gstats { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 8px; margin: 0; font-size: 11px; align-items: baseline; }
+  .gstats dt { color: #9ab; }
+  .gstats dd { margin: 0; font: 20px/1.1 var(--led); color: var(--lime); text-align: right; font-variant-numeric: tabular-nums; }
+  .gstats dd.bad { color: #ff3b3b; }
+  .gstats dd.txt { grid-column: 1 / -1; text-align: left; font-size: 17px; color: var(--yellow); margin-bottom: 4px; }
+  #hof { margin: 0; padding: 0; list-style: none; font: 17px/1.3 var(--led); color: var(--cyan); }
+  #hof li { display: flex; justify-content: space-between; gap: 6px; border-bottom: 1px dotted #246; }
+  #hof li .who { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #hof li b { flex-shrink: 0; font-weight: 400; color: var(--yellow); font-variant-numeric: tabular-nums; }
+  #hof li.me { color: var(--hot); }
+  #hof li.empty { color: #9ab; }
+  .nick-form { display: flex; gap: 6px; margin-top: 8px; }
+  .nick-form input { flex: 1; min-width: 0; font: 12px var(--body); border: 2px inset var(--silver); padding: 3px 4px; background: #fff; color: #000; }
+  .nick-form .btn { padding: 4px 10px; }
+  .gb-del { float: right; background: none; border: 0; color: #c00; font: 700 10px var(--body); cursor: pointer; text-decoration: underline; }
+  .gb-note { color: #333; min-height: 1em; margin: 6px 0 0; }
+  .db-status { font-weight: 700; }
+  .db-status.online { color: var(--lime); }
+  .db-status.readonly { color: var(--yellow); }
+  .db-status.offline, .db-status.loading { color: #ff9d5c; }
+
   /* guestbook */
   .guest { margin-top: 14px; }
   .gb-entries { display: grid; gap: 8px; margin-top: 8px; }
@@ -341,7 +363,21 @@
         <div class="win-title"><span>Visitas</span><span class="ctrls"><i>_</i><i>×</i></span></div>
         <div class="win-body">
           <div class="counter" id="counter" aria-label="Contador de visitas"></div>
-          <p class="tiny">desde el 01/01/2003 · ¡gracias por pasar!</p>
+          <p class="tiny" id="visitNote">contando visitas...</p>
+        </div>
+      </section>
+
+      <section class="win">
+        <div class="win-title"><span>Estadísticas globales</span><span class="ctrls"><i>_</i><i>×</i></span></div>
+        <div class="win-body dark">
+          <dl class="gstats">
+            <dt>Pop-ups borrados (todos)</dt><dd id="gKills">—</dd>
+            <dt>Spam que se coló (todos)</dt><dd id="gLeaks" class="bad">—</dd>
+            <dt>Puntería porcina</dt><dd id="gRatio">—</dd>
+            <dt>El más baleado</dt><dd id="gTopKill" class="txt">—</dd>
+            <dt>El que más se cuela</dt><dd id="gTopLeak" class="txt">—</dd>
+            <dt>El más odiado (encuesta)</dt><dd id="gHated" class="txt">—</dd>
+          </dl>
         </div>
       </section>
 
@@ -404,7 +440,19 @@
           <h2 class="box-h">¿Qué anuncio odiás más?</h2>
           <form id="poll">
             <div id="pollOpts"></div>
-            <button class="btn" type="submit">Votar</button>
+            <button class="btn" id="pollBtn" type="submit" hidden>Votar</button>
+            <p class="tiny" id="pollNote">cargando votos...</p>
+          </form>
+        </div>
+      </section>
+
+      <section class="win">
+        <div class="win-title"><span>Salón de la fama</span><span class="ctrls"><i>×</i></span></div>
+        <div class="win-body dark">
+          <ol id="hof"><li class="empty">cargando...</li></ol>
+          <form id="nickForm" class="nick-form" hidden>
+            <input id="nick" maxlength="20" placeholder="Tu apodo" aria-label="Tu apodo para el ranking">
+            <button class="btn" type="submit">OK</button>
           </form>
         </div>
       </section>
@@ -419,17 +467,15 @@
         <textarea id="gbMsg" maxlength="160" placeholder="Dejá tu mensaje..." aria-label="Mensaje"></textarea>
         <button class="btn" type="submit">Firmar</button>
       </form>
-      <div class="gb-entries" id="gbEntries">
-        <div class="gb-entry"><span class="who">xX_DarkCerdo_Xx</span><span class="when">12/03/2004</span><p>wooow la mejor pag q vi en mi vida!!! 10 puntos. pasate x mi fotolog</p></div>
-        <div class="gb-entry"><span class="who">marcelita_sk8</span><span class="when">28/07/2004</span><p>el cerdo tiene lentes de sol re fachero jajaja. saludos a todos los del ciber</p></div>
-        <div class="gb-entry"><span class="who">el_tio_del_ciber</span><span class="when">03/01/2005</span><p>Mi PC se puso lenta desde que entré. Igual 10/10, me gustó el cerdo.</p></div>
-      </div>
+      <p class="tiny gb-note" id="gbNote" aria-live="polite"></p>
+      <div class="gb-entries" id="gbEntries"></div>
     </div>
   </section>
 
   <footer>
     <div class="hr" aria-hidden="true"></div>
     <p>© 2003–2006 CerdoLáser Productions · Webmaster: el Cerdo · Ningún pop-up fue perdonado en la realización de esta página</p>
+    <p id="dbStatus" class="db-status loading" aria-live="polite">○ Conectando con la base de datos...</p>
     <p>Optimizado para 800×600 y 256 colores · Si no ves el cerdo, actualizá tus drivers de video <span class="blink">¡¡YA!!</span></p>
   </footer>
 </div>
@@ -442,15 +488,6 @@
 
   function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
   function pad(n, w) { n = String(Math.max(0, Math.floor(n))); while (n.length < w) n = "0" + n; return n; }
-
-  /* ---------------- visitor counter ---------------- */
-  (function () {
-    var visits = parseInt(store("cerdo_visits") || "0", 10) + 1;
-    store("cerdo_visits", String(visits));
-    var digits = pad(1337040 + visits, 7);
-    var el = document.getElementById("counter");
-    el.innerHTML = digits.split("").map(function (d) { return "<b>" + d + "</b>"; }).join("");
-  })();
 
   /* ---------------- sparkle cursor trail ---------------- */
   if (!reduceMotion) {
@@ -471,46 +508,319 @@
     });
   }
 
-  /* ---------------- poll ---------------- */
-  (function () {
-    var opts = [["Ganaste un premio", 412], ["Tu PC tiene virus", 389], ["Más RAM gratis", 275], ["Solteros en tu zona", 198]];
-    var box = document.getElementById("pollOpts"), form = document.getElementById("poll");
-    box.innerHTML = opts.map(function (o, i) {
-      return '<label><input type="radio" name="p" id="p' + i + '" value="' + i + '"' + (i === 0 ? " checked" : "") + '> ' + o[0] + '</label>';
-    }).join("");
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var sel = form.querySelector("input:checked");
-      opts[+sel.value][1]++;
-      var total = opts.reduce(function (a, o) { return a + o[1]; }, 0);
-      box.innerHTML = opts.map(function (o) {
-        var pct = Math.round(o[1] / total * 100);
-        return '<div class="row">' + o[0] + ' — ' + pct + '%</div><div class="bar" style="width:' + pct + '%"></div>';
-      }).join("") + '<p class="tiny">' + total + ' votos · ¡gracias por votar!</p>';
-      form.querySelector("button").hidden = true;
-    });
-  })();
+  /* ---------------- ads catalog (shared by game + stats) ---------------- */
+  var ADS = [
+    { id: "premio", short: "Visitante 1.000.000", title: "¡¡FELICIDADES!!", lines: ["ERES EL VISITANTE", "N° 1.000.000", "¡RECLAMA TU PREMIO!"], bg: ["#ffff00", "#ff9900"], fg: "#ff0000", stroke: "#fff" },
+    { id: "virus", short: "Tu PC tiene virus", title: "Alerta de seguridad", lines: ["¡TU PC TIENE", "3.472 VIRUS!", "ESCANEAR AHORA"], bg: ["#ff2a2a", "#5a0000"], fg: "#ffffff", stroke: "#000" },
+    { id: "ram", short: "Más RAM gratis", title: "Oferta exclusiva", lines: ["DESCARGÁ MÁS", "MEMORIA RAM", "¡¡GRATIS!!"], bg: ["#00ccff", "#0022aa"], fg: "#ffff00", stroke: "#000" },
+    { id: "solteros", short: "Solteros en tu zona", title: "Chat de solteros", lines: ["HAY 12 SOLTEROS", "CERCA DE TU ZONA", "¡CHATEÁ YA!"], bg: ["#ff99dd", "#cc0077"], fg: "#ffffff", stroke: "#660033" },
+    { id: "tonos", short: "Tonos polifónicos", title: "Tonos polifónicos", lines: ["ENVIÁ CERDO", "AL 5555", "¡TONO DE LA RANA!"], bg: ["#aaff00", "#118800"], fg: "#000000", stroke: "#fff" },
+    { id: "barra", short: "Barra de herramientas", title: "Barra de herramientas", lines: ["INSTALÁ LA BARRA", "MEGA BUSCADOR 2005", "+40 EMOTICONES"], bg: ["#cc88ff", "#440088"], fg: "#ffff00", stroke: "#000" },
+    { id: "mono", short: "Golpeá al mono", title: "Minijuego", lines: ["¡GOLPEÁ AL MONO", "Y GANÁ $20!", "(de verdad)"], bg: ["#ffcc66", "#ff5500"], fg: "#330000", stroke: "#fff" },
+    { id: "casino", short: "Casino virtual", title: "Casino virtual", lines: ["BONO DE BIENVENIDA", "$500", "¡SIN DEPÓSITO!"], bg: ["#006633", "#001a0d"], fg: "#ffd700", stroke: "#000" },
+    { id: "dieta", short: "Dieta milagro", title: "Dieta milagro", lines: ["BAJÁ 20 KILOS", "EN 3 DÍAS", "LOS MÉDICOS LA ODIAN"], bg: ["#ffffff", "#ffdddd"], fg: "#dd0000", stroke: "#fff" },
+    { id: "cursores", short: "Cursores animados", title: "Personalizá tu PC", lines: ["CURSORES ANIMADOS", "GRATIS", "+ FONDOS DE PANTALLA"], bg: ["#66ffff", "#0088aa"], fg: "#ff00cc", stroke: "#fff" }
+  ];
+  var POLL = ["premio", "virus", "ram", "solteros", "casino", "dieta"];
+  function adById(id) { for (var i = 0; i < ADS.length; i++) if (ADS[i].id === id) return ADS[i]; return null; }
+  function clone(o) { return JSON.parse(JSON.stringify(o || {})); }
+  function parseJSON(s) { try { return s ? JSON.parse(s) : null; } catch (e) { return null; } }
+  function fmtDate(ms) { var d = new Date(ms); return pad(d.getDate(), 2) + "/" + pad(d.getMonth() + 1, 2) + "/" + d.getFullYear(); }
+  function $(id) { return document.getElementById(id); }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 
-  /* ---------------- guestbook ---------------- */
-  (function () {
-    var form = document.getElementById("gbForm");
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var name = document.getElementById("gbName").value.trim() || "anónimo";
-      var msg = document.getElementById("gbMsg").value.trim();
-      if (!msg) { document.getElementById("gbMsg").focus(); return; }
-      var d = new Date();
-      var entry = document.createElement("div");
-      entry.className = "gb-entry";
-      var who = document.createElement("span"); who.className = "who"; who.textContent = name;
-      var when = document.createElement("span"); when.className = "when";
-      when.textContent = pad(d.getDate(), 2) + "/" + pad(d.getMonth() + 1, 2) + "/" + d.getFullYear();
-      var p = document.createElement("p"); p.textContent = msg;
-      entry.appendChild(who); entry.appendChild(when); entry.appendChild(p);
-      var list = document.getElementById("gbEntries");
-      list.insertBefore(entry, list.firstChild);
-      form.reset();
+  /* ---------------- data layer: shared db on claude.ai, localStorage elsewhere ---------------- */
+  var Data = (function () {
+    var db = null, userNs = null, uid = null, owner = false;
+    var mode = "loading";           // loading | online | readonly | offline
+    var me = null, players = [], guest = [];
+    var session = { kills: 0, leaks: 0, killsByAd: {}, leaksByAd: {}, best: 0 };
+    var bestCbs = [], saving = false, dirty = false, timer = null, timerDue = 0, lastPost = 0, pollEditing = false, pollChoice = null;
+    var OFFLINE_SAMPLES = [
+      { name: "xX_DarkCerdo_Xx", msg: "wooow la mejor pag q vi en mi vida!!! 10 puntos. pasate x mi fotolog", at: Date.UTC(2004, 2, 12) },
+      { name: "marcelita_sk8", msg: "el cerdo tiene lentes de sol re fachero jajaja. saludos a todos los del ciber", at: Date.UTC(2004, 6, 28) },
+      { name: "el_tio_del_ciber", msg: "Mi PC se puso lenta desde que entré. Igual 10/10, me gustó el cerdo.", at: Date.UTC(2005, 0, 3) }
+    ];
+
+    function blank() { return { nick: "", best: 0, totalKills: 0, totalLeaks: 0, killsByAd: {}, leaksByAd: {}, visits: 0, vote: null, firstSeen: Date.now(), lastSeen: Date.now() }; }
+    function normalize(d) {
+      var b = blank(); d = d ? clone(d) : {};
+      Object.keys(b).forEach(function (k) { if (d[k] !== undefined && d[k] !== null) b[k] = d[k]; });
+      if (typeof b.killsByAd !== "object") b.killsByAd = {};
+      if (typeof b.leaksByAd !== "object") b.leaksByAd = {};
+      if (POLL.indexOf(b.vote) < 0) b.vote = null;
+      return b;
+    }
+    function bump(map, id, n) { map[id] = (map[id] || 0) + n; }
+    function applySession() {
+      me.totalKills += session.kills; me.totalLeaks += session.leaks;
+      Object.keys(session.killsByAd).forEach(function (k) { bump(me.killsByAd, k, session.killsByAd[k]); });
+      Object.keys(session.leaksByAd).forEach(function (k) { bump(me.leaksByAd, k, session.leaksByAd[k]); });
+      me.best = Math.max(me.best, session.best);
+    }
+    function saveLocal() { store("cerdo_player", JSON.stringify(me)); }
+
+    function schedule(delay) {
+      if (!me) return;
+      if (mode === "offline") saveLocal();
+      if (mode === "online") { dirty = true; arm(delay == null ? 2500 : delay); }
+      render();
+    }
+    // throttle, not debounce: a steady stream of kills must still get saved
+    function arm(delay) {
+      var due = Date.now() + delay;
+      if (timer && due >= timerDue) return;
+      clearTimeout(timer); timerDue = due;
+      timer = setTimeout(function () { timer = null; flush(); }, delay);
+    }
+    function flush() {
+      if (mode !== "online" || !dirty) return;
+      if (saving) { arm(800); return; }
+      saving = true; dirty = false; me.lastSeen = Date.now();
+      db.doc("players/" + uid).set(clone(me)).then(function () { saving = false; }, function (e) { saving = false; onWriteError(e); });
+    }
+    function onWriteError(e) {
+      var code = e && e.code;
+      if (code === "unavailable" || code === "resource_exhausted") {
+        dirty = true; arm(5000 + Math.random() * 4000);
+      } else if (code === "invalid_argument" || code === "not_granted" || code === "revoked") {
+        mode = "readonly";
+      }
+      render();
+    }
+    window.addEventListener("pagehide", function () { if (dirty) { clearTimeout(timer); timer = null; flush(); } });
+
+    /* ---- aggregates over every player doc ---- */
+    function allPlayers() {
+      if (!me) return [];
+      if (mode === "offline") return [{ id: "local", d: me }];
+      var out = [], seen = false;
+      players.forEach(function (p) { if (p.id === uid) { seen = true; out.push({ id: uid, d: me }); } else out.push(p); });
+      if (!seen && mode === "online") out.push({ id: uid, d: me });
+      return out;
+    }
+    function argmax(map) { var best = null, n = 0; Object.keys(map).forEach(function (k) { if (map[k] > n) { n = map[k]; best = k; } }); return best ? { id: best, n: n } : null; }
+
+    function renderStats(list) {
+      var tv = 0, tk = 0, tl = 0, kb = {}, lb = {}, votes = {};
+      list.forEach(function (p) {
+        var d = p.d || {};
+        tv += +d.visits || 0; tk += +d.totalKills || 0; tl += +d.totalLeaks || 0;
+        Object.keys(d.killsByAd || {}).forEach(function (k) { bump(kb, k, +d.killsByAd[k] || 0); });
+        Object.keys(d.leaksByAd || {}).forEach(function (k) { bump(lb, k, +d.leaksByAd[k] || 0); });
+        if (d.vote) bump(votes, d.vote, 1);
+      });
+      $("counter").innerHTML = pad(tv, 7).split("").map(function (c) { return "<b>" + c + "</b>"; }).join("");
+      if (me) {
+        $("visitNote").textContent = mode === "offline"
+          ? "modo offline: solo cuenta este navegador · viniste " + me.visits + (me.visits === 1 ? " vez" : " veces")
+          : list.length + (list.length === 1 ? " visitante único" : " visitantes únicos") + " · vos viniste " + me.visits + (me.visits === 1 ? " vez" : " veces");
+      }
+      $("gKills").textContent = pad(tk, 5);
+      $("gLeaks").textContent = pad(tl, 5);
+      $("gRatio").textContent = tk + tl ? Math.round(tk / (tk + tl) * 100) + "%" : "—";
+      var mk = argmax(kb), ml = argmax(lb), mv = argmax(votes);
+      $("gTopKill").textContent = mk ? adById(mk.id).short + " (" + mk.n + ")" : "—";
+      $("gTopLeak").textContent = ml ? adById(ml.id).short + " (" + ml.n + ")" : "—";
+      $("gHated").textContent = mv ? adById(mv.id).short + " (" + mv.n + (mv.n === 1 ? " voto)" : " votos)") : "—";
+      return votes;
+    }
+
+    function renderPoll(votes) {
+      var box = $("pollOpts"), btn = $("pollBtn"), note = $("pollNote");
+      box.textContent = "";
+      if (!me) { note.textContent = "cargando votos..."; btn.hidden = true; return; }
+      var total = 0; POLL.forEach(function (id) { total += votes[id] || 0; });
+      if (me.vote && !pollEditing || mode === "readonly") {
+        POLL.forEach(function (id) {
+          var n = votes[id] || 0, pct = total ? Math.round(n / total * 100) : 0;
+          var row = el("div", "row" + (id === me.vote ? " mine" : ""), adById(id).short + " — " + pct + "% (" + n + ")");
+          var bar = el("div", "bar"); bar.style.width = Math.max(pct, 1) + "%";
+          box.appendChild(row); box.appendChild(bar);
+        });
+        btn.hidden = mode === "readonly"; btn.textContent = "Cambiar voto";
+        note.textContent = total + (total === 1 ? " voto" : " votos") +
+          (mode === "offline" ? " · sin conexión: solo cuenta tu voto" : mode === "readonly" ? " · solo lectura" : " · ¡gracias por votar!");
+      } else {
+        POLL.forEach(function (id, i) {
+          var lab = el("label"), inp = el("input");
+          inp.type = "radio"; inp.name = "p"; inp.id = "poll-" + id; inp.value = id;
+          inp.checked = pollChoice ? pollChoice === id : me.vote ? me.vote === id : i === 0;
+          lab.appendChild(inp); lab.appendChild(document.createTextNode(" " + adById(id).short));
+          box.appendChild(lab);
+        });
+        btn.hidden = false; btn.textContent = "Votar";
+        note.textContent = "Un voto por persona. Podés cambiarlo después.";
+      }
+    }
+
+    function renderHof(list) {
+      var ol = $("hof");
+      var top = list.filter(function (p) { return (+p.d.best || 0) > 0; })
+        .sort(function (a, b) { return (+b.d.best || 0) - (+a.d.best || 0); }).slice(0, 10);
+      function paint(profiles) {
+        ol.textContent = "";
+        if (!top.length) { ol.appendChild(el("li", "empty", "nadie todavía. ¡sé el primero!")); return; }
+        top.forEach(function (p, i) {
+          var isMe = mode === "offline" || p.id === uid;
+          var prof = profiles && profiles[p.id];
+          var name = (p.d.nick || "").trim() || (prof && prof.name) || (isMe ? "vos" : "Anónimo");
+          var li = el("li", isMe ? "me" : "");
+          li.appendChild(el("span", "who", (i + 1) + ". " + name + (isMe ? " (vos)" : "")));
+          li.appendChild(el("b", null, pad(p.d.best, 6)));
+          ol.appendChild(li);
+        });
+      }
+      paint(null);
+      if (userNs && mode !== "offline" && top.length) {
+        userNs.profiles(top.map(function (p) { return p.id; })).then(paint, function () {});
+      }
+      var nick = $("nick");
+      if (me && document.activeElement !== nick) nick.value = me.nick || "";
+      $("nickForm").hidden = !me || mode === "readonly";
+    }
+
+    function renderGuestbook() {
+      var list = $("gbEntries");
+      list.textContent = "";
+      var entries;
+      if (mode === "offline") entries = (parseJSON(store("cerdo_gb")) || []).map(function (e, i) { return { id: "l" + i, d: e, local: true }; })
+        .concat(OFFLINE_SAMPLES.map(function (e) { return { id: null, d: e }; }));
+      else entries = guest;
+      if (mode === "loading") { list.appendChild(el("p", "tiny", "cargando firmas...")); return; }
+      if (!entries.length) { list.appendChild(el("p", "tiny", "El libro está vacío. ¡Firmá primero!")); return; }
+      entries.forEach(function (e) {
+        var d = e.d || {};
+        var box = el("div", "gb-entry");
+        box.appendChild(el("span", "who", String(d.name || "anónimo").slice(0, 24)));
+        box.appendChild(el("span", "when", d.at ? fmtDate(d.at) : ""));
+        var mine = e.local || (mode !== "offline" && (owner || (uid && d.author === uid)));
+        if (mine && e.id) {
+          var del = el("button", "gb-del", "[borrar]"); del.type = "button";
+          del.addEventListener("click", function () {
+            if (!del.dataset.armed) { del.dataset.armed = "1"; del.textContent = "[¿seguro? clic otra vez]"; return; }
+            removeEntry(e);
+          });
+          box.appendChild(del);
+        }
+        box.appendChild(el("p", null, String(d.msg || "").slice(0, 160)));
+        list.appendChild(box);
+      });
+    }
+    function removeEntry(e) {
+      if (e.local) {
+        var arr = parseJSON(store("cerdo_gb")) || [];
+        arr.splice(+e.id.slice(1), 1); store("cerdo_gb", JSON.stringify(arr)); renderGuestbook(); return;
+      }
+      db.doc("guestbook/" + e.id).delete().catch(function () { gbNote("No se pudo borrar. Probá de nuevo."); });
+    }
+    function gbNote(t) { $("gbNote").textContent = t; }
+
+    function renderStatus() {
+      var s = $("dbStatus");
+      s.className = "db-status " + mode;
+      s.textContent = {
+        loading: "○ Conectando con la base de datos...",
+        online: "● Conectado: votos, firmas, puntajes y visitas se guardan para todos.",
+        readonly: "● Base de datos en solo lectura: ves todo, pero no podés guardar.",
+        offline: "○ Modo offline: todo se guarda solo en este navegador."
+      }[mode];
+      $("gbForm").hidden = mode === "readonly";
+    }
+
+    function render() {
+      var list = allPlayers();
+      var votes = renderStats(list);
+      renderPoll(votes);
+      renderHof(list);
+      renderStatus();
+    }
+
+    /* ---- UI wiring ---- */
+    $("poll").addEventListener("change", function (ev) { if (ev.target.name === "p") pollChoice = ev.target.value; });
+    $("poll").addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      if (!me || mode === "readonly") return;
+      if (me.vote && !pollEditing) { pollEditing = true; render(); return; }
+      var sel = $("poll").querySelector("input:checked");
+      if (!sel) return;
+      me.vote = sel.value; pollEditing = false; pollChoice = null;
+      schedule(0);
     });
+    $("nickForm").addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      if (!me) return;
+      me.nick = $("nick").value.trim().slice(0, 20);
+      $("nick").blur();
+      schedule(0);
+    });
+    $("gbForm").addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var name = $("gbName").value.trim().slice(0, 24) || (me && me.nick) || "anónimo";
+      var msg = $("gbMsg").value.trim().slice(0, 160);
+      if (!msg) { gbNote("Escribí algo antes de firmar."); $("gbMsg").focus(); return; }
+      var wait = Math.ceil((lastPost + 20000 - Date.now()) / 1000);
+      if (wait > 0) { gbNote("¡Tranqui! Esperá " + wait + " s antes de volver a firmar (anti-spam, obvio)."); return; }
+      var entry = { name: name, msg: msg, at: Date.now() };
+      if (mode === "offline") {
+        var arr = parseJSON(store("cerdo_gb")) || []; arr.unshift(entry); store("cerdo_gb", JSON.stringify(arr.slice(0, 50)));
+        lastPost = Date.now(); $("gbMsg").value = ""; gbNote("Firmado (guardado solo en este navegador)."); renderGuestbook(); return;
+      }
+      if (mode !== "online") { gbNote("Todavía conectando con la base de datos..."); return; }
+      entry.author = uid;
+      var btn = $("gbForm").querySelector("button"); btn.disabled = true;
+      db.collection("guestbook").add(entry).then(function () {
+        lastPost = Date.now(); $("gbMsg").value = ""; gbNote("¡Firmado! Gracias por pasar.");
+      }, function (e) {
+        gbNote(e && e.code === "quota_exceeded" ? "El libro de visitas está lleno. Avisale al webmaster." :
+          e && e.code === "invalid_argument" ? "No tenés permiso para firmar este libro." : "No se pudo guardar. Probá de nuevo en un rato.");
+      }).then(function () { btn.disabled = false; });
+    });
+
+    /* ---- connect ---- */
+    (async function () {
+      renderStatus(); renderGuestbook();
+      var c = window.claude;
+      if (c && typeof c.use === "function") {
+        try { var r = await Promise.all([c.use("db"), c.use("user")]); db = r[0]; userNs = r[1]; } catch (e) { db = null; }
+      }
+      if (db && userNs) { uid = await userNs.id(); owner = await userNs.isOwner(); }
+      if (db && uid) {
+        try {
+          var snap = await db.doc("players/" + uid).get();
+          me = normalize(snap.exists ? snap.data() : null);
+          mode = (await userNs.can("data.write")) === false ? "readonly" : "online";
+        } catch (e) { mode = "offline"; }
+      } else mode = "offline";
+      if (mode === "offline") me = normalize(parseJSON(store("cerdo_player")));
+      me.visits++; me.lastSeen = Date.now();
+      applySession();
+      if (mode !== "offline") {
+        db.collection("players").onSnapshot(function (s) {
+          players = s.docs.map(function (d) { return { id: d.id, d: d.data() }; });
+          render();
+        }, function () {});
+        db.collection("guestbook").orderBy("at", "desc").limit(50).onSnapshot(function (s) {
+          guest = s.docs.map(function (d) { return { id: d.id, d: d.data() }; });
+          renderGuestbook();
+        }, function () { gbNote("Se cortó la conexión con el libro de visitas. Recargá la página."); });
+      }
+      schedule(0);
+      renderGuestbook();
+      bestCbs.forEach(function (cb) { cb(me.best); });
+    })();
+
+    return {
+      kill: function (id, score) {
+        session.kills++; bump(session.killsByAd, id, 1); session.best = Math.max(session.best, score);
+        if (me) { me.totalKills++; bump(me.killsByAd, id, 1); me.best = Math.max(me.best, score); schedule(); }
+      },
+      leak: function (id) {
+        session.leaks++; bump(session.leaksByAd, id, 1);
+        if (me) { me.totalLeaks++; bump(me.leaksByAd, id, 1); schedule(); }
+      },
+      onBest: function (cb) { bestCbs.push(cb); if (me) cb(me.best); }
+    };
   })();
 
   /* ================= 3D GAME ================= */
@@ -692,18 +1002,6 @@
   var quips = ["¡OINK OINK!", "¡NO AL SPAM!", "¡CHUPATE ESA, POP-UP!", "¿MÁS RAM? MIS PATAS", "¡CERRAR VENTANA!", "¡ESTE CERDO NO CLICKEA!", "¡OINK... PEW PEW!"];
 
   /* ---------------- ads ---------------- */
-  var ADS = [
-    { title: "¡¡FELICIDADES!!", lines: ["ERES EL VISITANTE", "N° 1.000.000", "¡RECLAMA TU PREMIO!"], bg: ["#ffff00", "#ff9900"], fg: "#ff0000", stroke: "#fff" },
-    { title: "Alerta de seguridad", lines: ["¡TU PC TIENE", "3.472 VIRUS!", "ESCANEAR AHORA"], bg: ["#ff2a2a", "#5a0000"], fg: "#ffffff", stroke: "#000" },
-    { title: "Oferta exclusiva", lines: ["DESCARGÁ MÁS", "MEMORIA RAM", "¡¡GRATIS!!"], bg: ["#00ccff", "#0022aa"], fg: "#ffff00", stroke: "#000" },
-    { title: "Chat de solteros", lines: ["HAY 12 SOLTEROS", "CERCA DE TU ZONA", "¡CHATEÁ YA!"], bg: ["#ff99dd", "#cc0077"], fg: "#ffffff", stroke: "#660033" },
-    { title: "Tonos polifónicos", lines: ["ENVIÁ CERDO", "AL 5555", "¡TONO DE LA RANA!"], bg: ["#aaff00", "#118800"], fg: "#000000", stroke: "#fff" },
-    { title: "Barra de herramientas", lines: ["INSTALÁ LA BARRA", "MEGA BUSCADOR 2005", "+40 EMOTICONES"], bg: ["#cc88ff", "#440088"], fg: "#ffff00", stroke: "#000" },
-    { title: "Minijuego", lines: ["¡GOLPEÁ AL MONO", "Y GANÁ $20!", "(de verdad)"], bg: ["#ffcc66", "#ff5500"], fg: "#330000", stroke: "#fff" },
-    { title: "Casino virtual", lines: ["BONO DE BIENVENIDA", "$500", "¡SIN DEPÓSITO!"], bg: ["#006633", "#001a0d"], fg: "#ffd700", stroke: "#000" },
-    { title: "Dieta milagro", lines: ["BAJÁ 20 KILOS", "EN 3 DÍAS", "LOS MÉDICOS LA ODIAN"], bg: ["#ffffff", "#ffdddd"], fg: "#dd0000", stroke: "#fff" },
-    { title: "Personalizá tu PC", lines: ["CURSORES ANIMADOS", "GRATIS", "+ FONDOS DE PANTALLA"], bg: ["#66ffff", "#0088aa"], fg: "#ff00cc", stroke: "#fff" }
-  ];
   function makeAdTexture(ad) {
     var c = document.createElement("canvas"); c.width = 512; c.height = 384;
     var g = c.getContext("2d");
@@ -827,7 +1125,7 @@
   }
 
   /* ---------------- score / HUD ---------------- */
-  var kills = 0, score = 0, leaks = 0, best = parseInt(store("cerdo_best") || "0", 10) || 0;
+  var kills = 0, score = 0, leaks = 0, best = 0;
   var elK = document.getElementById("kills"), elS = document.getElementById("score"), elL = document.getElementById("leaks"), elB = document.getElementById("best");
   var logEl = document.getElementById("log"), firstLog = true;
   function hud() {
@@ -842,6 +1140,7 @@
     while (logEl.children.length > 7) logEl.removeChild(logEl.lastChild);
   }
   hud();
+  Data.onBest(function (b) { if (b > best) { best = b; hud(); } });
 
   /* ---------------- sound (after user click) ---------------- */
   var actx = null, soundOn = false, noiseBuf = null;
@@ -963,6 +1262,7 @@
       } else { m.material.color.setRGB(1, 1, 1); m.scale.setScalar(sc); }
       if (m.position.x < -2.1) {
         a.dead = true; leaks++;
+        Data.leak(ADS[a.kind].id);
         log('"' + ADS[a.kind].title + '" <em>SE COLÓ</em>', "miss");
         say("¡NOOO, SPAM!");
         hud();
@@ -1022,7 +1322,8 @@
           hit = true; ad.hp--; ad.hitT = 0.12;
           if (ad.hp <= 0) {
             ad.dead = true; kills++; score += 100 * (turbo ? 2 : 1);
-            if (score > best) { best = score; store("cerdo_best", String(best)); }
+            if (score > best) best = score;
+            Data.kill(ADS[ad.kind].id, score);
             log('"' + ADS[ad.kind].title + '" <em>ELIMINADO</em>');
             explode(ad);
             if (kills % 4 === 0) say(quips[(Math.random() * quips.length) | 0]);

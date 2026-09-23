@@ -1091,10 +1091,13 @@ var CONFIG = {
 
   /* ---------------- the pig ---------------- */
   var M = {
-    pink: new T.MeshPhongMaterial({ color: 0xff9ecb, specular: 0xffffff, shininess: 70 }),
+    pink: new T.MeshPhongMaterial({ color: 0xff9ecb, specular: 0xffffff, shininess: 120, emissive: 0x2a0012 }),
+    belly: new T.MeshPhongMaterial({ color: 0xffc4de, specular: 0xffffff, shininess: 120, emissive: 0x2a0012 }),
+    gold: new T.MeshPhongMaterial({ color: 0xffc933, specular: 0xfff4b0, shininess: 160, emissive: 0x3a2400 }),
+    chrome: new T.MeshPhongMaterial({ color: 0xc8d2ff, specular: 0xffffff, shininess: 220, flatShading: true }),
     dpink: new T.MeshPhongMaterial({ color: 0xe0608f, specular: 0x552233, shininess: 30 }),
     black: new T.MeshPhongMaterial({ color: 0x0c0c12, specular: 0x88ccff, shininess: 140 }),
-    lens: new T.MeshPhongMaterial({ color: 0x1030ff, specular: 0xffffff, shininess: 200, emissive: 0x220055 }),
+    lens: new T.MeshPhongMaterial({ color: 0x220044, specular: 0xffffff, shininess: 260, emissive: 0x3300aa }),
     metal: new T.MeshPhongMaterial({ color: 0x9aa0b4, specular: 0xffffff, shininess: 110 }),
     gunmetal: new T.MeshPhongMaterial({ color: 0x3a3f4f, specular: 0xaaaaff, shininess: 90 }),
     hoof: new T.MeshPhongMaterial({ color: 0x5a2a36, shininess: 20 }),
@@ -1108,6 +1111,17 @@ var CONFIG = {
   var pigBody = new T.Group(); pig.add(pigBody);
 
   var body = mesh(new T.SphereGeometry(1, 36, 24), M.pink); body.scale.set(1, 0.92, 1.35); pigBody.add(body);
+  var belly = mesh(new T.SphereGeometry(0.8, 28, 18), M.belly, 0, -0.18, 0.12); belly.scale.set(0.95, 0.8, 1.45); pigBody.add(belly);
+  // gold chain + "$" medallion (bling bling, 2003)
+  var chain = mesh(new T.TorusGeometry(0.66, 0.045, 10, 40), M.gold, 0, 0.1, 0.95); chain.rotation.x = Math.PI / 2 - 0.75; pigBody.add(chain);
+  var medal = new T.Group(); medal.position.set(0, -0.36, 1.33); medal.rotation.x = -0.35; pigBody.add(medal);
+  medal.add(mesh(new T.CylinderGeometry(0.2, 0.2, 0.05, 28).rotateX(Math.PI / 2), M.gold));
+  (function () {
+    var c = document.createElement("canvas"); c.width = c.height = 128; var g = c.getContext("2d");
+    g.font = "900 100px Impact, 'Arial Black', sans-serif"; g.textAlign = "center"; g.textBaseline = "middle";
+    g.fillStyle = "#7a4a00"; g.fillText("$", 64, 70);
+    medal.add(mesh(new T.PlaneGeometry(0.34, 0.34), new T.MeshBasicMaterial({ map: new T.CanvasTexture(c), transparent: true }), 0, 0, 0.03));
+  })();
   var head = new T.Group(); head.position.set(0, 0.35, 1.2); pigBody.add(head);
   head.add(mesh(new T.SphereGeometry(0.74, 32, 24), M.pink));
   var snout = mesh(new T.CylinderGeometry(0.33, 0.36, 0.28, 28), M.dpink, 0, -0.1, 0.72); snout.rotation.x = Math.PI / 2; head.add(snout);
@@ -1130,11 +1144,14 @@ var CONFIG = {
     var c = mesh(new T.SphereGeometry(0.12, 14, 10), blush, x, -0.1, 0.6); c.scale.set(1, 0.6, 0.35); c.rotation.y = x; head.add(c);
   });
   // sunglasses pushed up on the forehead (still 2004, still cool)
-  var shades = new T.Group(); shades.position.set(0, 0.56, 0.52); shades.rotation.x = -0.6; head.add(shades);
-  shades.add(mesh(new T.BoxGeometry(0.9, 0.06, 0.05), M.black, 0, 0.08, 0));
-  [-0.22, 0.22].forEach(function (x) {
-    var l = mesh(new T.BoxGeometry(0.34, 0.2, 0.05), M.lens, x, 0, 0.01); l.rotation.y = x * 0.5; shades.add(l);
+  // up on the forehead when chilling, down over the eyes when shooting (B-)
+  var SHADES_UP = { y: 0.56, z: 0.52, rx: -0.6 }, SHADES_DOWN = { y: 0.2, z: 0.8, rx: 0 };
+  var shades = new T.Group(); shades.position.set(0, SHADES_UP.y, SHADES_UP.z); shades.rotation.x = SHADES_UP.rx; head.add(shades);
+  shades.add(mesh(new T.BoxGeometry(0.98, 0.07, 0.06), M.black, 0, 0.1, 0));
+  [-0.24, 0.24].forEach(function (x) {
+    var l = mesh(new T.BoxGeometry(0.4, 0.24, 0.06), M.lens, x, 0, 0.01); l.rotation.y = x * 0.5; shades.add(l);
   });
+  [-1, 1].forEach(function (sd) { shades.add(mesh(new T.BoxGeometry(0.04, 0.05, 0.5), M.black, sd * 0.5, 0.1, -0.24)); });
   // happy smile + tongue
   var mouth = mesh(new T.TorusGeometry(0.17, 0.03, 8, 20, Math.PI), M.black, 0, -0.36, 0.68);
   mouth.rotation.set(0.35, 0, Math.PI); head.add(mouth);
@@ -1168,8 +1185,6 @@ var CONFIG = {
   gun.add(mesh(new T.BoxGeometry(0.14, 0.4, 0.18), M.gunmetal, 0, -0.34, -0.1));
   gun.add(mesh(new T.BoxGeometry(0.16, 0.16, 0.5), M.metal, 0, 0.3, -0.05));
   var gunBand = mesh(new T.TorusGeometry(0.24, 0.03, 8, 24), M.glow, 0, 0, 0.4); gun.add(gunBand);
-  var strap = mesh(new T.TorusGeometry(0.62, 0.05, 8, 24, Math.PI), M.black, 0.55, 0.1, -0.05);
-  strap.rotation.set(0, Math.PI / 2, 0.3); gun.add(strap);
   var barrels = new T.Group(); barrels.position.z = 0.4; gun.add(barrels);
   for (var bi = 0; bi < 6; bi++) {
     var a = bi / 6 * Math.PI * 2;
@@ -1191,6 +1206,29 @@ var CONFIG = {
   }
   var flashTex = radialTex("#ffffff", "rgba(120,255,80,.8)");
   var boomTex = radialTex("#ffffff", "rgba(255,160,0,.9)");
+  var smokeTex = radialTex("rgba(255,255,255,.9)", "rgba(190,190,215,.55)");
+  var starTex = (function () {
+    var c = document.createElement("canvas"); c.width = c.height = 128; var g = c.getContext("2d");
+    var gr = g.createRadialGradient(64, 64, 0, 64, 64, 64); gr.addColorStop(0, "rgba(255,255,255,1)"); gr.addColorStop(0.15, "rgba(255,255,255,.6)"); gr.addColorStop(1, "rgba(255,255,255,0)");
+    g.fillStyle = gr; g.fillRect(0, 0, 128, 128);
+    g.fillStyle = "#fff"; g.beginPath(); g.moveTo(64, 0); g.lineTo(70, 58); g.lineTo(128, 64); g.lineTo(70, 70); g.lineTo(64, 128); g.lineTo(58, 70); g.lineTo(0, 64); g.lineTo(58, 58); g.closePath(); g.fill();
+    return new T.CanvasTexture(c);
+  })();
+  // twinkling bling around the pig
+  var sparkles = [], sparkColors3 = [0xffffff, 0xff9ee8, 0x9ff6ff, 0xfff27a];
+  for (var sk = 0; sk < 12; sk++) {
+    var sp3 = new T.Sprite(new T.SpriteMaterial({ map: starTex, color: sparkColors3[sk % 4], blending: T.AdditiveBlending, transparent: true, depthWrite: false }));
+    sp3.userData = { a: Math.random() * 6.28, r: 1.5 + Math.random() * 0.8, h: -0.6 + Math.random() * 2.4, ph: Math.random() * 6.28, sp: 0.2 + Math.random() * 0.4 };
+    scene.add(sp3); sparkles.push(sp3);
+  }
+  var glint = new T.Sprite(new T.SpriteMaterial({ map: starTex, blending: T.AdditiveBlending, transparent: true, depthWrite: false, opacity: 0 }));
+  glint.renderOrder = 8; scene.add(glint);
+  var glintT = 0;
+  // 90s disco ball, comes down when the pig dances
+  var disco = new T.Group(); disco.position.set(-3.4, 7, 0.4); scene.add(disco);
+  disco.add(mesh(new T.CylinderGeometry(0.015, 0.015, 3, 6), M.black, 0, 1.9, 0));
+  var discoBall = mesh(new T.IcosahedronGeometry(0.45, 1), M.chrome); disco.add(discoBall);
+  var discoLight = new T.PointLight(0xff00cc, 0, 9); disco.add(discoLight);
 
   // muzzle flash sprite
   var flash = new T.Sprite(new T.SpriteMaterial({ map: flashTex, blending: T.AdditiveBlending, depthWrite: false, transparent: true, opacity: 0 }));
@@ -1324,6 +1362,7 @@ var CONFIG = {
       parts.push({ obj: m, vel: v, spin: new T.Vector3(Math.random() * 10, Math.random() * 10, Math.random() * 10), life: 1.4 + Math.random() * 0.6, max: 2 });
     }
     var s = new T.Sprite(new T.SpriteMaterial({ map: boomTex, blending: T.AdditiveBlending, transparent: true, depthWrite: false }));
+    s.userData.shared = true;
     s.position.copy(p); s.scale.setScalar(1);
     scene.add(s); sprites.push({ obj: s, life: 0.45, max: 0.45, grow: 9, rise: 0 });
     var txt = textSprite("+100", "#ffff00");
@@ -1467,6 +1506,95 @@ var CONFIG = {
     }
   }
 
+  /* ---------------- moods: what the pig does when you're not shooting ---------------- */
+  var mood = "bop", moodT = 0, moodIdx = 0, noteT = 0, calmT = 0, smoked = false;
+  var MOODS = [
+    { name: "bop", dur: 6, lines: ["♪ untz untz untz ♪", "♪ ¡tocá un pop-up! ♪ :3", "♪ oink-oink remix ♪"] },
+    { name: "twirl", dur: 2.6, lines: ["¿viste? B-)", "estilo cowboy B-)", "yeeeehaw XD"] },
+    { name: "bop", dur: 5, lines: ["♪ tuntz tuntz ♪ XD", "¿jugamos? :3"] },
+    { name: "dance", dur: 7, lines: ["♪ ooga-chaka ooga-ooga ♪", "¡fiebre de sábado! XD", "♪ ¡hacé la macarena! ♪"] }
+  ];
+  function setMood(i) {
+    moodIdx = i % MOODS.length; mood = MOODS[moodIdx].name; moodT = 0; smoked = false;
+    var L = MOODS[moodIdx].lines; say(L[(Math.random() * L.length) | 0]);
+  }
+  function updateMood(dt, firing) {
+    if (firing) { calmT = 0; if (mood !== "aim") { mood = "aim"; say("B-)"); } return; }
+    calmT += dt;
+    if (mood === "aim") { if (calmT > 1.2) setMood(moodIdx + 1); return; }
+    moodT += dt;
+    if (moodT > MOODS[moodIdx].dur) setMood(moodIdx + 1);
+  }
+  var qTmp = new T.Quaternion(), eTmp = new T.Euler(), vPose = new T.Vector3();
+  var SHOULDER = new T.Vector3(-0.78, 0.9, -0.2), TWIRL_POS = new T.Vector3(-1.2, 0.25, 0.35);
+  function posePig(dt, firing) {
+    var k = Math.min(1, dt * (firing ? 14 : 6));
+    if (firing) {
+      var q0 = gun.quaternion.clone(), p0 = gun.position.clone();
+      gun.position.copy(GUN_POS); gun.lookAt(aimPoint); qTmp.copy(gun.quaternion);
+      gun.quaternion.copy(q0).slerp(qTmp, k); gun.position.copy(p0).lerp(GUN_POS, k);
+    } else if (mood === "twirl") {
+      var u = Math.min(1, moodT / 1.4);
+      var ang = u * Math.PI * 4.5;                            // 2.25 spins, ends pointing up
+      gun.position.lerp(TWIRL_POS, k);
+      gun.quaternion.setFromEuler(eTmp.set(-ang, 0, 0.15));
+      if (u >= 1 && !smoked) {                                  // blow the smoke off the barrel
+        smoked = true; barrels.localToWorld(vPose.copy(MUZZLE));
+        for (var i = 0; i < 3; i++) {
+          var puff = new T.Sprite(new T.SpriteMaterial({ map: smokeTex, transparent: true, depthWrite: false, opacity: 0.8 }));
+          puff.userData.shared = true; puff.position.copy(vPose); puff.position.x += (Math.random() - 0.5) * 0.2;
+          scene.add(puff); sprites.push({ obj: puff, life: 1.1 + i * 0.25, max: 1.4, grow: 2.5, rise: 0.8 });
+        }
+      }
+    } else {                                                     // on the shoulder, chilling
+      var bob = mood === "dance" ? Math.sin(t * 6) * 0.25 : Math.sin(t * 8) * 0.05;
+      gun.position.lerp(SHOULDER, k);
+      qTmp.setFromEuler(eTmp.set(-Math.PI / 2 - 0.35, 0, 0.25 + bob));
+      gun.quaternion.slerp(qTmp, k);
+    }
+    // shades: down while shooting or showing off, up (friendly) otherwise
+    var down = firing || mood === "twirl" || mood === "dance";
+    var S = down ? SHADES_DOWN : SHADES_UP, ks = Math.min(1, dt * 10);
+    shades.position.y += (S.y - shades.position.y) * ks;
+    shades.position.z += (S.z - shades.position.z) * ks;
+    shades.rotation.x += (S.rx - shades.rotation.x) * ks;
+  }
+  function animateBling(dt, firing) {
+    // rainbow lenses, like every pair of shades at the mall in 2002
+    M.lens.emissive.setHSL((t * 0.15) % 1, 0.9, 0.22);
+    sparkles.forEach(function (sp) {
+      var d = sp.userData; d.a += dt * d.sp;
+      sp.position.set(pig.position.x + Math.cos(d.a) * d.r, pig.position.y + d.h + pigBody.position.y, pig.position.z + Math.sin(d.a) * d.r * 0.6 + 0.3);
+      var tw = Math.max(0, Math.sin(t * 3 + d.ph));
+      sp.scale.setScalar(0.12 + tw * tw * 0.4);
+      sp.material.opacity = tw;
+      sp.material.rotation = t * 0.8 + d.ph;
+    });
+    // "ting!" glint on the shades every few seconds
+    if (!firing && (t % 3.2) < dt) glintT = 0.35;
+    glintT = Math.max(0, glintT - dt);
+    shades.children[1].getWorldPosition(glint.position); glint.position.z += 0.1; glint.position.y += 0.05;
+    var g = glintT > 0 ? Math.sin(glintT / 0.35 * Math.PI) : 0;
+    glint.material.opacity = g; glint.scale.setScalar(0.2 + g * 0.9); glint.material.rotation = t * 3;
+    // disco ball
+    var wantY = mood === "dance" && !firing ? 3.4 : 7;
+    disco.position.y += (wantY - disco.position.y) * Math.min(1, dt * 2);
+    discoBall.rotation.y += dt * 1.5;
+    discoLight.intensity = disco.position.y < 5 ? 2.2 : 0;
+    discoLight.color.setHSL((t * 0.6) % 1, 1, 0.55);
+    // music notes while grooving
+    if (!firing && (mood === "bop" || mood === "dance")) {
+      noteT -= dt;
+      if (noteT <= 0) {
+        noteT = mood === "dance" ? 0.35 : 0.7;
+        var n = textSprite(Math.random() < 0.5 ? "♪" : "♫", ["#ff4fa3", "#00e5ff", "#fff27a", "#39ff14"][(Math.random() * 4) | 0]);
+        n.position.set(pig.position.x + 0.6 + Math.random() * 0.6, pig.position.y + 1.6, pig.position.z + 0.6);
+        n.scale.set(0.8, 0.3, 1);
+        scene.add(n); sprites.push({ obj: n, life: 1.4, max: 1.4, grow: 0.3, rise: 1.1 });
+      }
+    }
+  }
+
   /* ---------------- loop ---------------- */
   var clock = new T.Clock(), t = 0, spawnT = 0.2, fireCD = 0, spin = 0, shake = 0, recoil = 0, flashT = 0;
   var tmp = new T.Vector3(), tmp2 = new T.Vector3(), aimPoint = new T.Vector3(4, 0.5, 0), idleAim = new T.Vector3(6, 0, 0.8);
@@ -1527,19 +1655,16 @@ var CONFIG = {
     pig.updateMatrixWorld(true);
     if (target) tmp.copy(target.mesh.position); else tmp.copy(idleAim);
     aimPoint.lerp(tmp, Math.min(1, dt * 10));
-    var yaw = Math.atan2(aimPoint.x - pig.position.x, aimPoint.z - pig.position.z);
-    var wantYaw = (triggerHeld || burst > 0) ? yaw * 0.55 + 0.7 : 0.45;   // idle: look at the camera and smile
-    pig.rotation.y += (wantYaw - pig.rotation.y) * Math.min(1, dt * 4);
-    pig.updateMatrixWorld(true);
-    gun.position.copy(GUN_POS);
-    gun.lookAt(aimPoint);
-
     var firing = triggerHeld || burst > 0;
+    updateMood(dt, firing);
+    var yaw = Math.atan2(aimPoint.x - pig.position.x, aimPoint.z - pig.position.z);
+    var wantYaw = firing ? yaw * 0.55 + 0.7 : mood === "dance" ? 0.45 + Math.sin(t * 6) * 0.45 : mood === "twirl" ? 0.3 : 0.45;
+    pig.rotation.y += (wantYaw - pig.rotation.y) * Math.min(1, dt * (firing ? 6 : 4));
+    pig.updateMatrixWorld(true);
+    posePig(dt, firing);
     spin += ((firing ? 28 : 2) - spin) * Math.min(1, dt * 4);
     barrels.rotation.z += spin * dt;
     fireCD -= dt;
-    idleT += dt;
-    if (idleT > 10 && !paused) { idleT = 0; say(ads.length ? "psst... ¡tocá un pop-up! :3" : "oink... ¿jugamos? :3"); }
     if (firing && fireCD <= 0) {
       fireCD = turbo ? 1 / 20 : 1 / 13;
       if (burst > 0) burst--;
@@ -1560,11 +1685,14 @@ var CONFIG = {
     tipRing.scale.setScalar(1 + (firing ? Math.sin(t * 40) * 0.12 : 0));
 
     // pig idle anim
-    pigBody.position.y = Math.sin(t * (firing ? 14 : 3)) * (firing ? 0.03 : 0.05);
+    pigBody.position.y = mood === "dance" && !firing ? Math.abs(Math.sin(t * 6)) * 0.28 : Math.sin(t * (firing ? 14 : 3)) * (firing ? 0.03 : 0.05);
+    pigBody.rotation.z = mood === "dance" && !firing ? Math.sin(t * 6) * 0.13 : pigBody.rotation.z * 0.9;
+    animateBling(dt, firing);
     tail.rotation.z = t * (firing ? 14 : 4);
     ears[0].rotation.x = -0.35 + Math.sin(t * 9) * (firing ? 0.25 : 0.08);
     ears[1].rotation.x = -0.35 + Math.sin(t * 9 + 1) * (firing ? 0.25 : 0.08);
     head.rotation.z = Math.sin(t * 1.3) * 0.06;
+    head.rotation.x = mood === "bop" && !firing ? Math.max(0, Math.sin(t * 8)) * 0.18 : 0;
     var lid = (t % 3.7) < 0.12 ? 0.12 : 1;
     eyes[0].scale.y = eyes[1].scale.y = lid;
     tongue.position.y = -0.52 + Math.sin(t * 6) * 0.015;
@@ -1586,6 +1714,7 @@ var CONFIG = {
             Data.kill(ADS[ad.kind].id, score);
             log('"' + ADS[ad.kind].title + '" <em>ELIMINADO</em>');
             explode(ad);
+            glintT = 0.35;
             if (kills % 3 === 0) say(killQuips[(Math.random() * killQuips.length) | 0]);
             hud();
           }
@@ -1612,7 +1741,7 @@ var CONFIG = {
       if (sp.grow > 1) sp.obj.scale.setScalar(1 + k2 * sp.grow);
       sp.obj.position.y += sp.rise * dt;
       sp.obj.material.opacity = Math.max(0, sp.life / sp.max);
-      if (sp.life <= 0) { scene.remove(sp.obj); if (sp.obj.material.map && sp.obj.material.map !== boomTex) sp.obj.material.map.dispose(); sp.obj.material.dispose(); sprites.splice(s, 1); }
+      if (sp.life <= 0) { scene.remove(sp.obj); if (sp.obj.material.map && !sp.obj.userData.shared) sp.obj.material.map.dispose(); sp.obj.material.dispose(); sprites.splice(s, 1); }
     }
 
     // reticle

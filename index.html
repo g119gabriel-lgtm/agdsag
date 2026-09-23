@@ -331,6 +331,70 @@
   }
   @media (prefers-reduced-motion: reduce) { .page.buzzing { animation: none; outline: 4px solid #f00; } }
 
+  /* ---------- satire widgets ---------- */
+  .flash-sale { margin-top: 8px; padding: 6px 10px; text-align: center; font: 700 13px var(--body); color: #fff;
+    background: repeating-linear-gradient(45deg, #d00000 0 14px, #ff2d2d 14px 28px); border: 2px solid #ffe600; }
+  .flash-sale b { font: 22px/1 var(--led); color: #ffe600; background: #000; padding: 0 6px; font-variant-numeric: tabular-nums; }
+  .flash-sale small { color: #ffe0e0; font-weight: 400; }
+  .fake-toast { position: fixed; top: calc(12px + env(safe-area-inset-top, 0px)); right: 16px; z-index: 70; width: min(320px, calc(100vw - 32px));
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 8px; align-items: start;
+    background: #fff; color: #111; border-radius: 10px; padding: 10px 12px; box-shadow: 0 8px 24px rgba(0,0,0,.45); font: 13px/1.35 var(--body); }
+  .fake-toast .ft-tag { grid-column: 1 / -1; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: #d00; font-weight: 700; }
+  .fake-toast button { background: none; border: 0; font-size: 18px; line-height: 1; cursor: pointer; color: #888; }
+  .fake-toast.in, .chat-toast.in { animation: slidein .35s ease-out; }
+  @keyframes slidein { from { transform: translateY(24px); opacity: 0; } }
+  .cookie-wall { position: fixed; left: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 65; width: min(380px, calc(100vw - 32px));
+    background: #fff; color: #222; border-radius: 12px; padding: 14px 16px; box-shadow: 0 10px 30px rgba(0,0,0,.55); font: 13px/1.4 var(--body); }
+  .cookie-wall small { color: #d00; font-weight: 700; }
+  .cookie-wall p { margin: 6px 0 10px; color: #555; }
+  .cw-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .cw-accept { background: linear-gradient(180deg, #7dff9a 0%, #16a34a 52%, #0f7a36 100%); color: #fff; border-color: #0b5; font-size: 14px; padding: 10px 18px; text-shadow: 0 1px 0 #064; }
+  .cw-reject { background: none; border: 0; color: #aaa; font: 11px var(--body); text-decoration: underline; cursor: pointer; padding: 2px; }
+  .museum { margin-top: 14px; }
+  .manifesto { font-size: 13px; margin: 0 0 10px; max-width: 80ch; }
+  .exhibits { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; }
+  .exhibit { background: #fffbe0; border: 2px ridge #c90; padding: 10px; font-size: 12px; }
+  .exhibit h3 { margin: 0 0 6px; font: 700 15px var(--comic); color: #c00; }
+  .exhibit p { margin: 0 0 6px; }
+  .exhibit .src { font-size: 11px; }
+  .exhibit .src a { color: #0645ad; }
+  .exhibit .in-game { color: #6a2c91; font-weight: 700; margin: 0; }
+  /* ---------- game overlays ---------- */
+  .combo { position: absolute; right: 16px; top: 22px; font: 900 clamp(18px, 3.4vw, 30px)/1 Impact, "Arial Black", sans-serif; color: #ffe600;
+    -webkit-text-stroke: 1.5px #000; text-shadow: 3px 3px 0 #ff00cc; pointer-events: none; transform: rotate(-4deg); }
+  .combo.pop { animation: pop .35s ease-out; }
+  @keyframes pop { from { transform: rotate(-4deg) scale(1.8); } to { transform: rotate(-4deg) scale(1); } }
+  .sound-hint { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); width: max-content; max-width: calc(100% - 24px); text-align: center;
+    background: rgba(0,0,0,.8); border: 2px solid var(--yellow); color: var(--yellow); padding: 6px 12px; font: 700 13px var(--body); pointer-events: none;
+    animation: blink 1.2s steps(1) infinite; }
+  .sound-hint small { display: block; font-weight: 400; color: #ddd; font-size: 11px; }
+  .eq.paused i { animation-play-state: paused; }
+  /* ---------- floating Messenger dock ---------- */
+  .page { padding-bottom: 90px; }
+  .messenger { position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 60; margin: 0;
+    width: min(400px, calc(100vw - 32px)); box-shadow: 4px 4px 0 rgba(0,0,0,.55), 0 0 26px rgba(57,255,20,.35); }
+  .messenger.min .chat-bar { animation: glow 1.6s ease-in-out infinite; }
+  @keyframes glow { 50% { box-shadow: 0 0 18px 4px rgba(57,255,20,.8); } }
+  .chat-peek { list-style: none; margin: 0 0 8px; padding: 0; font-size: 12px; color: #000; background: #fff; border: 2px inset var(--silver); min-height: 70px; }
+  .chat-peek li { padding: 3px 6px; border-bottom: 1px dotted #ccc; overflow-wrap: anywhere; }
+  .chat-peek b { color: #0645ad; }
+  .messenger .chat-bar { cursor: pointer; background: linear-gradient(90deg, #0b6e2a, #6fd36f); font-size: 14px; padding-block: 8px; }
+  .messenger .chat-bar:focus-visible { outline-offset: -3px; }
+  .messenger.min .win-body { display: none; }
+  .messenger .chat-log, .messenger .online-box { height: 210px; }
+  .messenger .msn { grid-template-columns: minmax(0, 1fr) 118px; }
+  .messenger .nick-form input { width: 150px; }
+  .unread { background: #f00; color: #fff; border-radius: 8px; padding: 0 6px; margin-left: 4px; animation: blink 1s steps(1) infinite; }
+  .chat-toast { position: fixed; right: 16px; bottom: calc(58px + env(safe-area-inset-bottom, 0px)); z-index: 61; width: min(300px, calc(100vw - 32px));
+    background: #fffbe6; color: #000; border: 2px solid #0b6e2a; padding: 8px 10px; font-size: 12px; cursor: pointer; box-shadow: 3px 3px 0 rgba(0,0,0,.5); overflow-wrap: anywhere; }
+  .chat-toast small { display: block; color: #0b6e2a; margin-top: 2px; }
+  @media (max-width: 560px) {
+    .messenger .msn { grid-template-columns: minmax(0, 1fr); }
+    .messenger .online-box { display: none; }
+    .messenger .chat-log { height: 180px; }
+    .cookie-wall { bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
+  }
+
   /* guestbook */
   .guest { margin-top: 14px; }
   .gb-entries { display: grid; gap: 8px; margin-top: 8px; }
@@ -387,13 +451,15 @@
   <header class="banner">
     <span class="new">¡¡NUEVO!!</span>
     <h1>CERDO LÁSER 3000</h1>
-    <p class="sub">El único cerdo que le dice NO a los pop-ups · Ametralladora láser incluida</p>
+    <p class="sub">Sátira interactiva contra la publicidad invasiva · de los pop-ups de 2004 a las ruletas de hoy · ametralladora láser incluida</p>
     <div class="construction" aria-hidden="true"></div>
     <span class="construction-label">SITIO EN CONSTRUCCIÓN · PERDÓN LAS MOLESTIAS</span>
   </header>
 
+  <div class="flash-sale" role="note">⚡ OFERTA RELÁMPAGO: esta página termina en <b id="fakeCountdown">00:04:59</b> ⚡ <small>(se reinicia sola, como las de verdad)</small></div>
+
   <div class="ticker" aria-label="Noticias">
-    <span>*** BIENVENIDOS A LA WEB DEL CERDO LÁSER *** 100% LIBRE DE ANUNCIOS (LOS ESTAMOS BORRANDO A LOS TIROS) *** AGREGANOS A FAVORITOS CON CTRL+D *** FIRMÁ EL LIBRO DE VISITAS!!! *** SI VES UN POP-UP, NO LE HAGAS CLIC: EL CERDO SE ENCARGA *** ÚLTIMA ACTUALIZACIÓN: 14/02/2004 ***</span>
+    <span>*** BIENVENIDOS A CERDO LÁSER 3000: SÁTIRA ARMADA CONTRA LA PUBLICIDAD INVASIVA *** EN 2004 LOS POP-UPS ERAN TORPES. HOY SON RULETAS, CUENTAS REGRESIVAS FALSAS, JUEGOS QUE NO EXISTEN Y FAMOSOS HECHOS CON IA *** EL CERDO LES DISPARA A TODOS *** ESTE SITIO TIENE ANUNCIOS DE VERDAD (IRONÍA: 100%) *** NINGUNA RULETA FUE GIRADA EN LA REALIZACIÓN DE ESTA PÁGINA *** TODAS LAS MARCAS DEL JUEGO SON INVENTADAS ***</span>
   </div>
 
   <nav aria-label="Secciones">
@@ -402,11 +468,12 @@
     <a href="#bajas">Bajas</a>
     <a href="#libro">Libro de visitas</a>
     <a href="#chat">Chat</a>
+    <a href="#museo">Museo</a>
     <a href="#links">Links</a>
   </nav>
 
   <div class="adslot adslot-top" data-slot="top">
-    <span class="adslot-label">Publicidad</span>
+    <span class="adslot-label">Publicidad de verdad · el cerdo tiene prohibido dispararle (lo dice el contrato) · ironía: 100%</span>
     <div class="adslot-box"><div class="house-ad">¡¡ANUNCIATE AQUÍ!! · espacio 728×90 disponible · el cerdo promete no dispararle a TU banner XD</div></div>
   </div>
 
@@ -436,16 +503,16 @@
       </section>
 
       <section class="win">
-        <div class="win-title"><span>Ahora suena</span><span class="ctrls"><i>_</i><i>×</i></span></div>
+        <div class="win-title"><span>Ahora suena (Winamp de cerdo)</span><span class="ctrls"><i>_</i><i>×</i></span></div>
         <div class="win-body dark">
-          <div class="now-playing">techno_cerdo_remix_FINAL_v3.mp3</div>
-          <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          <p class="tiny">128 kbps · 44 kHz · bajado por módem de 56k (3 días)</p>
+          <div class="now-playing">Cerdo Madness (Metálico Mix '93)</div>
+          <div class="eq paused" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <p class="tiny"><span id="npState">■ tocá la página para darle play</span><br>house · techno · new jack swing · jungle. Tema original inspirado en el sonido de Sonic CD (versión japonesa).</p>
         </div>
       </section>
 
       <div class="adslot adslot-side" data-slot="side">
-        <span class="adslot-label">Publicidad</span>
+        <span class="adslot-label">Publicidad de verdad · el cerdo tiene prohibido dispararle (lo dice el contrato) · ironía: 100%</span>
         <div class="adslot-box"><div class="house-ad tall">TU BANNER ACÁ<br>160×600<br><br>¡precios de 2004!<br><br>:D</div></div>
       </div>
 
@@ -469,6 +536,8 @@
         <div id="stage">
           <canvas id="c" aria-label="Cerdito 3D con ametralladora láser disparando a ventanas emergentes"></canvas>
           <div class="stage-msg" id="stageMsg" hidden></div>
+          <div class="combo" id="combo" hidden></div>
+          <div class="sound-hint" id="soundHint" hidden>🔊 Tocá en cualquier lado para activar música y voz<small>(tu navegador no deja que arranque sola)</small></div>
         </div>
         <div class="hud">
           <div class="stat"><small>Anuncios borrados</small><b id="kills">0000</b></div>
@@ -479,10 +548,12 @@
         <div class="controls">
           <button class="btn fire" id="btnFire" type="button">¡DISPARAR! (mantené)</button>
           <button class="btn" id="btnTurbo" type="button" aria-pressed="false">MODO TURBO</button>
-          <button class="btn" id="btnSound" type="button" aria-pressed="false">SONIDO: NO</button>
+          <button class="btn" id="btnSound" type="button" aria-pressed="true">SONIDO: SÍ</button>
+          <button class="btn" id="btnMusic" type="button" aria-pressed="true">MÚSICA: SÍ</button>
+          <button class="btn" id="btnVoice" type="button" aria-pressed="true">VOZ: SÍ</button>
           <button class="btn" id="btnPause" type="button" aria-pressed="false">PAUSA</button>
         </div>
-        <p class="how"><b>Cómo se juega:</b> el cerdo solo dispara cuando vos querés. Tocá un pop-up para mandarle una ráfaga, o mantené <b>¡DISPARAR!</b> (o la barra <kbd>ESPACIO</kbd>). Si un anuncio llega hasta el cerdo, cuenta como spam. Tocá al cerdo para darle amor &lt;3</p>
+        <p class="how"><b>Cómo se juega:</b> el cerdo solo dispara cuando vos querés. Tocá un anuncio para mandarle una ráfaga, o mantené <b>¡DISPARAR!</b> (o la barra <kbd>ESPACIO</kbd>). Encadená bajas para hacer <b>combos</b>. Cada tanto aparece el jefe <b>MEGA TEMUERO</b>: tiene mucha vida y te tira cupones inútiles. Si un anuncio llega hasta el cerdo, cuenta como spam. Tocá al cerdo para darle amor &lt;3</p>
       </section>
     </main>
 
@@ -507,6 +578,14 @@
       </section>
 
       <section class="win">
+        <div class="win-title"><span>💬 Chat en vivo</span><span class="ctrls"><i>×</i></span></div>
+        <div class="win-body">
+          <ul class="chat-peek" id="chatPeek"><li>conectando...</li></ul>
+          <a class="btn" href="#chat">Abrir el chat</a>
+        </div>
+      </section>
+
+      <section class="win">
         <div class="win-title"><span>Salón de la fama</span><span class="ctrls"><i>×</i></span></div>
         <div class="win-body dark">
           <ol id="hof"><li class="empty">cargando...</li></ol>
@@ -515,14 +594,13 @@
     </aside>
   </div>
 
-  <section class="win messenger" id="chat">
-    <div class="win-title"><span>Cerdo Messenger 6.0 — Sala principal</span><span class="ctrls"><i>_</i><i>□</i><i>×</i></span></div>
-    <div class="win-body">
+  <section class="win messenger" id="chat" aria-label="Chat en vivo">
+    <div class="win-title chat-bar" id="chatBar" role="button" tabindex="0" aria-controls="chatBody"><span>💬 CHAT EN VIVO · <span id="onlineMini">0</span> conectados <span class="unread" id="chatUnread" hidden></span></span><span class="ctrls"><i id="chatToggle">_</i></span></div>
+    <div class="win-body" id="chatBody">
       <form id="nickForm" class="nick-form">
         <label for="nick">Tu apodo:</label>
         <input id="nick" maxlength="20" placeholder="xX_tu_nick_Xx">
         <button class="btn" type="submit">OK</button>
-        <span class="tiny">(se usa en el chat, el ranking y el libro)</span>
       </form>
       <div class="msn">
         <div class="chat-log" id="chatLog" aria-live="polite"><div class="chat-line sys">conectando...</div></div>
@@ -537,6 +615,47 @@
         <button class="btn buzz-btn" id="btnBuzz" type="button" title="Sacude la pantalla de todos">¡Zumbido!</button>
       </form>
       <p class="tiny chat-note" id="chatNote" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <div class="chat-toast" id="chatToast" role="status" hidden></div>
+  <div class="fake-toast" id="fakeToast" role="status" hidden><span class="ft-tag">notificación falsa (como todas)</span><span id="fakeToastText"></span><button type="button" id="fakeToastClose" aria-label="Cerrar">×</button></div>
+  <div class="cookie-wall" id="cookieWall" role="dialog" aria-label="Aviso de cookies (parodia)" hidden>
+    <b>🍪 Valoramos tu privacidad*</b> <small>*parodia</small>
+    <p id="cwText">Compartimos tus datos con 1.847 socios de confianza, incluido el cerdo, tu ex y un señor de Ohio.</p>
+    <div class="cw-actions"><button class="btn cw-accept" id="cwAccept" type="button">ACEPTAR TODO (y tu alma)</button><button type="button" class="cw-reject" id="cwReject">rechazar</button></div>
+  </div>
+
+  <section class="win museum" id="museo">
+    <div class="win-title"><span>Museo del Anuncio Tóxico · casos reales</span><span class="ctrls"><i>_</i><i>×</i></span></div>
+    <div class="win-body">
+      <p class="manifesto"><b>¿Por qué existe esta página?</b> En 2004 los pop-ups eran molestos, pero torpes. Hoy la publicidad invasiva es mucho más sofisticada: ruletas que siempre casi ganás, cuentas regresivas que se reinician, juegos que no existen, famosos falsos hechos con IA y avisos de cookies donde "rechazar" es un laberinto. El cerdo les dispara a todos. <b>Todos los anuncios del juego son parodias y las marcas son inventadas.</b> Lo que sigue, en cambio, es real:</p>
+      <div class="exhibits">
+        <article class="exhibit">
+          <h3>La ruleta que siempre casi gana</h3>
+          <p><b>Lo real:</b> la organización europea de consumidores (BEUC) denunció a Temu por usar prácticas manipuladoras ("dark patterns") bajo la Ley de Servicios Digitales de la UE. Los análisis de su diseño señalan mecánicas de juego, cuentas regresivas y ruletas de premios.</p>
+          <p class="src">Fuentes: <a href="https://www.beuc.eu/press-releases/surging-online-marketplace-temu-flouting-new-eu-law-meant-keep-consumers-safe" target="_blank" rel="noopener">BEUC</a> · <a href="https://www.techpolicy.press/eu-tests-limits-of-platform-risk-assessments-with-200-million-temu-fine/" target="_blank" rel="noopener">Tech Policy Press</a></p>
+          <p class="in-game">En el juego: la ruleta TEMUERO y el jefe MEGA TEMUERO.</p>
+        </article>
+        <article class="exhibit">
+          <h3>El juego que no es el juego</h3>
+          <p><b>Lo real:</b> en 2020 la ASA (el regulador publicitario del Reino Unido) prohibió anuncios de Playrix por mostrar puzzles de "sacar el pin" que no representaban el juego real. Después resolvió lo mismo con un anuncio de Evony.</p>
+          <p class="src">Fuentes: <a href="https://techraptor.net/gaming/news/uk-asa-upholds-misleading-pin-pulling-puzzle-ad-claims-against-playrix" target="_blank" rel="noopener">TechRaptor</a> · <a href="https://www.mishcon.com/news/asa-rules-mobile-game-ad-was-misleading-gameplay-depicted-did-not-reflect-the-core-game-playing-experience" target="_blank" rel="noopener">Mishcon de Reya</a></p>
+          <p class="in-game">En el juego: "ASALTO: LEYENDAS DEL PIN" y el #PUBLI del influencer.</p>
+        </article>
+        <article class="exhibit">
+          <h3>El famoso que nunca dijo eso</h3>
+          <p><b>Lo real:</b> las estafas de inversión y cripto con deepfakes de famosos se multiplicaron en redes sociales en 2024 y 2025, según investigaciones de consumidores y de ONG de transparencia.</p>
+          <p class="src">Fuentes: <a href="https://www.which.co.uk/news/article/how-crypto-investment-scammers-peddle-celebrity-deepfakes-online-with-ease-a12Pt9N4fXQy" target="_blank" rel="noopener">Which?</a> · <a href="https://www.techtransparencyproject.org/articles/meta-awash-in-deepfake-scam-ads" target="_blank" rel="noopener">Tech Transparency Project</a></p>
+          <p class="in-game">En el juego: "CERDOCOIN x1000, voz 100% real".</p>
+        </article>
+        <article class="exhibit">
+          <h3>Aceptar: 1 clic. Rechazar: 47 pasos</h3>
+          <p><b>Lo real:</b> en 2022 la FTC de EE.UU. documentó el auge de diseños pensados para que compres sin querer, te cueste cancelar una suscripción o entregues tu privacidad.</p>
+          <p class="src">Fuente: <a href="https://www.ftc.gov/news-events/news/press-releases/2022/09/ftc-report-shows-rise-sophisticated-dark-patterns-designed-trick-trap-consumers" target="_blank" rel="noopener">FTC</a></p>
+          <p class="in-game">En el juego y en esta página: el aviso de cookies, la suscripción "gratis" y la oferta relámpago eterna.</p>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -599,16 +718,31 @@ var CONFIG = {
 
   /* ---------------- ads catalog (shared by game + stats) ---------------- */
   var ADS = [
-    { id: "premio", short: "Visitante 1.000.000", title: "¡¡FELICIDADES!!", lines: ["ERES EL VISITANTE", "N° 1.000.000", "¡RECLAMA TU PREMIO!"], bg: ["#ffff00", "#ff9900"], fg: "#ff0000", stroke: "#fff" },
-    { id: "virus", short: "Tu PC tiene virus", title: "Alerta de seguridad", lines: ["¡TU PC TIENE", "3.472 VIRUS!", "ESCANEAR AHORA"], bg: ["#ff2a2a", "#5a0000"], fg: "#ffffff", stroke: "#000" },
-    { id: "ram", short: "Más RAM gratis", title: "Oferta exclusiva", lines: ["DESCARGÁ MÁS", "MEMORIA RAM", "¡¡GRATIS!!"], bg: ["#00ccff", "#0022aa"], fg: "#ffff00", stroke: "#000" },
-    { id: "solteros", short: "Solteros en tu zona", title: "Chat de solteros", lines: ["HAY 12 SOLTEROS", "CERCA DE TU ZONA", "¡CHATEÁ YA!"], bg: ["#ff99dd", "#cc0077"], fg: "#ffffff", stroke: "#660033" },
-    { id: "tonos", short: "Tonos polifónicos", title: "Tonos polifónicos", lines: ["ENVIÁ CERDO", "AL 5555", "¡TONO DE LA RANA!"], bg: ["#aaff00", "#118800"], fg: "#000000", stroke: "#fff" },
-    { id: "barra", short: "Barra de herramientas", title: "Barra de herramientas", lines: ["INSTALÁ LA BARRA", "MEGA BUSCADOR 2005", "+40 EMOTICONES"], bg: ["#cc88ff", "#440088"], fg: "#ffff00", stroke: "#000" },
-    { id: "mono", short: "Golpeá al mono", title: "Minijuego", lines: ["¡GOLPEÁ AL MONO", "Y GANÁ $20!", "(de verdad)"], bg: ["#ffcc66", "#ff5500"], fg: "#330000", stroke: "#fff" },
-    { id: "casino", short: "Casino virtual", title: "Casino virtual", lines: ["BONO DE BIENVENIDA", "$500", "¡SIN DEPÓSITO!"], bg: ["#006633", "#001a0d"], fg: "#ffd700", stroke: "#000" },
-    { id: "dieta", short: "Dieta milagro", title: "Dieta milagro", lines: ["BAJÁ 20 KILOS", "EN 3 DÍAS", "LOS MÉDICOS LA ODIAN"], bg: ["#ffffff", "#ffdddd"], fg: "#dd0000", stroke: "#fff" },
-    { id: "cursores", short: "Cursores animados", title: "Personalizá tu PC", lines: ["CURSORES ANIMADOS", "GRATIS", "+ FONDOS DE PANTALLA"], bg: ["#66ffff", "#0088aa"], fg: "#ff00cc", stroke: "#fff" }
+    // ---- 2004: the old school ----
+    { id: "premio", era: 2004, fmt: "win", short: "Visitante 1.000.000", title: "¡¡FELICIDADES!!", lines: ["ERES EL VISITANTE", "N° 1.000.000", "¡RECLAMA TU PREMIO!"], bg: ["#ffff00", "#ff9900"], fg: "#ff0000", stroke: "#fff" },
+    { id: "virus", era: 2004, fmt: "win", short: "Tu PC tiene virus", title: "Alerta de seguridad", lines: ["¡TU PC TIENE", "3.472 VIRUS!", "ESCANEAR AHORA"], bg: ["#ff2a2a", "#5a0000"], fg: "#ffffff", stroke: "#000" },
+    { id: "ram", era: 2004, fmt: "win", short: "Más RAM gratis", title: "Oferta exclusiva", lines: ["DESCARGÁ MÁS", "MEMORIA RAM", "¡¡GRATIS!!"], bg: ["#00ccff", "#0022aa"], fg: "#ffff00", stroke: "#000" },
+    { id: "solteros", era: 2004, fmt: "win", short: "Solteros en tu zona", title: "Chat de solteros", lines: ["HAY 12 SOLTEROS", "CERCA DE TU ZONA", "¡CHATEÁ YA!"], bg: ["#ff99dd", "#cc0077"], fg: "#ffffff", stroke: "#660033" },
+    { id: "tonos", era: 2004, fmt: "win", short: "Tonos polifónicos", title: "Tonos polifónicos", lines: ["ENVIÁ CERDO", "AL 5555", "¡TONO DE LA RANA!"], bg: ["#aaff00", "#118800"], fg: "#000000", stroke: "#fff" },
+    { id: "barra", era: 2004, fmt: "win", short: "Barra de herramientas", title: "Barra de herramientas", lines: ["INSTALÁ LA BARRA", "MEGA BUSCADOR 2005", "+40 EMOTICONES"], bg: ["#cc88ff", "#440088"], fg: "#ffff00", stroke: "#000" },
+    { id: "mono", era: 2004, fmt: "win", short: "Golpeá al mono", title: "Minijuego", lines: ["¡GOLPEÁ AL MONO", "Y GANÁ $20!", "(de verdad)"], bg: ["#ffcc66", "#ff5500"], fg: "#330000", stroke: "#fff" },
+    { id: "casino", era: 2004, fmt: "win", short: "Casino virtual", title: "Casino virtual", lines: ["BONO DE BIENVENIDA", "$500", "¡SIN DEPÓSITO!"], bg: ["#006633", "#001a0d"], fg: "#ffd700", stroke: "#000" },
+    { id: "dieta", era: 2004, fmt: "win", short: "Dieta milagro", title: "Dieta milagro", lines: ["BAJÁ 20 KILOS", "EN 3 DÍAS", "LOS MÉDICOS LA ODIAN"], bg: ["#ffffff", "#ffdddd"], fg: "#dd0000", stroke: "#fff" },
+    { id: "cursores", era: 2004, fmt: "win", short: "Cursores animados", title: "Personalizá tu PC", lines: ["CURSORES ANIMADOS", "GRATIS", "+ FONDOS DE PANTALLA"], bg: ["#66ffff", "#0088aa"], fg: "#ff00cc", stroke: "#fff" },
+    // ---- today: the toxic new school (every brand here is made up) ----
+    { id: "ruleta", fmt: "wheel", short: "Ruleta TEMUERO", title: "TEMUERO", lines: ["¡GIRÁ LA RULETA!", "100% OFF*", "*en tu compra nº 48"], bg: ["#ff6a00", "#ff3d00"], fg: "#fff" },
+    { id: "megaoferta", fmt: "boss", short: "MEGA TEMUERO (jefe)", title: "MEGA TEMUERO", lines: ["SÚPER OFERTA LEGENDARIA", "TODO A $0,01*", "*+ envío + tus datos + tu alma"], bg: ["#ff8a00", "#e02400"], fg: "#fff" },
+    { id: "pin", fmt: "video", short: "Sacá el pin (juego falso)", title: "ASALTO: LEYENDAS DEL PIN", lines: ["¡SACÁ EL PIN CORRECTO!", "99% NO LO LOGRA", "(el juego real es otra cosa)"], bg: ["#1b3a8a", "#0b1640"], fg: "#ffd400" },
+    { id: "deepfake", fmt: "video", short: "Famoso deepfake cripto", title: "NOTICIAS URGENTES", lines: ["FAMOSO REVELA SU SECRETO", "CERDOCOIN x1000", "voz 100% real, nada de IA ;)"], bg: ["#b30000", "#2a0000"], fg: "#fff" },
+    { id: "publi", fmt: "video", short: "#Publi de influencer", title: "#PUBLI", lines: ["este video está patrocinado por...", "¡UN JUEGO QUE NO ES EL DEL AVISO!", "usá mi código CERDO10"], bg: ["#7b2ff7", "#f107a3"], fg: "#fff" },
+    { id: "novia", fmt: "story", short: "Novia IA", title: "Tu novia IA", lines: ["te extraña :(", "3 mensajes sin leer", "desbloquear: $19,99/sem"], bg: ["#ff5fa2", "#7a1fff"], fg: "#fff" },
+    { id: "guru", fmt: "story", short: "Gurú cerdo alfa", title: "MENTALIDAD CERDO ALFA", lines: ["gané $10K/mes", "desde un auto alquilado", "curso: $997 (hoy $997)"], bg: ["#111111", "#3a2a00"], fg: "#ffd24a" },
+    { id: "gacha", fmt: "story", short: "Tirada x10", title: "¡TIRADA x10!", lines: ["probabilidad: 0,0006%", "¡YA CASI!", "comprá más gemas"], bg: ["#00c6ff", "#7a00ff"], fg: "#fff" },
+    { id: "cookies", fmt: "cookie", short: "Cookies trampa", title: "Valoramos tu privacidad", lines: ["compartimos tus datos con 1.847 socios de confianza", "ACEPTAR TODO", "rechazar (47 pasos)"], bg: ["#ffffff", "#f1f1f1"], fg: "#222" },
+    { id: "suscripcion", fmt: "cookie", short: "Suscripción trampa", title: "PRUEBA GRATIS 7 DÍAS", lines: ["después $99/mes. para siempre. sin aviso.", "EMPEZAR GRATIS", "cancelar: por fax, los martes a las 3 AM"], bg: ["#ffffff", "#eef4ff"], fg: "#222" },
+    { id: "escasez", fmt: "notif", short: "Escasez falsa", title: "¡SOLO QUEDAN 2!", lines: ["347 personas están viendo esto"], bg: ["#ffffff", "#fff"], fg: "#d00000" },
+    { id: "notis", fmt: "notif", short: "Permitir notificaciones", title: "¿Permitir notificaciones?", lines: ["[ PERMITIR ]   [ PERMITIR ]"], bg: ["#ffffff", "#fff"], fg: "#1a73e8" },
+    { id: "cupon", fmt: "notif", short: "Cupón que no sirve", title: "¡CUPÓN -$3!", lines: ["válido comprando más de $300"], bg: ["#fff4e6", "#fff"], fg: "#ff5a00" }
   ];
   var POLL = ["premio", "virus", "ram", "solteros", "casino", "dieta"];
   function adById(id) { for (var i = 0; i < ADS.length; i++) if (ADS[i].id === id) return ADS[i]; return null; }
@@ -617,6 +751,76 @@ var CONFIG = {
   function fmtDate(ms) { var d = new Date(ms); return pad(d.getDate(), 2) + "/" + pad(d.getMonth() + 1, 2) + "/" + d.getFullYear(); }
   function $(id) { return document.getElementById(id); }
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+  /* ---------------- floating Messenger dock (always in view) ---------------- */
+  var Dock = (function () {
+    var box = $("chat"), badge = $("chatUnread"), toast = $("chatToast"), toggle = $("chatToggle"), unread = 0, hideT = null;
+    var saved = store("cerdo_dock");
+    var min = saved ? saved === "min" : true;           // starts as a glowing bar so it never covers the game
+    function paint() {
+      box.classList.toggle("min", min);
+      badge.textContent = unread ? unread + " nuevo" + (unread > 1 ? "s" : "") : ""; badge.hidden = !unread;
+      toggle.textContent = min ? "▲" : "_";
+      $("chatBar").setAttribute("aria-expanded", String(!min));
+    }
+    function setMin(v) {
+      min = v; store("cerdo_dock", min ? "min" : "open");
+      if (!min) { unread = 0; toast.hidden = true; setTimeout(function () { var l = $("chatLog"); l.scrollTop = l.scrollHeight; }, 0); }
+      paint();
+    }
+    $("chatBar").addEventListener("click", function () { setMin(!min); });
+    $("chatBar").addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setMin(!min); } });
+    toast.addEventListener("click", function () { setMin(false); $("chatMsg").focus(); });
+    Array.prototype.forEach.call(document.querySelectorAll('a[href="#chat"]'), function (a) {
+      a.addEventListener("click", function (e) { e.preventDefault(); setMin(false); $("chatMsg").focus(); });
+    });
+    paint();
+    return {
+      open: function () { if (min) setMin(false); },
+      notify: function (row) {
+        if (window.CerdoSfx) window.CerdoSfx.ding();
+        if (!min) return;
+        unread++; paint();
+        toast.textContent = "";
+        toast.appendChild(el("b", null, row.name + " dice:"));
+        toast.appendChild(document.createTextNode(" " + String(row.msg || "").slice(0, 90)));
+        toast.appendChild(el("small", null, "clic para responder"));
+        toast.hidden = false; toast.classList.remove("in"); void toast.offsetWidth; toast.classList.add("in");
+        clearTimeout(hideT); hideT = setTimeout(function () { toast.hidden = true; }, 6000);
+      }
+    };
+  })();
+
+  /* ---------------- satire: the manipulative UI, done on purpose and labelled as such ---------------- */
+  (function () {
+    // a "flash sale" countdown that restarts forever, like the real ones
+    var cd = $("fakeCountdown"), left = 299;
+    setInterval(function () { left = left <= 0 ? 299 : left - 1; cd.textContent = "00:0" + Math.floor(left / 60) + ":" + pad(left % 60, 2); }, 1000);
+    // fake "social proof" notifications, obviously fake
+    var FAKE = ["Alguien de Algún Lugar compró Algo hace Un Rato", "347 personas están mirando este cerdo ahora mismo (mentira)", "¡Solo quedan 2 cerdos! (hay infinitos)",
+      "Marta, 34, bajó 20 kg sacando un pin", "Un influencer recomienda esta página (no le pagamos, por eso no la recomienda)",
+      "Tu carrito te extraña. Tu billetera no.", "Oferta exclusiva para vos y otras 8.000 millones de personas", "¡Felicitaciones! Fuiste seleccionado para leer esta notificación"];
+    var ft = $("fakeToast"), fi = (Math.random() * FAKE.length) | 0;
+    function showFake() {
+      $("fakeToastText").textContent = FAKE[fi++ % FAKE.length];
+      ft.hidden = false; ft.classList.remove("in"); void ft.offsetWidth; ft.classList.add("in");
+      setTimeout(function () { ft.hidden = true; }, 6500);
+    }
+    $("fakeToastClose").addEventListener("click", function () { ft.hidden = true; });
+    setTimeout(function loop() { showFake(); setTimeout(loop, 28000 + Math.random() * 15000); }, 14000);
+    // cookie banner parody: accepting is one click, rejecting is an odyssey
+    var cw = $("cookieWall"), reject = $("cwReject"), accept = $("cwAccept"), si = 0;
+    var steps = ["¿Seguro? Paso 2 de 47.", "¿Seguro seguro? Paso 3 de 47.", "Casi... Paso 46 de 47. Ingresá tu número de fax.",
+      CONFIG.ADSENSE_CLIENT ? "Listo, era una parodia. El cerdo no te rastrea; los anuncios reales de Google tienen su propio aviso de verdad."
+                            : "Listo, era una parodia: esta página no usa cookies de rastreo. El cerdo solo quería que sientas lo que se siente."];
+    if (store("cerdo_cookie_parody") !== "done") setTimeout(function () { cw.hidden = false; }, 2500);
+    reject.addEventListener("click", function () {
+      $("cwText").textContent = steps[Math.min(si, steps.length - 1)]; si++;
+      reject.style.fontSize = Math.max(8, 11 - si) + "px";
+      if (si >= steps.length) { reject.hidden = true; accept.textContent = "Cerrar"; }
+    });
+    accept.addEventListener("click", function () { cw.hidden = true; store("cerdo_cookie_parody", "done"); });
+  })();
 
   /* ---------------- data layer: Supabase online, localStorage as fallback ---------------- */
   var Data = (function () {
@@ -837,11 +1041,16 @@ var CONFIG = {
       line.appendChild(el("span", "chat-time", "[" + pad(d.getHours(), 2) + ":" + pad(d.getMinutes(), 2) + "]"));
       if (row.kind === "buzz") {
         line.appendChild(el("span", "chat-buzz", " *** " + row.name + " mandó un ZUMBIDO!!! ***"));
-        if (fresh) buzz();
+        if (fresh) { buzz(); Dock.open(); }
       } else {
         line.appendChild(el("b", "chat-who", " " + row.name + " dice: "));
         var msg = el("span", "chat-msg"); emote(msg, row.msg); line.appendChild(msg);
+        if (fresh && row.author !== uid) Dock.notify(row);
       }
+      var peek = $("chatPeek"), pl = el("li");
+      if (peek.firstChild && peek.firstChild.textContent === "conectando...") peek.textContent = "";
+      pl.appendChild(el("b", null, row.name + ": ")); if (row.kind === "buzz") pl.appendChild(el("span", "chat-buzz", "¡¡ZUMBIDO!!")); else emote(pl, row.msg);
+      peek.appendChild(pl); while (peek.children.length > 4) peek.removeChild(peek.firstChild);
       var atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 40;
       box.appendChild(line);
       while (box.children.length > 80) box.removeChild(box.firstChild);
@@ -853,7 +1062,7 @@ var CONFIG = {
         $("chatLog").textContent = "";
         chatRows = r.data.reverse();
         chatRows.forEach(function (row) { chatLine(row, false); });
-        if (!chatRows.length) $("chatLog").appendChild(el("div", "chat-line sys", "No hay mensajes. ¡Saludá! :D"));
+        if (!chatRows.length) { $("chatLog").appendChild(el("div", "chat-line sys", "No hay mensajes. ¡Saludá! :D")); $("chatPeek").innerHTML = "<li>nadie habló todavía. ¡rompé el hielo! :D</li>"; }
       });
     }
     function buzz() {
@@ -884,7 +1093,7 @@ var CONFIG = {
         var p = state[k] && state[k][0];
         names.push({ id: k, nick: (p && p.nick) || "Anónimo" });
       });
-      $("onlineCount").textContent = names.length;
+      $("onlineCount").textContent = names.length; $("onlineMini").textContent = names.length;
       var ul = $("onlineList"); ul.textContent = "";
       names.slice(0, 30).forEach(function (n) { ul.appendChild(el("li", n.id === uid ? "me" : "", n.nick + (n.id === uid ? " (vos)" : ""))); });
     }
@@ -897,7 +1106,7 @@ var CONFIG = {
         : mode === "loading" ? "○ Conectando con la base de datos..."
         : "○ Modo offline (" + offlineWhy + "): todo se guarda solo en este navegador.";
       $("chatForm").hidden = mode !== "online";
-      if (mode === "offline") $("chatLog").textContent = "El chat no está disponible sin conexión a la base de datos.";
+      if (mode === "offline") { $("chatLog").textContent = "El chat no está disponible sin conexión a la base de datos."; $("chatPeek").innerHTML = "<li>chat desconectado (modo offline)</li>"; }
     }
 
     function render() {
@@ -1258,54 +1467,158 @@ var CONFIG = {
   var quips = ["¡hola! XD", "oink oink :P", "¡sos lo más! ^_^", "¿jugamos? :3", "tocame y te doy amor <3", "¡cerremos pop-ups juntos! :D", "¡buenísimo! XD", "no me dejes solo T_T"];
   var killQuips = ["¡chau pop-up! :P", "¡sos crack! ^_^", "¡BUENÍSIMO! XD", "¡otro menos! :D", "¡qué puntería! <3"];
 
-  /* ---------------- ads ---------------- */
-  function makeAdTexture(ad) {
-    var c = document.createElement("canvas"); c.width = 512; c.height = 384;
-    var g = c.getContext("2d");
-    g.fillStyle = "#c0c0c0"; g.fillRect(0, 0, 512, 384);
-    g.fillStyle = "#fff"; g.fillRect(0, 0, 512, 4); g.fillRect(0, 0, 4, 384);
-    g.fillStyle = "#404040"; g.fillRect(0, 380, 512, 4); g.fillRect(508, 0, 4, 384);
-    var tb = g.createLinearGradient(8, 0, 504, 0); tb.addColorStop(0, "#0a246a"); tb.addColorStop(1, "#a6caf0");
-    g.fillStyle = tb; g.fillRect(8, 8, 496, 40);
-    g.font = "bold 22px Tahoma, Verdana, sans-serif"; g.fillStyle = "#fff"; g.textBaseline = "middle";
-    g.fillText(ad.title, 18, 29, 360);
-    ["_", "□", "×"].forEach(function (s, i) {
-      var x = 404 + i * 32;
-      g.fillStyle = "#c0c0c0"; g.fillRect(x, 13, 28, 28);
-      g.fillStyle = "#fff"; g.fillRect(x, 13, 28, 2); g.fillRect(x, 13, 2, 28);
-      g.fillStyle = "#404040"; g.fillRect(x, 39, 28, 2); g.fillRect(x + 26, 13, 2, 28);
-      g.fillStyle = "#000"; g.font = "bold 20px Tahoma, sans-serif"; g.textAlign = "center"; g.fillText(s, x + 14, 27); g.textAlign = "left";
-    });
-    var bg = g.createLinearGradient(0, 54, 0, 376); bg.addColorStop(0, ad.bg[0]); bg.addColorStop(1, ad.bg[1]);
-    g.fillStyle = bg; g.fillRect(10, 54, 492, 320);
-    // starburst
-    g.save(); g.translate(440, 110); g.fillStyle = "#ffff00"; g.strokeStyle = "#f00"; g.lineWidth = 3;
-    g.beginPath();
-    for (var i = 0; i < 24; i++) { var r = i % 2 ? 26 : 46, an = i / 24 * Math.PI * 2; g.lineTo(Math.cos(an) * r, Math.sin(an) * r); }
-    g.closePath(); g.fill(); g.stroke();
-    g.rotate(-0.3); g.fillStyle = "#f00"; g.font = "bold 20px Verdana, sans-serif"; g.textAlign = "center"; g.fillText("¡YA!", 0, 2);
+  /* ---------------- ads: 2004 pop-ups + today's toxic formats ---------------- */
+  var FMT = {
+    win:    { w: 2.1,  h: 1.575, hp: 3,  spd: 1 },
+    story:  { w: 1.25, h: 2.2,   hp: 3,  spd: 1 },
+    wheel:  { w: 1.9,  h: 1.9,   hp: 5,  spd: 0.8 },
+    cookie: { w: 2.7,  h: 1.35,  hp: 4,  spd: 0.9 },
+    notif:  { w: 2.0,  h: 0.66,  hp: 2,  spd: 1.5 },
+    video:  { w: 2.3,  h: 1.3,   hp: 4,  spd: 1 },
+    boss:   { w: 3.8,  h: 2.85,  hp: 60, spd: 0.4 }
+  };
+  var PX = 240, SANS = "'Helvetica Neue', Arial, sans-serif", IMPACT = "Impact, 'Arial Black', Verdana, sans-serif";
+  function rr(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+  function vgrad(g, y0, y1, a, b) { var gr = g.createLinearGradient(0, y0, 0, y1); gr.addColorStop(0, a); gr.addColorStop(1, b); return gr; }
+  function txt(g, s, x, y, size, color, o) {
+    o = o || {};
+    g.font = (o.weight || "900") + " " + size + "px " + (o.font || IMPACT);
+    g.textAlign = o.align || "center"; g.textBaseline = "middle";
+    if (o.stroke) { g.lineWidth = o.lw || Math.max(3, size / 7); g.lineJoin = "round"; g.strokeStyle = o.stroke; g.strokeText(s, x, y, o.max); }
+    g.fillStyle = color; g.fillText(s, x, y, o.max);
+  }
+  function burstStar(g, x, y, r1, r2, n, fill, stroke, label, rot) {
+    g.save(); g.translate(x, y); g.rotate(rot || -0.25);
+    g.beginPath(); for (var i = 0; i < n * 2; i++) { var r = i % 2 ? r2 : r1, an = i / (n * 2) * Math.PI * 2; g.lineTo(Math.cos(an) * r, Math.sin(an) * r); }
+    g.closePath(); g.fillStyle = fill; g.fill(); g.lineWidth = 3; g.strokeStyle = stroke; g.stroke();
+    if (label) txt(g, label, 0, 2, r2 * 0.75, stroke, { max: r2 * 1.8 });
     g.restore();
-    g.textAlign = "center";
-    var sizes = [40, 54, 30];
-    ad.lines.forEach(function (line, i) {
-      g.font = "900 " + sizes[i] + "px Impact, 'Arial Black', Verdana, sans-serif";
-      var y = 120 + i * 68;
-      g.lineWidth = 6; g.strokeStyle = ad.stroke; g.strokeText(line, 250, y, 460);
-      g.fillStyle = ad.fg; g.fillText(line, 250, y, 460);
-    });
-    var bx = 146, by = 318, bw = 220, bh = 44;
-    var bt = g.createLinearGradient(0, by, 0, by + bh); bt.addColorStop(0, "#d8ffb0"); bt.addColorStop(0.5, "#5fd000"); bt.addColorStop(1, "#2a8a00");
-    g.fillStyle = bt; g.fillRect(bx, by, bw, bh); g.strokeStyle = "#000"; g.lineWidth = 2; g.strokeRect(bx, by, bw, bh);
-    g.fillStyle = "#fff"; g.font = "bold 22px Verdana, sans-serif"; g.fillText("¡CLIC AQUÍ!", 256, by + bh / 2 + 1);
+  }
+  var DRAW = {
+    win: function (g, W, H, ad) {           // Windows 2000 pop-up, straight out of 2004
+      g.save(); g.scale(W / 512, H / 384);
+      g.fillStyle = "#c0c0c0"; g.fillRect(0, 0, 512, 384);
+      g.fillStyle = "#fff"; g.fillRect(0, 0, 512, 4); g.fillRect(0, 0, 4, 384);
+      g.fillStyle = "#404040"; g.fillRect(0, 380, 512, 4); g.fillRect(508, 0, 4, 384);
+      var tb = g.createLinearGradient(8, 0, 504, 0); tb.addColorStop(0, "#0a246a"); tb.addColorStop(1, "#a6caf0");
+      g.fillStyle = tb; g.fillRect(8, 8, 496, 40);
+      txt(g, ad.title, 18, 29, 22, "#fff", { font: "Tahoma, Verdana, sans-serif", weight: "bold", align: "left", max: 360 });
+      ["_", "□", "×"].forEach(function (s, i) {
+        var x = 404 + i * 32;
+        g.fillStyle = "#c0c0c0"; g.fillRect(x, 13, 28, 28);
+        g.fillStyle = "#fff"; g.fillRect(x, 13, 28, 2); g.fillRect(x, 13, 2, 28);
+        g.fillStyle = "#404040"; g.fillRect(x, 39, 28, 2); g.fillRect(x + 26, 13, 2, 28);
+        txt(g, s, x + 14, 27, 20, "#000", { font: "Tahoma, sans-serif", weight: "bold" });
+      });
+      g.fillStyle = vgrad(g, 54, 376, ad.bg[0], ad.bg[1]); g.fillRect(10, 54, 492, 320);
+      burstStar(g, 440, 110, 46, 26, 12, "#ffff00", "#f00", "¡YA!");
+      var sizes = [40, 54, 30];
+      ad.lines.forEach(function (line, i) { txt(g, line, 250, 120 + i * 68, sizes[i], ad.fg, { stroke: ad.stroke, lw: 6, max: 460 }); });
+      var bt = vgrad(g, 318, 362, "#d8ffb0", "#2a8a00"); g.fillStyle = bt; g.fillRect(146, 318, 220, 44);
+      g.strokeStyle = "#000"; g.lineWidth = 2; g.strokeRect(146, 318, 220, 44);
+      txt(g, "¡CLIC AQUÍ!", 256, 341, 22, "#fff", { font: "Verdana, sans-serif", weight: "bold" });
+      g.restore();
+    },
+    story: function (g, W, H, ad) {         // vertical "story" ad, swipe up to lose money
+      rr(g, 0, 0, W, H, 28); g.save(); g.clip();
+      g.fillStyle = vgrad(g, 0, H, ad.bg[0], ad.bg[1]); g.fillRect(0, 0, W, H);
+      for (var i = 0; i < 3; i++) { g.fillStyle = i === 0 ? "#fff" : "rgba(255,255,255,.4)"; rr(g, 14 + i * (W - 28) / 3, 12, (W - 28) / 3 - 6, 5, 2); g.fill(); }
+      g.fillStyle = "#fff"; g.beginPath(); g.arc(34, 50, 16, 0, 7); g.fill();
+      txt(g, ad.title, 58, 46, 17, "#fff", { font: SANS, weight: "bold", align: "left", max: W - 70 });
+      txt(g, "Patrocinado", 58, 64, 12, "rgba(255,255,255,.8)", { font: SANS, weight: "normal", align: "left" });
+      txt(g, ad.lines[0], W / 2, H * 0.36, 34, ad.fg, { stroke: "rgba(0,0,0,.55)", max: W - 24 });
+      txt(g, ad.lines[1], W / 2, H * 0.5, 30, "#fff", { stroke: "rgba(0,0,0,.55)", max: W - 24 });
+      txt(g, ad.lines[2], W / 2, H * 0.63, 22, "#fff", { font: SANS, weight: "bold", stroke: "rgba(0,0,0,.45)", max: W - 24 });
+      g.fillStyle = "#fff"; rr(g, 24, H - 96, W - 48, 50, 25); g.fill();
+      txt(g, "▲ DESLIZÁ ARRIBA", W / 2, H - 71, 20, "#111", { font: SANS, weight: "bold", max: W - 60 });
+      txt(g, "ya 12.000 cayeron (mentira)", W / 2, H - 26, 13, "rgba(255,255,255,.85)", { font: SANS, weight: "normal", max: W - 30 });
+      g.restore();
+    },
+    wheel: function (g, W, H, ad) {         // "spin the wheel" (you always almost win)
+      var cx = W / 2, cy = H * 0.44, R = W * 0.4;
+      var cols = ["#ff7a00", "#ffd000", "#ff2d55", "#00c853", "#2979ff", "#ff7a00", "#aa00ff", "#ffd000"];
+      var labs = ["90%", "GRATIS", "¡CASI!", "99%", "OTRA VEZ", "REGALO", "100%", "¡CASI!"];
+      g.fillStyle = "#ffe08a"; g.beginPath(); g.arc(cx, cy, R + 18, 0, 7); g.fill();
+      g.fillStyle = "#c93b00"; g.beginPath(); g.arc(cx, cy, R + 10, 0, 7); g.fill();
+      for (var i = 0; i < 8; i++) {
+        var a0 = i / 8 * Math.PI * 2 - Math.PI / 2, a1 = (i + 1) / 8 * Math.PI * 2 - Math.PI / 2;
+        g.beginPath(); g.moveTo(cx, cy); g.arc(cx, cy, R, a0, a1); g.closePath(); g.fillStyle = cols[i]; g.fill();
+        g.save(); g.translate(cx, cy); g.rotate((a0 + a1) / 2); txt(g, labs[i], R * 0.62, 0, 24, "#fff", { stroke: "#000", lw: 4, max: R * 0.6 }); g.restore();
+      }
+      for (var b = 0; b < 24; b++) { var ab = b / 24 * Math.PI * 2; g.fillStyle = b % 2 ? "#fff" : "#fff45c"; g.beginPath(); g.arc(cx + Math.cos(ab) * (R + 14), cy + Math.sin(ab) * (R + 14), 5, 0, 7); g.fill(); }
+      g.fillStyle = "#fff"; g.beginPath(); g.arc(cx, cy, R * 0.24, 0, 7); g.fill();
+      txt(g, "GIRAR", cx, cy, 26, "#ff5a00", { max: R * 0.42 });
+      g.fillStyle = "#fff"; g.beginPath(); g.moveTo(cx - 20, cy - R - 26); g.lineTo(cx + 20, cy - R - 26); g.lineTo(cx, cy - R + 14); g.closePath(); g.fill();
+      g.fillStyle = ad.bg[0]; rr(g, 16, H * 0.83, W - 32, H * 0.15, 18); g.fill();
+      txt(g, ad.lines[0], W / 2, H * 0.875, 30, "#fff", { stroke: "#7a2000", max: W - 50 });
+      txt(g, ad.title + " · " + ad.lines[1] + " " + ad.lines[2], W / 2, H * 0.94, 15, "#fff", { font: SANS, weight: "bold", max: W - 50 });
+    },
+    cookie: function (g, W, H, ad) {        // consent banner where "no" takes 47 steps
+      g.fillStyle = "rgba(0,0,0,.25)"; rr(g, 8, 10, W - 12, H - 12, 22); g.fill();
+      g.fillStyle = "#fff"; rr(g, 2, 2, W - 12, H - 12, 22); g.fill();
+      g.fillStyle = "#b5752d"; g.beginPath(); g.arc(48, 52, 24, 0, 7); g.fill();
+      g.fillStyle = "#5a3210"; [[40, 44], [55, 50], [45, 60], [58, 62]].forEach(function (p) { g.beginPath(); g.arc(p[0], p[1], 3.5, 0, 7); g.fill(); });
+      txt(g, ad.title, 84, 52, 30, ad.fg, { font: SANS, weight: "bold", align: "left", max: W - 110 });
+      txt(g, ad.lines[0], 30, 108, 21, "#666", { font: SANS, weight: "normal", align: "left", max: W - 60 });
+      g.fillStyle = "#16a34a"; rr(g, 28, 146, W - 68, 76, 16); g.fill();
+      txt(g, ad.lines[1], W / 2 - 6, 185, 36, "#fff", { font: SANS, weight: "bold", max: W - 100 });
+      txt(g, ad.lines[2], 34, H - 42, 12, "#aaa", { font: SANS, weight: "normal", align: "left" });
+      g.fillStyle = "#ccc"; g.fillRect(34, H - 34, 160, 1);
+      txt(g, "×", W - 34, 30, 14, "#ddd", { font: SANS, weight: "normal" });
+    },
+    notif: function (g, W, H, ad) {         // push notification / fake scarcity toast
+      g.fillStyle = "rgba(0,0,0,.25)"; rr(g, 6, 8, W - 8, H - 10, 28); g.fill();
+      g.fillStyle = ad.bg[0]; rr(g, 2, 2, W - 10, H - 10, 28); g.fill();
+      g.fillStyle = ad.fg; rr(g, 18, 20, H - 50, H - 50, 18); g.fill();
+      txt(g, "!", 18 + (H - 50) / 2, 20 + (H - 50) / 2, 48, "#fff");
+      txt(g, ad.title, H - 14, 52, 30, ad.fg, { font: SANS, weight: "bold", align: "left", max: W - H - 30 });
+      txt(g, ad.lines[0], H - 14, 98, 21, "#555", { font: SANS, weight: "normal", align: "left", max: W - H - 30 });
+      txt(g, "ahora", W - 28, 26, 14, "#999", { font: SANS, weight: "normal", align: "right" });
+    },
+    video: function (g, W, H, ad) {         // pre-roll whose "skip" never arrives
+      g.fillStyle = "#000"; g.fillRect(0, 0, W, H);
+      g.fillStyle = vgrad(g, 0, H, ad.bg[0], ad.bg[1]); g.fillRect(6, 6, W - 12, H - 12);
+      g.fillStyle = "#ffd400"; rr(g, 16, 16, 128, 28, 6); g.fill();
+      txt(g, "Anuncio · 0:05", 80, 31, 15, "#000", { font: SANS, weight: "bold" });
+      txt(g, ad.title, W - 20, 31, 15, "rgba(255,255,255,.8)", { font: SANS, weight: "bold", align: "right", max: W - 180 });
+      txt(g, ad.lines[0], W / 2, H * 0.38, 34, ad.fg, { stroke: "#000", max: W - 40 });
+      txt(g, ad.lines[1], W / 2, H * 0.55, 30, "#fff", { stroke: "#000", max: W - 40 });
+      txt(g, ad.lines[2], W / 2, H * 0.7, 18, "rgba(255,255,255,.9)", { font: SANS, weight: "bold", max: W - 40 });
+      g.fillStyle = "rgba(255,255,255,.3)"; g.fillRect(6, H - 12, W - 12, 6); g.fillStyle = "#ffd400"; g.fillRect(6, H - 12, (W - 12) * 0.3, 6);
+      g.fillStyle = "rgba(0,0,0,.75)"; g.fillRect(W - 206, H - 64, 190, 40); g.strokeStyle = "#fff"; g.lineWidth = 1.5; g.strokeRect(W - 206, H - 64, 190, 40);
+      txt(g, "Saltar anuncio en 5 ▶", W - 111, H - 44, 17, "#fff", { font: SANS, weight: "bold" });
+    },
+    boss: function (g, W, H, ad) {          // the final boss of e-commerce
+      g.fillStyle = vgrad(g, 0, H, ad.bg[0], ad.bg[1]); rr(g, 0, 0, W, H, 30); g.fill();
+      g.lineWidth = 10; g.strokeStyle = "#fff45c"; rr(g, 8, 8, W - 16, H - 16, 26); g.stroke();
+      g.fillStyle = "#000"; g.fillRect(24, 26, W - 48, 64);
+      txt(g, "⚡ TERMINA EN 00:04:59 ⚡ (se reinicia siempre) ⚡", W / 2, 58, 32, "#ff2d2d", { max: W - 70 });
+      burstStar(g, W - 120, 170, 96, 60, 14, "#fff45c", "#d00000", "MEGA", 0.2);
+      txt(g, ad.title, W / 2 - 60, 190, 104, "#fff", { stroke: "#7a1500", lw: 12, max: W - 260 });
+      txt(g, ad.lines[0], W / 2, 300, 50, "#fff45c", { stroke: "#7a1500", lw: 8, max: W - 80 });
+      txt(g, ad.lines[1], W / 2, 390, 88, "#fff", { stroke: "#000", lw: 12, max: W - 80 });
+      txt(g, ad.lines[2], W / 2, 462, 28, "#fff", { font: SANS, weight: "bold", max: W - 80 });
+      g.fillStyle = vgrad(g, 510, 600, "#baff7a", "#1f8f00"); rr(g, W / 2 - 230, 510, 460, 90, 45); g.fill();
+      txt(g, "¡COMPRAR YA!", W / 2, 556, 54, "#fff", { stroke: "#0b4a00", lw: 8 });
+      txt(g, "Términos y condiciones: sí. Tus datos: también.", W / 2, H - 38, 20, "rgba(255,255,255,.75)", { font: SANS, weight: "normal", max: W - 80 });
+    }
+  };
+  function makeAdTexture(ad) {
+    var f = FMT[ad.fmt], c = document.createElement("canvas");
+    c.width = Math.round(f.w * PX); c.height = Math.round(f.h * PX);
+    DRAW[ad.fmt](c.getContext("2d"), c.width, c.height, ad);
     var tex = new T.CanvasTexture(c);
     tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
     return tex;
   }
   var adTextures = ADS.map(makeAdTexture);
-  var adGeo = new T.PlaneGeometry(2.1, 1.575);
+  var adGeos = {}; Object.keys(FMT).forEach(function (k) { adGeos[k] = new T.PlaneGeometry(FMT[k].w, FMT[k].h); });
+  var SPAWNABLE = ADS.map(function (a, i) { return i; }).filter(function (i) { return ADS[i].fmt !== "boss" && ADS[i].id !== "cupon"; });
+  var RETRO = SPAWNABLE.filter(function (i) { return ADS[i].era === 2004; }), MODERN = SPAWNABLE.filter(function (i) { return ADS[i].era !== 2004; });
+  function kindOf(id) { for (var i = 0; i < ADS.length; i++) if (ADS[i].id === id) return i; return 0; }
 
   var ads = [], bolts = [], parts = [], sprites = [];
-  var selected = null;
+  var selected = null, bossAlive = null;
 
   var reticle = new T.Mesh(new T.RingGeometry(1.45, 1.6, 40), new T.MeshBasicMaterial({ color: 0xff0033, transparent: true, opacity: 0.9, side: T.DoubleSide, depthTest: false }));
   reticle.renderOrder = 5; reticle.visible = false; scene.add(reticle);
@@ -1316,67 +1629,109 @@ var CONFIG = {
   });
 
   var turbo = false, paused = false;
-  function spawnAd() {
-    var k = (Math.random() * ADS.length) | 0;
+  var hpBgMat = new T.MeshBasicMaterial({ color: 0x220000, depthTest: false }), hpFgMat = new T.MeshBasicMaterial({ color: 0xff2020, depthTest: false });
+  function spawnAd(kind, at) {
+    var pool = Math.random() < 0.62 ? MODERN : RETRO;
+    var k = kind != null ? kind : pool[(Math.random() * pool.length) | 0];
+    var def = ADS[k], f = FMT[def.fmt];
     var mat = new T.MeshBasicMaterial({ map: adTextures[k], side: T.DoubleSide, transparent: true });
-    var m = new T.Mesh(adGeo, mat);
-    var y = -0.6 + Math.random() * 3.6, z = -4 + Math.random() * 5;
-    m.position.set(8 + Math.random() * 3, y, z);
+    var m = new T.Mesh(adGeos[def.fmt], mat);
+    var y = at ? at.y : -0.4 + Math.random() * 3.3, z = at ? at.z : -3.5 + Math.random() * 4.5;
+    m.position.set(at ? at.x : 8 + Math.random() * 3, y, z);
     m.scale.setScalar(0.01);
     scene.add(m);
-    var ad = { mesh: m, kind: k, hp: 4, vx: -(0.35 + Math.random() * 0.4), baseY: y, phase: Math.random() * 6, hitT: 0, age: 0, dead: false };
+    var ad = { mesh: m, kind: k, hp: f.hp, maxHp: f.hp, hw: f.w / 2 + 0.2, hh: f.h / 2 + 0.2,
+      vx: -(0.32 + Math.random() * 0.35) * f.spd, baseY: y, points: def.fmt === "boss" ? 3000 : f.hp * 40, phase: Math.random() * 6, hitT: 0, age: 0, dead: false, boss: def.fmt === "boss" };
+    if (ad.boss) {
+      var bg = new T.Mesh(new T.PlaneGeometry(f.w * 0.9, 0.16), hpBgMat); bg.position.set(0, f.h / 2 + 0.3, 0.01); bg.renderOrder = 6;
+      var fg = new T.Mesh(new T.PlaneGeometry(f.w * 0.9, 0.12), hpFgMat); fg.position.set(0, f.h / 2 + 0.3, 0.02); fg.renderOrder = 7;
+      m.add(bg); m.add(fg); ad.hpBar = fg; ad.barW = f.w * 0.9;
+      m.position.set(9, 1.4, -1.2); ad.baseY = 1.4;
+      bossAlive = ad;
+    }
     m.userData.ad = ad;
     ads.push(ad);
+    return ad;
   }
 
-  /* bolts */
-  var boltCore = new T.CylinderGeometry(0.035, 0.035, 0.9, 6).rotateX(Math.PI / 2);
-  var boltGlow = new T.CylinderGeometry(0.11, 0.11, 1.0, 8).rotateX(Math.PI / 2);
+  /* bolts (with a little aim assist, so the ads are actually shootable) */
+  var boltCore = new T.CylinderGeometry(0.04, 0.04, 0.9, 6).rotateX(Math.PI / 2);
+  var boltGlow = new T.CylinderGeometry(0.13, 0.13, 1.0, 8).rotateX(Math.PI / 2);
   var boltColors = [0xff1744, 0x39ff14, 0x00e5ff, 0xff00cc];
   var coreMat = new T.MeshBasicMaterial({ color: 0xffffff });
-  var glowMats = boltColors.map(function (c) { return new T.MeshBasicMaterial({ color: c, transparent: true, opacity: 0.55, blending: T.AdditiveBlending, depthWrite: false }); });
-  var shotN = 0, Z = new T.Vector3(0, 0, 1);
-  function fire(from, dir) {
+  var glowMats = boltColors.map(function (c) { return new T.MeshBasicMaterial({ color: c, transparent: true, opacity: 0.6, blending: T.AdditiveBlending, depthWrite: false }); });
+  var shotN = 0, Z = new T.Vector3(0, 0, 1), BOLT_SPEED = 26;
+  function fire(from, dir, target) {
     var g = new T.Group();
     g.add(new T.Mesh(boltCore, coreMat));
     g.add(new T.Mesh(boltGlow, glowMats[shotN % glowMats.length]));
     g.position.copy(from);
     g.quaternion.setFromUnitVectors(Z, dir);
     scene.add(g);
-    bolts.push({ obj: g, vel: dir.clone().multiplyScalar(26), life: 1.2 });
+    bolts.push({ obj: g, vel: dir.clone().multiplyScalar(BOLT_SPEED), life: 1.4, target: target || null });
     shotN++;
     muzzleLight.color.setHex(boltColors[shotN % boltColors.length]);
     if (shotN % 2 === 0) sfxPew();
   }
 
-  /* explosions */
-  var shardGeo = new T.BoxGeometry(0.18, 0.14, 0.03);
-  function explode(ad) {
-    var p = ad.mesh.position, def = ADS[ad.kind];
+  /* explosions: flash, shockwave, sparks, window shards, smoke and a comic-book word */
+  var shardGeo = new T.BoxGeometry(0.18, 0.14, 0.03), sparkGeo = new T.BoxGeometry(0.05, 0.05, 0.35), ringGeo = new T.RingGeometry(0.85, 1, 48);
+  var boomLight = new T.PointLight(0xffaa33, 0, 14); scene.add(boomLight);
+  var COMIC = [["¡KABOOM!", "#ffe600"], ["¡POW!", "#ff3dbb"], ["¡BLAM!", "#00e5ff"], ["¡ZAS!", "#39ff14"], ["¡PLOP!", "#ffffff"], ["¡BLOQUEADO!", "#ff7a00"], ["¡DENUNCIADO!", "#ff4040"], ["¡CERRADO!", "#b388ff"]];
+  function comicSprite(word, color, big) {
+    var c = document.createElement("canvas"); c.width = 512; c.height = 256; var g = c.getContext("2d");
+    burstStar(g, 256, 128, 250, 150, 16, "rgba(255,255,255,.95)", "#000", null, 0.1);
+    burstStar(g, 256, 128, 225, 135, 16, color === "#ffffff" ? "#ff3dbb" : "#111", "#000", null, 0.1);
+    txt(g, word, 256, 132, 86, color, { stroke: "#000", lw: 12, max: 420 });
+    var s = new T.Sprite(new T.SpriteMaterial({ map: new T.CanvasTexture(c), transparent: true, depthTest: false }));
+    s.scale.set(big ? 5 : 2.8, big ? 2.5 : 1.4, 1); s.renderOrder = 11;
+    return s;
+  }
+  function explode(ad, big) {
+    var p = ad.mesh.position.clone(), def = ADS[ad.kind];
+    var n = big ? 80 : 34;
     var cols = [def.bg[0], def.bg[1], "#c0c0c0", "#0a246a", "#ffffff", def.fg];
-    for (var i = 0; i < 34; i++) {
+    for (var i = 0; i < n; i++) {                    // shards of the ad itself
       var m = new T.Mesh(shardGeo, new T.MeshBasicMaterial({ color: cols[i % cols.length], transparent: true }));
-      m.position.set(p.x + (Math.random() - 0.5) * 1.8, p.y + (Math.random() - 0.5) * 1.3, p.z);
-      var v = new T.Vector3((Math.random() - 0.3) * 7, Math.random() * 6 + 1, (Math.random() - 0.5) * 6);
+      m.position.set(p.x + (Math.random() - 0.5) * ad.hw * 1.6, p.y + (Math.random() - 0.5) * ad.hh * 1.6, p.z);
+      var v = new T.Vector3((Math.random() - 0.3) * 8, Math.random() * 7 + 1, (Math.random() - 0.5) * 7).multiplyScalar(big ? 1.4 : 1);
       scene.add(m);
-      parts.push({ obj: m, vel: v, spin: new T.Vector3(Math.random() * 10, Math.random() * 10, Math.random() * 10), life: 1.4 + Math.random() * 0.6, max: 2 });
+      parts.push({ obj: m, vel: v, spin: new T.Vector3(Math.random() * 10, Math.random() * 10, Math.random() * 10), life: 1.4 + Math.random() * 0.8, max: 2 });
     }
-    var s = new T.Sprite(new T.SpriteMaterial({ map: boomTex, blending: T.AdditiveBlending, transparent: true, depthWrite: false }));
-    s.userData.shared = true;
-    s.position.copy(p); s.scale.setScalar(1);
-    scene.add(s); sprites.push({ obj: s, life: 0.45, max: 0.45, grow: 9, rise: 0 });
-    var txt = textSprite("+100", "#ffff00");
-    txt.position.set(p.x, p.y + 0.4, p.z); scene.add(txt);
-    sprites.push({ obj: txt, life: 1.1, max: 1.1, grow: 0.4, rise: 1.6 });
-    shake = reduceMotion ? 0 : 0.25;
-    sfxBoom();
+    for (var s = 0; s < (big ? 60 : 26); s++) {       // hot sparks
+      var sm = new T.Mesh(sparkGeo, new T.MeshBasicMaterial({ color: [0xffffff, 0xffe066, 0xff8a00, 0xff3dbb][s % 4], transparent: true, blending: T.AdditiveBlending, depthWrite: false }));
+      var sv = new T.Vector3(Math.random() - 0.5, Math.random() - 0.3, Math.random() - 0.5).normalize().multiplyScalar(9 + Math.random() * 9);
+      sm.position.copy(p); sm.quaternion.setFromUnitVectors(Z, sv.clone().normalize());
+      scene.add(sm); parts.push({ obj: sm, vel: sv, spin: new T.Vector3(), life: 0.35 + Math.random() * 0.35, max: 0.6 });
+    }
+    var fl = new T.Sprite(new T.SpriteMaterial({ map: boomTex, blending: T.AdditiveBlending, transparent: true, depthWrite: false }));
+    fl.userData.shared = true; fl.position.copy(p);
+    scene.add(fl); sprites.push({ obj: fl, life: 0.45, max: 0.45, grow: big ? 22 : 10, rise: 0 });
+    for (var r = 0; r < (big ? 3 : 1); r++) {         // shockwave ring(s)
+      var ring = new T.Mesh(ringGeo, new T.MeshBasicMaterial({ color: [0xfff27a, 0xff3dbb, 0x00e5ff][r], transparent: true, blending: T.AdditiveBlending, depthWrite: false, side: T.DoubleSide }));
+      ring.userData.shared = true; ring.position.copy(p); ring.quaternion.copy(camera.quaternion);
+      scene.add(ring); sprites.push({ obj: ring, life: 0.55 + r * 0.15, max: 0.55 + r * 0.15, grow: big ? 9 : 4.5, rise: 0 });
+    }
+    for (var k = 0; k < (big ? 8 : 3); k++) {         // lingering smoke
+      var sk = new T.Sprite(new T.SpriteMaterial({ map: smokeTex, color: 0x6a6a80, transparent: true, depthWrite: false, opacity: 0.7 }));
+      sk.userData.shared = true; sk.position.set(p.x + (Math.random() - 0.5) * 1.2, p.y + (Math.random() - 0.5) * 0.8, p.z);
+      scene.add(sk); sprites.push({ obj: sk, life: 1.4 + Math.random() * 0.8, max: 2.2, grow: big ? 5 : 3, rise: 0.5 });
+    }
+    var w = COMIC[(Math.random() * COMIC.length) | 0];
+    var cs = comicSprite(big ? "¡¡MEGA KABOOM!!" : w[0], big ? "#ffe600" : w[1], big);
+    cs.position.set(p.x, p.y + 0.3, p.z + 0.5); scene.add(cs);
+    sprites.push({ obj: cs, life: big ? 1.6 : 0.9, max: big ? 1.6 : 0.9, grow: 0, rise: 0.6 });
+    var pts = textSprite("+" + ad.points, "#ffff00");
+    pts.position.set(p.x + 0.8, p.y - 0.4, p.z + 0.5); scene.add(pts);
+    sprites.push({ obj: pts, life: 1.1, max: 1.1, grow: 0.4, rise: 1.6 });
+    boomLight.position.copy(p); boomLight.intensity = big ? 9 : 4;
+    shake = reduceMotion ? 0 : (big ? 0.9 : 0.35);
+    sfxBoom(big);
   }
   function textSprite(text, color) {
     var c = document.createElement("canvas"); c.width = 256; c.height = 96;
     var g = c.getContext("2d");
-    g.font = "900 64px Impact, 'Arial Black', sans-serif"; g.textAlign = "center"; g.textBaseline = "middle";
-    g.lineWidth = 8; g.strokeStyle = "#000"; g.strokeText(text, 128, 50);
-    g.fillStyle = color; g.fillText(text, 128, 50);
+    txt(g, text, 128, 50, 64, color, { stroke: "#000", lw: 8 });
     var s = new T.Sprite(new T.SpriteMaterial({ map: new T.CanvasTexture(c), transparent: true, depthTest: false }));
     s.scale.set(1.6, 0.6, 1); s.renderOrder = 9;
     return s;
@@ -1400,58 +1755,262 @@ var CONFIG = {
   hud();
   Data.onBest(function (b) { if (b > best) { best = b; hud(); } });
 
-  /* ---------------- sound (after user click) ---------------- */
-  var actx = null, soundOn = false, noiseBuf = null;
-  function sfxPew() {
-    if (!soundOn || !actx) return;
-    var t = actx.currentTime, o = actx.createOscillator(), gn = actx.createGain();
-    o.type = "square"; o.frequency.setValueAtTime(1500 + Math.random() * 300, t); o.frequency.exponentialRampToValueAtTime(160, t + 0.1);
-    gn.gain.setValueAtTime(0.045, t); gn.gain.exponentialRampToValueAtTime(0.0001, t + 0.11);
-    o.connect(gn).connect(actx.destination); o.start(t); o.stop(t + 0.12);
+  /* ================= AUDIO: sfx + original 90s track + deep pig voice ================= */
+  // Browsers only let audio start after the visitor interacts (Chrome's autoplay policy),
+  // so everything is ON by default and wakes up on the first click/tap/key anywhere.
+  var AC = window.AudioContext || window.webkitAudioContext;
+  var actx = null, master = null, sfxBus = null, musicBus = null, echo = null, noiseBuf = null;
+  var prefs = { sound: store("cerdo_sound") !== "0", music: store("cerdo_music") !== "0", voice: store("cerdo_voice") !== "0" };
+  var soundOn = prefs.sound;
+  var soundHint = document.getElementById("soundHint");
+  function ensureAudio() {
+    if (!AC || !soundOn) return false;
+    if (!actx) {
+      try { actx = new AC(); } catch (e) { return false; }
+      master = actx.createDynamicsCompressor(); master.threshold.value = -14; master.ratio.value = 4; master.connect(actx.destination);
+      sfxBus = actx.createGain(); sfxBus.gain.value = 0.85; sfxBus.connect(master);
+      musicBus = actx.createGain(); musicBus.gain.value = prefs.music ? 0.42 : 0; musicBus.connect(master);
+      echo = actx.createDelay(1); echo.delayTime.value = 60 / Music.bpm / 4 * 3;       // dotted-8th echo for the lead
+      var fb = actx.createGain(); fb.gain.value = 0.32; var echoOut = actx.createGain(); echoOut.gain.value = 0.35;
+      echo.connect(fb).connect(echo); echo.connect(echoOut).connect(musicBus);
+      noiseBuf = actx.createBuffer(1, actx.sampleRate * 1.5, actx.sampleRate);
+      var d = noiseBuf.getChannelData(0); for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    }
+    if (actx.state === "suspended") actx.resume();
+    return true;
   }
-  function sfxBoom() {
-    if (!soundOn || !actx) return;
-    var t = actx.currentTime, src = actx.createBufferSource(), f = actx.createBiquadFilter(), gn = actx.createGain();
-    src.buffer = noiseBuf; f.type = "lowpass"; f.frequency.setValueAtTime(1800, t); f.frequency.exponentialRampToValueAtTime(120, t + 0.4);
-    gn.gain.setValueAtTime(0.35, t); gn.gain.exponentialRampToValueAtTime(0.0001, t + 0.45);
-    src.connect(f).connect(gn).connect(actx.destination); src.start(t); src.stop(t + 0.5);
+  function audioLive() { return soundOn && actx && actx.state === "running"; }
+  function refreshAudioUI() {
+    var live = audioLive();
+    soundHint.hidden = !soundOn || live || !AC;
+    Music.setPlaying(live && prefs.music);
+    var np = document.getElementById("npState");
+    if (np) np.textContent = !soundOn ? "■ silenciado" : !live ? "■ tocá la página para darle play" : prefs.music ? "▶ sonando · 136 BPM" : "■ música apagada";
+    var eq = document.querySelector(".eq"); if (eq) eq.classList.toggle("paused", !(live && prefs.music));
+  }
+  function unlock() { if (ensureAudio()) actx.resume().then(refreshAudioUI, refreshAudioUI); }
+  ["pointerdown", "keydown", "touchend"].forEach(function (ev) { document.addEventListener(ev, unlock, true); });
+
+  function env(gn, t, a, peak, dec) { gn.gain.setValueAtTime(0.0001, t); gn.gain.linearRampToValueAtTime(peak, t + a); gn.gain.exponentialRampToValueAtTime(0.0001, t + a + dec); }
+  function osc(type, f, t, dur, dest) { var o = actx.createOscillator(); o.type = type; o.frequency.setValueAtTime(f, t); o.connect(dest); o.start(t); o.stop(t + dur + 0.05); return o; }
+  function noise(t, dur, dest) { var s = actx.createBufferSource(); s.buffer = noiseBuf; s.connect(dest); s.start(t, Math.random() * 0.5); s.stop(t + dur + 0.05); return s; }
+  function mtof(m) { return 440 * Math.pow(2, (m - 69) / 12); }
+
+  function sfxPew() {
+    if (!audioLive()) return;
+    var t = actx.currentTime, gn = actx.createGain(); gn.connect(sfxBus); env(gn, t, 0.003, 0.05, 0.1);
+    var o = osc("square", 1500 + Math.random() * 300, t, 0.12, gn); o.frequency.exponentialRampToValueAtTime(160, t + 0.1);
+  }
+  function sfxBoom(big) {
+    if (!audioLive()) return;
+    var t = actx.currentTime, len = big ? 1.6 : 0.6;
+    var f = actx.createBiquadFilter(); f.type = "lowpass"; f.frequency.setValueAtTime(big ? 3000 : 2200, t); f.frequency.exponentialRampToValueAtTime(90, t + len);
+    var gn = actx.createGain(); env(gn, t, 0.005, big ? 0.7 : 0.45, len); f.connect(gn).connect(sfxBus); noise(t, len, f);
+    var sg = actx.createGain(); env(sg, t, 0.005, big ? 0.9 : 0.6, len * 0.7); sg.connect(sfxBus);              // sub thump
+    var so = osc("sine", 120, t, len, sg); so.frequency.exponentialRampToValueAtTime(30, t + len * 0.7);
+    var cg = actx.createGain(); env(cg, t + 0.05, 0.01, 0.12, 0.3); var hp = actx.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 4000;
+    hp.connect(cg).connect(sfxBus); noise(t + 0.05, 0.35, hp);                                                   // crackle
   }
   function sfxOink() {
-    if (!soundOn || !actx) return;
+    if (!audioLive()) return;
     var t = actx.currentTime;
     [0, 0.16].forEach(function (d) {
-      var o = actx.createOscillator(), gn = actx.createGain();
-      o.type = "sawtooth"; o.frequency.setValueAtTime(260, t + d); o.frequency.linearRampToValueAtTime(170, t + d + 0.12);
-      gn.gain.setValueAtTime(0.0001, t + d); gn.gain.linearRampToValueAtTime(0.08, t + d + 0.02); gn.gain.exponentialRampToValueAtTime(0.0001, t + d + 0.13);
-      o.connect(gn).connect(actx.destination); o.start(t + d); o.stop(t + d + 0.15);
+      var gn = actx.createGain(); gn.connect(sfxBus); env(gn, t + d, 0.02, 0.09, 0.11);
+      var o = osc("sawtooth", 260, t + d, 0.15, gn); o.frequency.linearRampToValueAtTime(170, t + d + 0.12);
     });
+  }
+  function sfxDing() {                       // "new message" chime, Messenger style
+    if (!audioLive()) return;
+    var t = actx.currentTime;
+    [[988, 0], [1319, 0.12]].forEach(function (n) { var gn = actx.createGain(); gn.connect(sfxBus); env(gn, t + n[1], 0.005, 0.12, 0.35); osc("sine", n[0], t + n[1], 0.4, gn); });
+  }
+  function sfxCombo(n) {
+    if (!audioLive()) return;
+    var t = actx.currentTime;
+    for (var i = 0; i < Math.min(n, 6); i++) { var gn = actx.createGain(); gn.connect(sfxBus); env(gn, t + i * 0.05, 0.003, 0.05, 0.08); osc("square", mtof(76 + i * 4), t + i * 0.05, 0.1, gn); }
   }
   window.CerdoSfx = {
     buzz: function () {
-      if (!soundOn || !actx) return;
-      var t0 = actx.currentTime, o = actx.createOscillator(), lfo = actx.createOscillator(), lg = actx.createGain(), gn = actx.createGain();
-      o.type = "square"; o.frequency.value = 90; lfo.frequency.value = 28; lg.gain.value = 40;
-      lfo.connect(lg).connect(o.frequency);
-      gn.gain.setValueAtTime(0.08, t0); gn.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.6);
-      o.connect(gn).connect(actx.destination); o.start(t0); lfo.start(t0); o.stop(t0 + 0.62); lfo.stop(t0 + 0.62);
-    }
+      if (!audioLive()) return;
+      var t0 = actx.currentTime, gn = actx.createGain(); gn.connect(sfxBus); env(gn, t0, 0.01, 0.1, 0.6);
+      var o = osc("square", 90, t0, 0.62, gn), lfo = actx.createOscillator(), lg = actx.createGain();
+      lfo.frequency.value = 28; lg.gain.value = 40; lfo.connect(lg).connect(o.frequency); lfo.start(t0); lfo.stop(t0 + 0.62);
+    },
+    ding: sfxDing
   };
-  var btnSound = document.getElementById("btnSound");
-  btnSound.addEventListener("click", function () {
-    soundOn = !soundOn;
-    if (soundOn && !actx) {
-      var AC = window.AudioContext || window.webkitAudioContext;
-      if (AC) {
-        actx = new AC();
-        noiseBuf = actx.createBuffer(1, actx.sampleRate * 0.5, actx.sampleRate);
-        var d = noiseBuf.getChannelData(0); for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+
+  /* ---- "Cerdo Madness (Metálico Mix '93)" — original tune: house/techno pulse, new jack swing hats,
+         funky slap bass, jungle breaks and orchestra hits. A nod to the Sonic CD (JP) sound, not a copy. ---- */
+  var Music = (function () {
+    var bpm = 136, SD = 60 / bpm / 4, nextT = 0, step = 0, sec = 0, timer = null, playing = false;
+    var ORDER = ["I", "A", "B", "C", "B2", "D"], LOOP_FROM = 1;
+    var ROOTS = [40, 36, 45, 47];                                   // E  C  A  B  (i - VI - iv - V)
+    var CHORDS = [[64, 67, 71, 74, 78], [60, 64, 67, 71], [57, 60, 64, 67], [59, 63, 66, 69]];
+    var BASS = [0, null, 12, 0, null, 0, 10, null, 0, null, 12, null, 7, null, 10, 12];
+    var STABS = [0, 3, 6, 10, 13];
+    var LEAD = [                                                   // [step, midi, length] per bar
+      [[0, 76, 2], [3, 79, 1], [4, 78, 2], [6, 76, 2], [8, 74, 3], [12, 71, 2], [14, 74, 2]],
+      [[0, 76, 3], [4, 79, 2], [6, 83, 4], [12, 81, 2], [14, 79, 2]],
+      [[0, 81, 2], [2, 79, 2], [4, 76, 4], [10, 74, 2], [12, 76, 4]],
+      [[0, 78, 2], [2, 79, 2], [4, 81, 3], [8, 83, 6], [14, 86, 2]]
+    ];
+    function kick(t) { var g = actx.createGain(); g.connect(musicBus); env(g, t, 0.002, 0.95, 0.32); var o = osc("sine", 160, t, 0.35, g); o.frequency.exponentialRampToValueAtTime(42, t + 0.12); }
+    function snare(t, v) {
+      var bp = actx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 1900; bp.Q.value = 0.8;
+      var g = actx.createGain(); env(g, t, 0.001, 0.38 * v, 0.17); bp.connect(g).connect(musicBus); noise(t, 0.2, bp);
+      var tg = actx.createGain(); env(tg, t, 0.001, 0.25 * v, 0.08); tg.connect(musicBus); osc("triangle", 190, t, 0.1, tg);
+    }
+    function clap(t) {
+      var bp = actx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 1200; bp.Q.value = 1.2; bp.connect(musicBus);
+      [0, 0.011, 0.022].forEach(function (d, i) { var g = actx.createGain(); env(g, t + d, 0.001, i === 2 ? 0.35 : 0.2, i === 2 ? 0.14 : 0.01); g.connect(bp); noise(t + d, 0.16, g); });
+    }
+    function hat(t, open, v) {
+      var hp = actx.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 7500;
+      var g = actx.createGain(); env(g, t, 0.001, 0.13 * v, open ? 0.22 : 0.035); hp.connect(g).connect(musicBus); noise(t, open ? 0.25 : 0.05, hp);
+    }
+    function bass(t, m, len) {
+      var lp = actx.createBiquadFilter(); lp.type = "lowpass"; lp.Q.value = 9; lp.frequency.setValueAtTime(2400, t); lp.frequency.exponentialRampToValueAtTime(260, t + len);
+      var g = actx.createGain(); env(g, t, 0.004, 0.42, len); lp.connect(g).connect(musicBus);
+      osc("sawtooth", mtof(m), t, len, lp); osc("square", mtof(m - 12), t, len, lp);
+    }
+    function reese(t, m, len) {
+      var lp = actx.createBiquadFilter(); lp.type = "lowpass"; lp.Q.value = 4; lp.frequency.setValueAtTime(300, t); lp.frequency.linearRampToValueAtTime(1100, t + len / 2); lp.frequency.linearRampToValueAtTime(300, t + len);
+      var g = actx.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(0.3, t + 0.03); g.gain.setValueAtTime(0.3, t + len - 0.05); g.gain.linearRampToValueAtTime(0.0001, t + len);
+      lp.connect(g).connect(musicBus);
+      var a = osc("sawtooth", mtof(m), t, len, lp), b = osc("sawtooth", mtof(m), t, len, lp); a.detune.value = -14; b.detune.value = 14;
+      osc("sine", mtof(m - 12), t, len, g);
+    }
+    function stab(t, notes, len, vol) {                               // house piano / organ stab
+      var lp = actx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 3200;
+      var g = actx.createGain(); env(g, t, 0.003, vol || 0.075, len); lp.connect(g).connect(musicBus);
+      notes.forEach(function (m) { osc("square", mtof(m), t, len, lp); osc("triangle", mtof(m + 12), t, len, lp); });
+    }
+    function orch(t, notes) {                                         // the classic 90s orchestra hit
+      var lp = actx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.setValueAtTime(6000, t); lp.frequency.exponentialRampToValueAtTime(500, t + 0.5);
+      var g = actx.createGain(); env(g, t, 0.002, 0.2, 0.55); lp.connect(g).connect(musicBus);
+      notes.concat(notes.map(function (m) { return m - 12; })).forEach(function (m) { var o = osc("sawtooth", mtof(m), t, 0.6, lp); o.detune.value = (Math.random() - 0.5) * 20; });
+      var ng = actx.createGain(); env(ng, t, 0.001, 0.12, 0.12); ng.connect(lp); noise(t, 0.15, ng);
+    }
+    function lead(t, m, len) {
+      var g = actx.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(0.07, t + 0.01); g.gain.setValueAtTime(0.07, t + len * 0.8); g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+      g.connect(musicBus); g.connect(echo);
+      var o = osc("square", mtof(m), t, len, g), o2 = osc("sawtooth", mtof(m), t, len, g); o2.detune.value = 9;
+      var vib = actx.createOscillator(), vg = actx.createGain(); vib.frequency.value = 6; vg.gain.value = 8; vib.connect(vg); vg.connect(o.detune); vg.connect(o2.detune); vib.start(t + 0.12); vib.stop(t + len + 0.05);
+    }
+    function pad(t, notes, len) {
+      var lp = actx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 1400;
+      var g = actx.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(0.05, t + len * 0.4); g.gain.linearRampToValueAtTime(0.0001, t + len);
+      lp.connect(g).connect(musicBus);
+      notes.forEach(function (m) { var a = osc("sawtooth", mtof(m), t, len, lp); a.detune.value = -8; var b = osc("sawtooth", mtof(m), t, len, lp); b.detune.value = 8; });
+    }
+    function arp(t, m) { var g = actx.createGain(); env(g, t, 0.003, 0.06, 0.12); g.connect(musicBus); g.connect(echo); osc("triangle", mtof(m), t, 0.14, g); osc("square", mtof(m + 12), t, 0.1, g); }
+
+    function play(st, t) {
+      var S = ORDER[sec], bar = (st / 16) | 0, s = st % 16, root = ROOTS[bar], ch = CHORDS[bar];
+      var swing = (S === "A" || S === "B" || S === "B2") && s % 2 === 1 ? SD * 0.3 : 0, ts = t + swing;
+      if (S === "I") {
+        if (s % 4 === 0) kick(t);
+        hat(ts, s % 4 === 2, s % 2 ? 0.5 : 0.8);
+        if (bar >= 2 && BASS[s] !== null) bass(ts, root + BASS[s], SD * 1.6);
+        if (bar === 3 && s >= 12) snare(t, 0.4 + (s - 12) * 0.2);
+        return;
+      }
+      if (S === "A" || S === "B" || S === "B2") {
+        if (s % 4 === 0) kick(t);
+        if (s === 4 || s === 12) { clap(t); snare(t, 0.6); }
+        hat(ts, s % 4 === 2, s % 2 ? 0.55 : 0.9);
+        if (BASS[s] !== null) bass(ts, root + BASS[s], SD * (BASS[s] === 12 ? 0.9 : 1.6));
+        if (STABS.indexOf(s) >= 0) stab(ts, ch, SD * 1.4);
+        if (s === 0 && (bar === 0 || S !== "A")) orch(t, [ch[0], ch[2]]);
+        if (S !== "A") LEAD[bar].forEach(function (n) { if (n[0] === s) lead(t, n[1] + (S === "B2" ? 12 : 0), SD * n[2]); });
+        return;
+      }
+      if (S === "C") {                                              // jungle / drum & bass break
+        if (s === 0 || s === 10 || (s === 7 && bar % 2)) kick(t);
+        if (s === 4 || s === 12) snare(t, 1);
+        if (s === 7 || s === 9 || s === 15) snare(t, 0.3);
+        hat(t, false, 0.7); hat(t + SD / 2, false, 0.4);
+        if (s === 0) reese(t, root, SD * 16);
+        if (s === 0 && bar % 2 === 0) orch(t, [ch[0], ch[2], ch[3]]);
+        if (s % 4 === 2) stab(t, ch.slice(0, 3), SD * 0.8, 0.05);
+        return;
+      }
+      if (S === "D") {                                              // breakdown: pads + arpeggios, then the build
+        if (s === 0) pad(t, ch, SD * 16);
+        arp(t, ch[s % ch.length] + (s % 8 >= 4 ? 12 : 0));
+        if (bar === 3) { snare(t, 0.2 + s * 0.05); if (s % 2 === 0) kick(t); }
       }
     }
-    if (actx && actx.state === "suspended") actx.resume();
-    btnSound.textContent = soundOn ? "SONIDO: SÍ" : "SONIDO: NO";
-    btnSound.setAttribute("aria-pressed", String(soundOn));
-    if (soundOn) sfxOink();
+    function tick() {
+      if (!actx) return;
+      if (nextT < actx.currentTime - 0.25) nextT = actx.currentTime + 0.05;   // tab was asleep: skip, don't burst
+      while (nextT < actx.currentTime + 0.12) {
+        play(step, nextT);
+        nextT += SD; step++;
+        if (step >= 64) { step = 0; sec++; if (sec >= ORDER.length) sec = LOOP_FROM; }
+      }
+    }
+    return {
+      bpm: bpm,
+      setPlaying: function (on) {
+        if (on && !playing) { playing = true; nextT = actx.currentTime + 0.08; step = 0; sec = 0; timer = setInterval(tick, 25); }
+        else if (!on && playing) { playing = false; clearInterval(timer); }
+      }
+    };
+  })();
+
+  /* ---- the pig's voice: speech synthesis, pitched all the way down ---- */
+  var Voice = (function () {
+    var synth = window.speechSynthesis, voice = null, last = 0;
+    function pick() {
+      if (!synth) return;
+      var vs = synth.getVoices().filter(function (v) { return /^es/i.test(v.lang); });
+      var male = vs.filter(function (v) { return /jorge|diego|carlos|enrique|pablo|juan|raul|álvaro|alvaro|male|hombre|andr[eé]s|miguel/i.test(v.name); });
+      voice = male[0] || vs[0] || null;
+    }
+    if (synth) { pick(); if ("onvoiceschanged" in synth) synth.onvoiceschanged = pick; }
+    return {
+      speak: function (text, force) {
+        if (!synth || !soundOn || !prefs.voice || !audioLive()) return;
+        if (!force && (synth.speaking || Date.now() - last < 3500)) return;
+        if (force) synth.cancel();
+        last = Date.now();
+        var u = new SpeechSynthesisUtterance(text.replace(/[♪♫]|XD|B-\)|:[DP3)]|<3|\^_\^|T_T/g, ""));
+        u.lang = voice ? voice.lang : "es-ES"; if (voice) u.voice = voice;
+        u.pitch = 0.05; u.rate = 0.82; u.volume = 1;
+        u.onstart = function () { if (musicBus) musicBus.gain.setTargetAtTime(prefs.music ? 0.16 : 0, actx.currentTime, 0.05); };
+        u.onend = u.onerror = function () { if (musicBus) musicBus.gain.setTargetAtTime(prefs.music ? 0.42 : 0, actx.currentTime, 0.2); };
+        synth.speak(u);
+      }
+    };
+  })();
+  function line(text, force) { say(text); Voice.speak(text, force); }
+
+  /* ---- buttons ---- */
+  var btnSound = document.getElementById("btnSound"), btnMusic = document.getElementById("btnMusic"), btnVoice = document.getElementById("btnVoice");
+  function paintButtons() {
+    btnSound.textContent = soundOn ? "SONIDO: SÍ" : "SONIDO: NO"; btnSound.setAttribute("aria-pressed", String(soundOn));
+    btnMusic.textContent = prefs.music ? "MÚSICA: SÍ" : "MÚSICA: NO"; btnMusic.setAttribute("aria-pressed", String(prefs.music));
+    btnVoice.textContent = prefs.voice ? "VOZ: SÍ" : "VOZ: NO"; btnVoice.setAttribute("aria-pressed", String(prefs.voice));
+  }
+  btnSound.addEventListener("click", function () {
+    soundOn = !soundOn; store("cerdo_sound", soundOn ? "1" : "0");
+    if (soundOn) { ensureAudio(); sfxOink(); } else { if (actx) actx.suspend(); if (window.speechSynthesis) speechSynthesis.cancel(); }
+    paintButtons(); setTimeout(refreshAudioUI, 50);
   });
+  btnMusic.addEventListener("click", function () {
+    prefs.music = !prefs.music; store("cerdo_music", prefs.music ? "1" : "0");
+    if (musicBus) musicBus.gain.setTargetAtTime(prefs.music ? 0.42 : 0, actx.currentTime, 0.1);
+    paintButtons(); refreshAudioUI();
+  });
+  btnVoice.addEventListener("click", function () {
+    prefs.voice = !prefs.voice; store("cerdo_voice", prefs.voice ? "1" : "0");
+    if (!prefs.voice && window.speechSynthesis) speechSynthesis.cancel(); else line("Voz activada. Oink.", true);
+    paintButtons();
+  });
+  paintButtons();
+  if (soundOn) { ensureAudio(); setTimeout(refreshAudioUI, 300); }   // some browsers allow it right away
+
   var btnTurbo = document.getElementById("btnTurbo");
   btnTurbo.addEventListener("click", function () {
     turbo = !turbo;
@@ -1475,12 +2034,13 @@ var CONFIG = {
     var hits = ray.intersectObjects(ads.filter(function (a) { return !a.dead; }).map(function (a) { return a.mesh; }));
     if (hits.length) {
       selected = hits[0].object.userData.ad;
-      burst = Math.max(burst, 7);
+      burst = Math.max(burst, 10);
       idleT = 0;
     } else if (ray.intersectObject(pig, true).length) {
       loveHearts();
-      say(quips[(Math.random() * quips.length) | 0]);
       sfxOink();
+      if (Math.random() < 0.5) line(["Oink. Baby.", "No me toques. Soy una leyenda.", "Tranqui. Yo me encargo."][(Math.random() * 3) | 0]);
+      else say(quips[(Math.random() * quips.length) | 0]);
     }
   });
 
@@ -1517,6 +2077,8 @@ var CONFIG = {
   function setMood(i) {
     moodIdx = i % MOODS.length; mood = MOODS[moodIdx].name; moodT = 0; smoked = false;
     var L = MOODS[moodIdx].lines; say(L[(Math.random() * L.length) | 0]);
+    if (mood === "twirl" && Math.random() < 0.6) Voice.speak(["¿Viste eso?", "Estilo cowboy.", "Rápido. Porcino. Letal."][(Math.random() * 3) | 0]);
+    if (mood === "dance" && Math.random() < 0.5) Voice.speak("Fiebre. De sábado.");
   }
   function updateMood(dt, firing) {
     if (firing) { calmT = 0; if (mood !== "aim") { mood = "aim"; say("B-)"); } return; }
@@ -1598,8 +2160,12 @@ var CONFIG = {
   /* ---------------- loop ---------------- */
   var clock = new T.Clock(), t = 0, spawnT = 0.2, fireCD = 0, spin = 0, shake = 0, recoil = 0, flashT = 0;
   var tmp = new T.Vector3(), tmp2 = new T.Vector3(), aimPoint = new T.Vector3(4, 0.5, 0), idleAim = new T.Vector3(6, 0, 0.8);
+  var comboN = 0, comboT = 0, bossCD = location.hash === "#jefe" ? 2 : 40, slowmo = 0;
+  var comboEl = document.getElementById("combo");
+  var VOICE_KILL = ["Hasta la vista, pop-up.", "Bloqueado.", "Oferta rechazada.", "Yo no hago clic.", "Cerrado. Para siempre.", "Tus cookies. Mi almuerzo.", "Denunciado.", "Saltar anuncio."];
   for (var s0 = 0; s0 < 3; s0++) { spawnAd(); ads[s0].mesh.position.x = 3 + s0 * 2; }
   say("¡hola! tocá un pop-up :D");
+  setTimeout(function () { Voice.speak("Oink. Llegó el cerdo."); }, 1200);
 
   function pickTarget() {
     if (selected && !selected.dead) return selected;
@@ -1612,14 +2178,51 @@ var CONFIG = {
     }
     return best;
   }
+  function showCombo(n) {
+    if (n < 2) return;
+    var label = n >= 10 ? "¡IMPARABLE!" : n >= 7 ? "¡BESTIAL!" : n >= 5 ? "¡COMBO PORCINO!" : n >= 3 ? "¡TRIPLE!" : "¡DOBLE!";
+    comboEl.textContent = "COMBO x" + n + " · " + label;
+    comboEl.classList.remove("pop"); void comboEl.offsetWidth; comboEl.classList.add("pop");
+    comboEl.hidden = false;
+    sfxCombo(n);
+    if (n === 5) Voice.speak("Combo. Porcino.", true);
+    if (n === 10) Voice.speak("Imparable.", true);
+  }
+  function killAd(ad) {
+    ad.dead = true; kills++;
+    comboN = comboT > 0 ? comboN + 1 : 1; comboT = 2.6;
+    var bonus = Math.max(0, comboN - 1) * 25;
+    ad.points = (ad.points + bonus) * (turbo ? 2 : 1);
+    score += ad.points;
+    if (score > best) best = score;
+    Data.kill(ADS[ad.kind].id, score);
+    log('"' + ADS[ad.kind].title + '" <em>' + (ad.boss ? "JEFE DERROTADO" : "ELIMINADO") + '</em>');
+    explode(ad, ad.boss);
+    glintT = 0.35;
+    showCombo(comboN);
+    if (ad.boss) {
+      bossAlive = null; bossCD = 70 + Math.random() * 30;
+      slowmo = reduceMotion ? 0 : 1.1;                 // bullet time, like it's 1999
+      line("Tu oferta... acaba de expirar.", true);
+    } else if (Math.random() < 0.35) line(VOICE_KILL[(Math.random() * VOICE_KILL.length) | 0]);
+    else if (kills % 3 === 0) say(killQuips[(Math.random() * killQuips.length) | 0]);
+    hud();
+  }
 
   function update(dt) {
     t += dt;
     var speedMul = turbo ? 1.9 : 1;
 
-    // spawn
+    // spawn (+ the occasional boss)
     spawnT -= dt;
-    if (spawnT <= 0 && ads.length < (turbo ? 10 : 6)) { spawnAd(); spawnT = (turbo ? 1.0 : 2.2) + Math.random() * 0.8; }
+    if (spawnT <= 0 && ads.length < (turbo ? 11 : 7)) { spawnAd(); spawnT = (turbo ? 0.9 : 1.9) + Math.random() * 0.8; }
+    bossCD -= dt;
+    if (bossCD <= 0 && !bossAlive && (kills >= 5 || location.hash === "#jefe")) {
+      spawnAd(kindOf("megaoferta"));
+      line("Mega oferta detectada. Hora de trabajar.", true);
+      bossCD = 999;
+    }
+    if (comboT > 0) { comboT -= dt; if (comboT <= 0) { comboN = 0; comboEl.hidden = true; } }
 
     // ads
     for (var i = ads.length - 1; i >= 0; i--) {
@@ -1632,20 +2235,22 @@ var CONFIG = {
       }
       var sc = Math.min(1, a.age * 3);
       m.position.x += a.vx * speedMul * dt;
-      m.position.y = a.baseY + Math.sin(t * 1.7 + a.phase) * 0.35;
-      m.rotation.y = -0.25 + Math.sin(t * 1.1 + a.phase) * 0.3;
-      m.rotation.z = Math.sin(t * 2.3 + a.phase) * 0.06;
+      m.position.y = a.baseY + Math.sin(t * 1.7 + a.phase) * (a.boss ? 0.2 : 0.35);
+      m.rotation.y = -0.25 + Math.sin(t * 1.1 + a.phase) * (a.boss ? 0.12 : 0.3);
+      m.rotation.z = ADS[a.kind].fmt === "wheel" ? m.rotation.z + dt * 0.8 : Math.sin(t * 2.3 + a.phase) * 0.06;
       if (a.hitT > 0) {
         a.hitT -= dt;
         m.material.color.setRGB(1, 0.35, 0.35);
         m.position.x += (Math.random() - 0.5) * 0.12;
-        m.scale.setScalar(sc * (1 + a.hitT));
+        m.scale.setScalar(sc * (1 + a.hitT * (a.boss ? 0.3 : 1)));
       } else { m.material.color.setRGB(1, 1, 1); m.scale.setScalar(sc); }
+      if (a.hpBar) { var r = Math.max(0, a.hp / a.maxHp); a.hpBar.scale.x = Math.max(0.001, r); a.hpBar.position.x = -(1 - r) * a.barW / 2; }
       if (m.position.x < -2.1) {
         a.dead = true; leaks++;
         Data.leak(ADS[a.kind].id);
         log('"' + ADS[a.kind].title + '" <em>SE COLÓ</em>', "miss");
-        say("¡uy! se coló uno T_T");
+        if (a.boss) { bossAlive = null; bossCD = 60; line("La mega oferta... se coló. Revisá tu tarjeta.", true); }
+        else if (Math.random() < 0.5) line("Eso... dolió."); else say("¡uy! se coló uno T_T");
         hud();
       }
     }
@@ -1666,12 +2271,12 @@ var CONFIG = {
     barrels.rotation.z += spin * dt;
     fireCD -= dt;
     if (firing && fireCD <= 0) {
-      fireCD = turbo ? 1 / 20 : 1 / 13;
+      fireCD = turbo ? 1 / 22 : 1 / 15;
       if (burst > 0) burst--;
       barrels.localToWorld(tmp2.copy(MUZZLE));
       var dir = target ? tmp.copy(target.mesh.position).sub(tmp2).normalize() : barrels.getWorldDirection(tmp);
       dir.x += (Math.random() - 0.5) * 0.03; dir.y += (Math.random() - 0.5) * 0.03; dir.normalize();
-      fire(tmp2, dir);
+      fire(tmp2, dir, target);
       recoil = 0.08; flashT = 0.05;
       flash.position.copy(tmp2);
       muzzleLight.position.copy(tmp2);
@@ -1682,6 +2287,7 @@ var CONFIG = {
     flash.material.opacity = flashT > 0 ? 1 : 0;
     flash.material.rotation = Math.random() * 6;
     muzzleLight.intensity = flashT > 0 ? 3 : 0;
+    boomLight.intensity *= Math.pow(0.02, dt);
     tipRing.scale.setScalar(1 + (firing ? Math.sin(t * 40) * 0.12 : 0));
 
     // pig idle anim
@@ -1697,27 +2303,25 @@ var CONFIG = {
     eyes[0].scale.y = eyes[1].scale.y = lid;
     tongue.position.y = -0.52 + Math.sin(t * 6) * 0.015;
 
-    // bolts
+    // bolts: gently home in on their target, then check hits against each ad's real size
     for (var j = bolts.length - 1; j >= 0; j--) {
       var bo = bolts[j];
       bo.life -= dt;
+      if (bo.target && !bo.target.dead) {
+        tmp2.copy(bo.target.mesh.position).sub(bo.obj.position).normalize().multiplyScalar(BOLT_SPEED);
+        bo.vel.lerp(tmp2, Math.min(1, dt * 6));
+        bo.obj.quaternion.setFromUnitVectors(Z, tmp2.copy(bo.vel).normalize());
+      }
       bo.obj.position.addScaledVector(bo.vel, dt);
       var hit = false;
       for (var k = 0; k < ads.length && !hit; k++) {
         var ad = ads[k]; if (ad.dead) continue;
         ad.mesh.worldToLocal(tmp.copy(bo.obj.position));
-        if (Math.abs(tmp.x) < 1.1 && Math.abs(tmp.y) < 0.85 && Math.abs(tmp.z) < 0.5) {
+        if (Math.abs(tmp.x) < ad.hw && Math.abs(tmp.y) < ad.hh && Math.abs(tmp.z) < 0.6) {
           hit = true; ad.hp--; ad.hitT = 0.12;
-          if (ad.hp <= 0) {
-            ad.dead = true; kills++; score += 100 * (turbo ? 2 : 1);
-            if (score > best) best = score;
-            Data.kill(ADS[ad.kind].id, score);
-            log('"' + ADS[ad.kind].title + '" <em>ELIMINADO</em>');
-            explode(ad);
-            glintT = 0.35;
-            if (kills % 3 === 0) say(killQuips[(Math.random() * killQuips.length) | 0]);
-            hud();
-          }
+          if (ad.boss && Math.random() < 0.12 && ads.length < 14)   // the boss sheds useless coupons
+            spawnAd(kindOf("cupon"), { x: ad.mesh.position.x - 1, y: ad.mesh.position.y + (Math.random() - 0.5) * 2, z: ad.mesh.position.z + 1 });
+          if (ad.hp <= 0) killAd(ad);
         }
       }
       if (hit || bo.life <= 0) { scene.remove(bo.obj); bolts.splice(j, 1); }
@@ -1740,7 +2344,7 @@ var CONFIG = {
       var k2 = 1 - sp.life / sp.max;
       if (sp.grow > 1) sp.obj.scale.setScalar(1 + k2 * sp.grow);
       sp.obj.position.y += sp.rise * dt;
-      sp.obj.material.opacity = Math.max(0, sp.life / sp.max);
+      sp.obj.material.opacity = Math.max(0, Math.min(1, sp.life / sp.max * 1.5));
       if (sp.life <= 0) { scene.remove(sp.obj); if (sp.obj.material.map && !sp.obj.userData.shared) sp.obj.material.map.dispose(); sp.obj.material.dispose(); sprites.splice(s, 1); }
     }
 
@@ -1750,6 +2354,7 @@ var CONFIG = {
       reticle.position.copy(selected.mesh.position);
       reticle.quaternion.copy(camera.quaternion);
       reticle.rotateZ(t * 2);
+      reticle.scale.setScalar(Math.max(selected.hw, selected.hh) / 1.2);
     } else reticle.visible = false;
 
     // bubble
@@ -1760,14 +2365,16 @@ var CONFIG = {
 
   function frame() {
     requestAnimationFrame(frame);
-    var dt = Math.min(clock.getDelta(), 0.05);
+    var raw = Math.min(clock.getDelta(), 0.05);
+    slowmo = Math.max(0, slowmo - raw);
+    var dt = slowmo > 0 ? raw * 0.25 : raw;
     if (!paused) update(dt);
     var sway = reduceMotion ? 0 : 1;
-    shake = Math.max(0, shake - dt);
+    shake = Math.max(0, shake - raw);
     camera.position.set(
       camBase.x + Math.sin(t * 0.25) * 0.5 * sway + (Math.random() - 0.5) * shake,
       camBase.y + Math.sin(t * 0.37) * 0.2 * sway + (Math.random() - 0.5) * shake,
-      camBase.z
+      camBase.z - (slowmo > 0 ? Math.sin(slowmo / 1.1 * Math.PI) * 1.5 : 0)
     );
     camera.lookAt(camLook);
     grid.position.x = reduceMotion ? 0 : -((t * 1.5) % 1);
